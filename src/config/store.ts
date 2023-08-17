@@ -3,6 +3,7 @@ import { create } from "zustand";
 import getRawDiseases from "../lib/getRawDiseases";
 import getRawSymptoms from "../lib/getRawSymptoms";
 import { IDisease, ISymptom } from "../types/interfaces";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 const resetSymptom = (arr: ISymptom[], id: string) => {
   // populate item
@@ -38,43 +39,48 @@ interface Store {
   updateDiseases: (object: IDisease[]) => void;
 }
 
-export const useStore = create<Store>()((set, get) => ({
-  symptoms: getRawSymptoms(),
-  updateSymptom: (id, value, parent) => {
-    let result = undefined;
-    set(
-      produce((s) => {
-        let arr: ISymptom[] = s.symptoms;
-        let item = arr.find((i) => i.id === id);
-        if (item) {
-          // check item of enum parent -> reset parent -r
-          if (parent && parent.type === "enum") resetSymptom(arr, parent.id);
-          // if unset occured and has options -> reset item -r
-          if (!value && Array.isArray(item.options)) resetSymptom(arr, item.id);
-          // update/reset value
-          console.log("Setting", id, value);
-          item.value = value;
-          result = arr;
-        } else {
-          console.error("Couldnt find item", id);
-        }
-        result = arr;
-      })
-    );
-    return result;
-  },
-  resetSymptoms: () => {
-    set(() => ({ symptoms: getRawSymptoms() }));
-    console.log(get().symptoms);
-  },
-  expanded: getRawExpanded(),
-  toggleExpanded: (id) =>
-    set((s) => {
-      const list = new Set(s.expanded);
-      if (list.has(id)) list.delete(id);
-      else list.add(id);
-      return { expanded: Array.from(list) };
+export const useStore = create(
+  persist<Store>(
+    (set, get) => ({
+      symptoms: getRawSymptoms(),
+      updateSymptom: (id, value, parent) => {
+        let result = undefined;
+        set(
+          produce((s) => {
+            let arr: ISymptom[] = s.symptoms;
+            let item = arr.find((i) => i.id === id);
+            if (item) {
+              // check item of enum parent -> reset parent -r
+              if (parent && parent.type === "enum") resetSymptom(arr, parent.id);
+              // if unset occured and has options -> reset item -r
+              if (!value && Array.isArray(item.options)) resetSymptom(arr, item.id);
+              // update/reset value
+              console.log("Setting", id, value);
+              item.value = value;
+              result = arr;
+            } else {
+              console.error("Couldnt find item", id);
+            }
+            result = arr;
+          })
+        );
+        return result;
+      },
+      resetSymptoms: () => {
+        set(() => ({ symptoms: getRawSymptoms() }));
+        console.log(get().symptoms);
+      },
+      expanded: getRawExpanded(),
+      toggleExpanded: (id) =>
+        set((s) => {
+          const list = new Set(s.expanded);
+          if (list.has(id)) list.delete(id);
+          else list.add(id);
+          return { expanded: Array.from(list) };
+        }),
+      diseases: getRawDiseases(),
+      updateDiseases: (object) => set(() => ({ diseases: getRawDiseases(object as IDisease[]) })),
     }),
-  diseases: getRawDiseases(),
-  updateDiseases: (object) => set(() => ({ diseases: getRawDiseases(object as IDisease[]) })),
-}));
+    { name: "app-storage", storage: createJSONStorage(() => sessionStorage) }
+  )
+);
