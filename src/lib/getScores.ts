@@ -25,13 +25,17 @@ const getSingleRate = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
       switch (symptom.type) {
         case "range":
           dfranges!.forEach((range) => {
-            if (typeof symptom.value !== "object") {
+            if (
+              typeof symptom.value !== "object" ||
+              (typeof symptom.value === "object" && (!symptom.value?.a || !symptom.value?.b))
+            ) {
               console.error(
-                `Type mismatch for symptom.value ${symptom.id} expected range but got ${typeof symptom.value}`
+                `Type mismatch for symptom.value ${symptom.id} expected range but got ${typeof symptom.value}`,
+                symptom.value
               );
               return 1;
             }
-            if (symptom.value!.a >= range.a && symptom.value!.b <= range.b) {
+            if (symptom.value.a >= range.a && symptom.value.b <= range.b) {
               return manipulateRate(range.rate);
             }
           });
