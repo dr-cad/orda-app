@@ -1,64 +1,54 @@
-import { Box, Button, Divider, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
-import { Fragment, useMemo } from "react";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import TreeView from "@mui/lab/TreeView";
+import { Button, Stack, Typography } from "@mui/material";
+import { Options } from "../components/Symptom";
 import { useStore } from "../config/store";
-import getScores from "../lib/getScores";
-import { IDisease, IScore } from "../types/interfaces";
+import { usePageIndex } from "../hooks/pages";
 
-async function parseJsonFile(file: Blob) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.onload = (event) => resolve(JSON.parse(String(event.target?.result) ?? ""));
-    fileReader.onerror = (error) => reject(error);
-    fileReader.readAsText(file);
-  });
-}
+function SymptomsPage() {
+  const { currPage } = usePageIndex();
+  const resetSymptoms = useStore((s) => s.resetSymptoms);
+  const expanded = useStore((s) => s.expanded);
 
-export default function DiseasesPage() {
-  const symptoms = useStore((s) => s.symptoms);
-  const diseases = useStore((s) => s.diseases);
-  const updateDiseases = useStore((s) => s.updateDiseases);
-
-  const scores = useMemo(() => getScores({ diseases, symptoms }), [diseases, symptoms]);
-
-  const handleUpload = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.onchange = async (_) => {
-      // you can use this method to get file and perform respective operations
-      const files = Array.from(input.files ?? []);
-      const file = files[0];
-      if (!file) return;
-      const object = await parseJsonFile(file);
-      console.log(object);
-      updateDiseases(object as IDisease[]);
-    };
-    input.click();
+  const handleReset = () => {
+    resetSymptoms();
   };
 
   return (
-    <Stack overflow="scroll" p={2} gap={2}>
-      <Typography variant="h5" fontWeight={700}>
-        Result
-      </Typography>
-      <List>
-        {scores.map((score, i) => (
-          <DiseaseScore key={i} {...score} />
-        ))}
-      </List>
-      <Box flex={1} />
-      <Button onClick={handleUpload}>Upload Diseases</Button>
+    <Stack gap={4} flex={1} overflow="scroll">
+      <Stack direction="row" justifyContent="space-between" alignItems="center" pt={2} pl={4}>
+        {currPage && (
+          <Stack>
+            <Typography variant="h5" fontWeight={700}>
+              {currPage.name}
+            </Typography>
+            <Typography variant="subtitle2" fontWeight={500} color="#444">
+              {typeof currPage.desc === "string" ? currPage.desc : null}
+            </Typography>
+          </Stack>
+        )}
+        <Button variant="outlined" size="small" color="error" sx={{ ml: 2, mr: 2 }} onClick={handleReset}>
+          <Typography variant="caption" textTransform="uppercase" sx={{ cursor: "pointer" }}>
+            Reset
+          </Typography>
+        </Button>
+      </Stack>
+      {currPage && (
+        <TreeView
+          defaultCollapseIcon={<ExpandMoreIcon />}
+          defaultExpandIcon={<ChevronRightIcon />}
+          expanded={expanded}
+          selected={[]}
+          onNodeSelect={() => {}}
+          onNodeToggle={() => {}}
+          sx={{ flex: 1, overflowY: "auto" }}
+        >
+          <Options symptom={currPage} />
+        </TreeView>
+      )}
     </Stack>
   );
 }
 
-const DiseaseScore = ({ value, name }: IScore) => {
-  return (
-    <Fragment>
-      <ListItem sx={{ justifyContent: "space-between" }}>
-        <ListItemText primary={name} />
-        <Typography sx={{ textAlign: "end" }}>{Math.round(value * 100) / 100}</Typography>
-      </ListItem>
-      <Divider />
-    </Fragment>
-  );
-};
+export default SymptomsPage;

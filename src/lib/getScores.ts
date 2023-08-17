@@ -1,11 +1,12 @@
 import { IDisease, IScore, ISymptom } from "./../types/interfaces";
+import waApi from "./wa-api";
 
 interface IProps {
   symptoms: ISymptom[];
   diseases: IDisease[];
 }
 
-export default function getScores({ diseases, symptoms }: IProps): IScore[] {
-  return diseases.map((disease, i) => ({ ...disease, value: 0 }));
-  // TODO instead calculate all at once and pass the result
+export default async function getScores({ diseases, symptoms }: IProps): Promise<IScore[]> {
+  console.log(((await waApi).exports as any).add(20, 46));
+  return [];
 }
