@@ -1,5 +1,5 @@
-import { IDisease, IScore, ISymptom } from "./../types/interfaces";
-import waApi from "./wa-api";
+import { IDisease, IDiseaseFactor, IScore, ISymptom } from "./../types/interfaces";
+import _ from "lodash";
 
 interface IProps {
   symptoms: ISymptom[];
@@ -7,6 +7,49 @@ interface IProps {
 }
 
 export default async function getScores({ diseases, symptoms }: IProps): Promise<IScore[]> {
-  console.log(((await waApi).exports as any).add(20, 46));
-  return [];
+  const nominators: number[] = diseases.map((disease, i) => getDiseaseProbablity(disease, symptoms));
+  const dinaminator = nominators.reduce((a, b) => a + b, 0);
+  return diseases.map((disease, i) => ({ ...disease, value: nominators[i] / dinaminator }));
 }
+
+const getDiseaseProbablity = (disease: IDisease, symptoms: ISymptom[]): number => {
+  const result = disease.factors.reduce((a, b) => a * getSingleRate(b, symptoms), 1);
+  return result;
+};
+
+const getSingleRate = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
+  const dfranges = factor.ranges ? _.orderBy(factor.ranges, (a) => a.rate, "desc") : null;
+
+  for (let symptom of symptoms) {
+    if (symptom.id === factor.sid) {
+      switch (symptom.type) {
+        case "range":
+          dfranges!.forEach((range) => {
+            if (typeof symptom.value !== "object") {
+              console.error(
+                `Type mismatch for symptom.value ${symptom.id} expected range but got ${typeof symptom.value}`
+              );
+              return 1;
+            }
+            if (symptom.value!.a >= range.a && symptom.value!.b <= range.b) {
+              return range.rate;
+            }
+          });
+          return 1;
+        case "number":
+          dfranges!.forEach((range) => {
+            if (symptom.value! >= range.a && symptom.value! <= range.b) {
+              return range.rate;
+            }
+          });
+          return 1;
+        case "boolean":
+        default:
+          return symptom.value ? factor.rate! : 1;
+      }
+    }
+  }
+
+  console.error("Couldn't find factor", factor.sid);
+  return 1;
+};
