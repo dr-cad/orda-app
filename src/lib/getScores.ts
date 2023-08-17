@@ -18,7 +18,7 @@ const getDiseaseProbablity = (disease: IDisease, symptoms: ISymptom[]): number =
 };
 
 const getSingleRate = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
-  const dfranges = factor.ranges ? _.orderBy(factor.ranges, (a) => a.rate, "desc") : null;
+  const dfranges = factor.ranges ? _.orderBy(factor.ranges, (a) => manipulateRate(a.rate), "desc") : null;
 
   for (let symptom of symptoms) {
     if (symptom.id === factor.sid) {
@@ -32,20 +32,20 @@ const getSingleRate = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
               return 1;
             }
             if (symptom.value!.a >= range.a && symptom.value!.b <= range.b) {
-              return range.rate;
+              return manipulateRate(range.rate);
             }
           });
           return 1;
         case "number":
           dfranges!.forEach((range) => {
             if (symptom.value! >= range.a && symptom.value! <= range.b) {
-              return range.rate;
+              return manipulateRate(range.rate);
             }
           });
           return 1;
         case "boolean":
         default:
-          return symptom.value ? factor.rate! : 1;
+          return symptom.value ? manipulateRate(factor.rate!) : 1;
       }
     }
   }
@@ -53,3 +53,6 @@ const getSingleRate = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
   console.error("Couldn't find factor", factor.sid);
   return 1;
 };
+
+const epsilon = 0.01;
+const manipulateRate = (rate: number) => (rate === -1 ? epsilon : rate);

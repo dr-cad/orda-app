@@ -49,7 +49,7 @@
           {
             "a": 1,
             "b": 12,
-            "rate": 0.01
+            "rate": -1
           }
         ]
       },
@@ -69,7 +69,7 @@
           {
             "a": 1,
             "b": 12,
-            "rate": 0.01
+            "rate": -1
           }
         ]
       },
@@ -79,7 +79,7 @@
           {
             "a": 1,
             "b": 12,
-            "rate": 0.01
+            "rate": -1
           }
         ]
       },
@@ -97,111 +97,111 @@
       },
       {
         "sid": "recent-gingival",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "primary-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "permanent-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "primary-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "permanent-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "history-of-surgery",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "increase-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "decrease-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "increase-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "decrease-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "increase-3",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "decrease-3",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "hist-radio",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "paget-dis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "fibrous",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "cherubism",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "osteoporosis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "osteopetrosis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "osteogensis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "osteomalacia",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "hyperpara",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "multiple-myeloma",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "langer",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "fever-illness",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "paresth-anes",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "bleeding",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "mobile-teeth",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "facial",
@@ -213,23 +213,23 @@
       },
       {
         "sid": "generalized-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "toothache",
-        "rate": 0.20
+        "rate": 0.2
       },
       {
         "sid": "other-sites",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "localized-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "generalized-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "slow-0",
@@ -237,15 +237,15 @@
       },
       {
         "sid": "moderate-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "rapid-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "vital",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "nonvital",
@@ -253,23 +253,23 @@
       },
       {
         "sid": "hemorrhage",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pain-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pump",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "negative",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "blood",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "serosanguinous",
@@ -277,15 +277,15 @@
       },
       {
         "sid": "cheesy-mat",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pus",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "auscultation",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "intrabony",
@@ -293,23 +293,23 @@
       },
       {
         "sid": "soft-tissue",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "soft",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "cheesy",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "rubbery",
-        "rate": 0.10
+        "rate": 0.1
       },
       {
         "sid": "firm",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "bony-hard",
@@ -317,19 +317,19 @@
       },
       {
         "sid": "round-1",
-        "rate": 0.80
+        "rate": 0.8
       },
       {
         "sid": "scalloped",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "irregular-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "punched",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "corticated",
@@ -341,15 +341,15 @@
       },
       {
         "sid": "soft-capsule",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "blending",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "invasive",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "unilatral",
@@ -357,11 +357,11 @@
       },
       {
         "sid": "bilateral",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pericoronal",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "interradicular",
@@ -369,7 +369,7 @@
       },
       {
         "sid": "related",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "periapical",
@@ -381,19 +381,19 @@
       },
       {
         "sid": "multiple-seprate",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "diffuse",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "radiopaue-zone",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "radiopaque-nozone",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "uniocular",
@@ -401,23 +401,23 @@
       },
       {
         "sid": "rarefaction",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "soap",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "honey",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "tenis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "unusual",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dystrophic",
@@ -425,23 +425,23 @@
       },
       {
         "sid": "amorph",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dent-struct",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "wispy",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "coarse",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dispalce-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "resorp-1",
@@ -453,87 +453,87 @@
       },
       {
         "sid": "divergence",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dura",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "wide-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "wide-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dispalce-1",
-        "rate": 0.10
+        "rate": 0.1
       },
       {
         "sid": "enlarge",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "destruct-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dispalce-2",
-        "rate": 0.10
+        "rate": 0.1
       },
       {
         "sid": "destruct-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "sclerotic-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "destruct-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "expand",
-        "rate": 0.10
+        "rate": 0.1
       },
       {
         "sid": "destruct-3",
-        "rate": 0.10
+        "rate": 0.1
       },
       {
         "sid": "single",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "onion",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "solid",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "compelx",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "codman",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "hair",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "divergnet",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "sloping",
-        "rate": 0.01
+        "rate": -1
       }
     ]
   },
@@ -547,7 +547,7 @@
           {
             "a": 0,
             "b": 100,
-            "rate": 0.01
+            "rate": -1
           }
         ]
       },
@@ -557,7 +557,7 @@
           {
             "a": 0,
             "b": 20,
-            "rate": 0.01
+            "rate": -1
           }
         ]
       },
@@ -567,7 +567,7 @@
           {
             "a": 1,
             "b": 12,
-            "rate": 0.01
+            "rate": -1
           }
         ]
       },
@@ -577,7 +577,7 @@
           {
             "a": 1,
             "b": 12,
-            "rate": 0.01
+            "rate": -1
           }
         ]
       },
@@ -587,461 +587,461 @@
           {
             "a": 1,
             "b": 12,
-            "rate": 0.01
+            "rate": -1
           }
         ]
       },
       {
         "sid": "pat-male",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pat-female",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dental-prob",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "recent-gingival",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "primary-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "permanent-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "primary-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "permanent-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "history-of-surgery",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "increase-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "decrease-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "increase-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "decrease-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "increase-3",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "decrease-3",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "hist-radio",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "paget-dis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "fibrous",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "cherubism",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "osteoporosis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "osteopetrosis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "osteogensis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "osteomalacia",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "hyperpara",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "multiple-myeloma",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "langer",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "fever-illness",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "paresth-anes",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "bleeding",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "mobile-teeth",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "facial",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "gingival",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "generalized-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "toothache",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "other-sites",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "localized-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "generalized-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "slow-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "moderate-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "rapid-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "vital",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "nonvital",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "hemorrhage",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pain-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pump",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "negative",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "blood",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "serosanguinous",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "cheesy-mat",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pus",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "auscultation",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "intrabony",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "soft-tissue",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "soft",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "cheesy",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "rubbery",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "firm",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "bony-hard",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "round-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "scalloped",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "irregular-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "punched",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "corticated",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "sclerotic",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "soft-capsule",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "blending",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "invasive",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "unilatral",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "bilateral",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "pericoronal",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "interradicular",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "related",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "periapical",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "solitary",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "multiple-seprate",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "diffuse",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "radiopaue-zone",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "radiopaque-nozone",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "uniocular",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "rarefaction",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "soap",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "honey",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "tenis",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "unusual",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dystrophic",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "amorph",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dent-struct",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "wispy",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "coarse",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dispalce-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "resorp-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "resorp-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "divergence",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dura",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "wide-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "wide-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dispalce-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "enlarge",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "destruct-0",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "dispalce-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "destruct-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "sclerotic-1",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "destruct-2",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "expand",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "destruct-3",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "single",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "onion",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "solid",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "compelx",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "codman",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "hair",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "divergnet",
-        "rate": 0.01
+        "rate": -1
       },
       {
         "sid": "sloping",
-        "rate": 0.01
+        "rate": -1
       }
     ]
   }
