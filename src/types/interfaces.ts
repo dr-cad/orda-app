@@ -39,3 +39,7 @@ export interface IRange {
 export interface IDiseaseFactorRange extends IRange {
   rate: number;
 }
+
+export interface IScore extends IDisease {
+  value: number;
+}

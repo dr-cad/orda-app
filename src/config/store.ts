@@ -32,10 +32,10 @@ interface Store {
   symptoms: ISymptom[];
   updateSymptom: (id: string, value: any, parent: ISymptom | null) => ISymptom[] | undefined;
   resetSymptoms: (...args: any[]) => void;
-  diseases: IDisease[];
-  updateDisease: (args: any[]) => void;
   expanded: string[];
   toggleExpanded: (id: string) => void;
+  diseases: IDisease[];
+  updateDiseases: (object: IDisease[]) => void;
 }
 
 export const useStore = create<Store>()((set, get) => ({
@@ -67,11 +67,6 @@ export const useStore = create<Store>()((set, get) => ({
     set(() => ({ symptoms: getRawSymptoms() }));
     console.log(get().symptoms);
   },
-  diseases: getRawDiseases(),
-  updateDisease: () => {
-    set(() => ({}));
-    return undefined;
-  },
   expanded: getRawExpanded(),
   toggleExpanded: (id) =>
     set((s) => {
@@ -80,4 +75,6 @@ export const useStore = create<Store>()((set, get) => ({
       else list.add(id);
       return { expanded: Array.from(list) };
     }),
+  diseases: getRawDiseases(),
+  updateDiseases: (object) => set(() => ({ diseases: getRawDiseases(object as IDisease[]) })),
 }));

@@ -1,6 +1,6 @@
 import TreeItem from "@mui/lab/TreeItem";
 import { Checkbox, FormControlLabel, Radio, Stack, TextField, Typography } from "@mui/material";
-import { Fragment, MouseEventHandler, useCallback, useMemo } from "react";
+import React, { Fragment, MouseEventHandler, useCallback, useMemo } from "react";
 import { useStore } from "../config/store";
 import { IRange, ISymptom, Value } from "../types/interfaces";
 
@@ -21,18 +21,22 @@ export default function Symptom({ id, parent }: IProps) {
 
   const symptom = useMemo(() => symptoms.find((i) => i.id === id), [id, symptoms]);
 
-  const handleClick: MouseEventHandler = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!symptom) return;
-    if (!symptom.type || symptom.type === "enum") {
-      // for radio or checkbox
-      updateSymptom(id, !symptom.value, parent);
-    } else {
-      // for inputs
-      toggleExpanded(symptom.id);
-    }
-  };
+  const handleClick: MouseEventHandler = useCallback(
+    async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!symptom) return;
+      if (!symptom.type || symptom.type === "enum") {
+        // for radio or checkbox
+        updateSymptom(id, !symptom.value, parent);
+        toggleExpanded(symptom.id);
+      } else {
+        // for inputs
+        toggleExpanded(symptom.id);
+      }
+    },
+    [id, parent, symptom, toggleExpanded, updateSymptom]
+  );
 
   if (!symptom) return null;
   return (
@@ -55,7 +59,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
         </Typography>
       }
       control={
-        parent?.type === "enum" ? (
+        parent.type === "enum" ? (
           <Radio size="small" checked={!!symptom.value} />
         ) : (
           <Checkbox size="small" checked={!!symptom.value} />
@@ -81,7 +85,7 @@ const Desc = ({ symptom }: { symptom: ISymptom }) => {
   );
 };
 
-const Input = ({ symptom, parent }: IInnerProps) => {
+const Input = React.memo(({ symptom, parent }: IInnerProps) => {
   const updateSymptom = useStore((s) => s.updateSymptom);
 
   const handleChange = useCallback(
@@ -98,7 +102,6 @@ const Input = ({ symptom, parent }: IInnerProps) => {
     <Stack p={2}>
       {symptom.type === "string" ? (
         <TextField
-          key={symptom.id + "-textfield"}
           id={symptom.id + "-textfield"}
           size="small"
           type="text"
@@ -108,7 +111,6 @@ const Input = ({ symptom, parent }: IInnerProps) => {
         />
       ) : symptom.type === "number" ? (
         <TextField
-          key={symptom.id + "-textfield"}
           id={symptom.id + "-textfield"}
           size="small"
           type="number"
@@ -119,8 +121,7 @@ const Input = ({ symptom, parent }: IInnerProps) => {
       ) : symptom.type === "range" ? (
         <Stack direction="row" gap={1}>
           <TextField
-            key={symptom.id + "-textfield"}
-            id={symptom.id + "-textfield"}
+            id={symptom.id + "-textfield-1"}
             size="small"
             type="number"
             placeholder="Start"
@@ -128,20 +129,19 @@ const Input = ({ symptom, parent }: IInnerProps) => {
             onChange={(e) =>
               handleChange({
                 a: Number(e.target.value),
-                b: (symptom.value as IRange)?.b,
+                b: (symptom.value as IRange)?.b ?? "",
               })
             }
           />
           <TextField
-            key={symptom.id + "-textfield"}
-            id={symptom.id + "-textfield"}
+            id={symptom.id + "-textfield-2"}
             size="small"
             type="number"
             placeholder="End"
             value={(symptom.value as IRange)?.b ?? ""}
             onChange={(e) =>
               handleChange({
-                a: (symptom.value as IRange)?.a,
+                a: (symptom.value as IRange)?.a ?? "",
                 b: Number(e.target.value),
               })
             }
@@ -150,7 +150,7 @@ const Input = ({ symptom, parent }: IInnerProps) => {
       ) : null}
     </Stack>
   );
-};
+});
 
 export function Options({ symptom }: { symptom: ISymptom }) {
   if (!symptom.options) return null;
