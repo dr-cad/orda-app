@@ -3,11 +3,7 @@
     "id": "pat-info",
     "name": "Patient's information",
     "page": true,
-    "options": [
-      "pat-name",
-      "pat-gender",
-      "pat-age"
-    ]
+    "options": ["pat-name", "pat-gender", "pat-age"]
   },
   {
     "id": "pat-name",
@@ -30,10 +26,7 @@
     "name": "Patient's gender",
     "required": true,
     "type": "enum",
-    "options": [
-      "pat-male",
-      "pat-female"
-    ],
+    "options": ["pat-male", "pat-female"],
     "open": true
   },
   {
@@ -50,15 +43,7 @@
     "id": "pat-his-cli-fin",
     "name": "Patient history & Clinical findings",
     "page": true,
-    "options": [
-      "dental-prob",
-      "recent-gingival",
-      "delayed",
-      "history-of-surgery",
-      "sys-dis",
-      "sig-blood",
-      "hist-radio"
-    ]
+    "options": ["dental-prob", "recent-gingival", "delayed", "history-of-surgery", "sys-dis", "sig-blood", "hist-radio"]
   },
   {
     "id": "recent-gingival",
@@ -73,20 +58,13 @@
   {
     "id": "sig-blood",
     "name": "Significant blood's values change",
-    "options": [
-      "calcium",
-      "phosphorus",
-      "alkaline"
-    ]
+    "options": ["calcium", "phosphorus", "alkaline"]
   },
   {
     "id": "calcium",
     "name": "Calcium",
     "type": "enum",
-    "options": [
-      "increase-1",
-      "decrease-1"
-    ]
+    "options": ["increase-1", "decrease-1"]
   },
   {
     "id": "increase-1",
@@ -100,10 +78,7 @@
     "id": "phosphorus",
     "name": "Phosphorus",
     "type": "enum",
-    "options": [
-      "increase-2",
-      "decrease-2"
-    ]
+    "options": ["increase-2", "decrease-2"]
   },
   {
     "id": "increase-2",
@@ -117,10 +92,7 @@
     "id": "alkaline",
     "name": "Alkaline phosphatase",
     "type": "enum",
-    "options": [
-      "increase-3",
-      "decrease-3"
-    ]
+    "options": ["increase-3", "decrease-3"]
   },
   {
     "id": "increase-3",
@@ -138,7 +110,8 @@
   {
     "id": "dental-prob",
     "name": "Existing problem or previously treated (The specific tooth)",
-    "desc": "Deep caries or restoration, pervious rootcanal treatment, malformation, tooth color change"
+    "desc": "Deep caries or restoration, pervious rootcanal treatment, malformation, tooth color change",
+    "open": true
   },
   {
     "id": "sys-dis",
@@ -207,14 +180,7 @@
     "id": "chief-comp",
     "name": "Chief complaint",
     "page": true,
-    "options": [
-      "pain-0",
-      "fever-illness",
-      "paresth-anes",
-      "bleeding",
-      "mobile-teeth",
-      "swelling"
-    ]
+    "options": ["pain-0", "fever-illness", "paresth-anes", "bleeding", "mobile-teeth", "swelling"]
   },
   {
     "id": "fever-illness",
@@ -235,28 +201,13 @@
   },
   {
     "id": "swelling",
-    "name": "Swelling",
-    "options": [
-      "facial",
-      "gingival"
-    ]
-  },
-  {
-    "id": "facial",
-    "name": "Facial"
-  },
-  {
-    "id": "gingival",
-    "name": "Gingival"
+    "name": "Swelling"
   },
   {
     "id": "pain-0",
     "name": "Pain",
     "type": "enum",
-    "options": [
-      "localized-0",
-      "generalized-0"
-    ]
+    "options": ["localized-0", "generalized-0"]
   },
   {
     "id": "generalized-0",
@@ -264,37 +215,18 @@
   },
   {
     "id": "localized-0",
-    "name": "Localized",
-    "type": "enum",
-    "options": [
-      "toothache",
-      "other-sites"
-    ]
-  },
-  {
-    "id": "toothache",
-    "name": "Toothache"
-  },
-  {
-    "id": "other-sites",
-    "name": "Other sites"
+    "name": "Localized"
   },
   {
     "id": "delayed",
     "name": "Impacted or missing tooth",
     "type": "enum",
-    "options": [
-      "localized-1",
-      "generalized-1"
-    ]
+    "options": ["localized-1", "generalized-1"]
   },
   {
     "id": "localized-1",
     "name": "Localized",
-    "options": [
-      "primary-1",
-      "permanent-1"
-    ]
+    "options": ["primary-1", "permanent-1"]
   },
   {
     "id": "primary-1",
@@ -307,10 +239,7 @@
   {
     "id": "generalized-1",
     "name": "Generalized",
-    "options": [
-      "primary-2",
-      "permanent-2"
-    ]
+    "options": ["primary-2", "permanent-2"]
   },
   {
     "id": "primary-2",
@@ -326,11 +255,7 @@
     "page": true,
     "type": "enum",
     "required": true,
-    "options": [
-      "slow-0",
-      "moderate-0",
-      "rapid-0"
-    ]
+    "options": ["slow-0", "moderate-0", "rapid-0"]
   },
   {
     "id": "slow-0",
@@ -349,24 +274,13 @@
     "name": "Clinical examination",
     "desc": "Observable Findings & Clinical examination",
     "page": true,
-    "options": [
-      "appearance",
-      "hemorrhage",
-      "consist",
-      "vitality",
-      "percussion",
-      "aspiration",
-      "auscultation"
-    ]
+    "options": ["appearance", "hemorrhage", "consist", "vitality", "percussion", "aspiration", "auscultation"]
   },
   {
     "id": "vitality",
     "name": "Tooth vitality",
     "type": "enum",
-    "options": [
-      "vital",
-      "nonvital"
-    ]
+    "options": ["vital", "nonvital"]
   },
   {
     "id": "vital",
@@ -384,10 +298,7 @@
     "id": "percussion",
     "name": "Percussion",
     "type": "enum",
-    "options": [
-      "pain-1",
-      "pump"
-    ]
+    "options": ["pain-1", "pump"]
   },
   {
     "id": "pain-1",
@@ -401,10 +312,7 @@
     "id": "aspiration",
     "name": "Aspiration",
     "type": "enum",
-    "options": [
-      "negative",
-      "positive"
-    ]
+    "options": ["negative", "positive"]
   },
   {
     "id": "negative",
@@ -414,12 +322,7 @@
     "id": "positive",
     "name": "Positive",
     "type": "enum",
-    "options": [
-      "blood",
-      "serosanguinous",
-      "cheesy-mat",
-      "pus"
-    ]
+    "options": ["blood", "serosanguinous", "serum", "cheesy-mat", "pus"]
   },
   {
     "id": "blood",
@@ -428,6 +331,10 @@
   {
     "id": "serosanguinous",
     "name": "Serosanguinous"
+  },
+  {
+    "id": "serum",
+    "name": "Serum like fluid"
   },
   {
     "id": "cheesy-mat",
@@ -445,10 +352,7 @@
     "id": "appearance",
     "name": "Appearance",
     "type": "enum",
-    "options": [
-      "intrabony",
-      "soft-tissue"
-    ]
+    "options": ["intrabony", "soft-tissue"]
   },
   {
     "id": "intrabony",
@@ -462,13 +366,7 @@
     "id": "consist",
     "name": "Consistancy",
     "type": "enum",
-    "options": [
-      "soft",
-      "cheesy",
-      "rubbery",
-      "firm",
-      "bony-hard"
-    ]
+    "options": ["soft", "cheesy", "rubbery", "firm", "bony-hard"]
   },
   {
     "id": "soft",
@@ -494,32 +392,18 @@
     "id": "imaging-fin",
     "name": "Imaging finding",
     "page": true,
-    "options": [
-      "location",
-      "shape-size",
-      "periphery",
-      "type",
-      "int-struct",
-      "effects-surr"
-    ]
+    "options": ["location", "shape-size", "periphery", "type", "int-struct", "effects-surr"]
   },
   {
     "id": "type",
     "name": "Type",
     "type": "enum",
-    "options": [
-      "solitary",
-      "multiple-seprate",
-      "diffuse"
-    ]
+    "options": ["solitary", "multiple-seprate", "diffuse"]
   },
   {
     "id": "shape-size",
     "name": "Shape and size",
-    "options": [
-      "size",
-      "shape-1"
-    ],
+    "options": ["size", "shape-1"],
     "required": true
   },
   {
@@ -531,11 +415,7 @@
     "id": "shape-1",
     "name": "Shape",
     "type": "enum",
-    "options": [
-      "round-1",
-      "scalloped",
-      "irregular-2"
-    ]
+    "options": ["round-1", "scalloped", "irregular-2"]
   },
   {
     "id": "round-1",
@@ -554,21 +434,13 @@
     "name": "Periphery",
     "required": true,
     "type": "enum",
-    "options": [
-      "well-defined",
-      "ill-defined"
-    ]
+    "options": ["well-defined", "ill-defined"]
   },
   {
     "id": "well-defined",
     "name": "Well-defined",
     "type": "enum",
-    "options": [
-      "punched",
-      "corticated",
-      "sclerotic",
-      "soft-capsule"
-    ]
+    "options": ["punched", "corticated", "sclerotic", "soft-capsule"]
   },
   {
     "id": "punched",
@@ -590,10 +462,7 @@
     "id": "ill-defined",
     "name": "Ill-defined",
     "type": "enum",
-    "options": [
-      "blending",
-      "invasive"
-    ]
+    "options": ["blending", "invasive"]
   },
   {
     "id": "blending",
@@ -607,11 +476,7 @@
     "id": "location",
     "name": "Location",
     "required": true,
-    "options": [
-      "ana-location",
-      "side",
-      "relation-tooth"
-    ]
+    "options": ["ana-location", "side", "relation-tooth"]
   },
   {
     "id": "ana-location",
@@ -621,11 +486,7 @@
       "image": "/assets/ana-loc.jpg"
     },
     "type": "enum",
-    "options": [
-      "ana-location-maxilla",
-      "ana-location-mandible",
-      "ana-location-both"
-    ]
+    "options": ["ana-location-maxilla", "ana-location-mandible", "ana-location-both"]
   },
   {
     "id": "ana-location-maxilla",
@@ -646,10 +507,7 @@
     "id": "side",
     "name": "Side",
     "type": "enum",
-    "options": [
-      "unilatral",
-      "bilateral"
-    ]
+    "options": ["unilatral", "bilateral"]
   },
   {
     "id": "unilatral",
@@ -663,12 +521,7 @@
     "id": "relation-tooth",
     "name": "Relation to tooth",
     "type": "enum",
-    "options": [
-      "periapical",
-      "pericoronal",
-      "interradicular",
-      "related"
-    ]
+    "options": ["periapical", "pericoronal", "interradicular", "related"]
   },
   {
     "id": "pericoronal",
@@ -703,20 +556,13 @@
     "name": "Internal structure",
     "required": true,
     "type": "enum",
-    "options": [
-      "radiolucent",
-      "mixed",
-      "radiopaque"
-    ]
+    "options": ["radiolucent", "mixed", "radiopaque"]
   },
   {
     "id": "radiopaque",
     "name": "Radiopaque",
     "type": "enum",
-    "options": [
-      "radiopaue-zone",
-      "radiopaque-nozone"
-    ]
+    "options": ["radiopaue-zone", "radiopaque-nozone"]
   },
   {
     "id": "radiopaue-zone",
@@ -730,11 +576,7 @@
     "id": "radiolucent",
     "name": "Radiolucent",
     "type": "enum",
-    "options": [
-      "uniocular",
-      "multiocular",
-      "rarefaction"
-    ]
+    "options": ["uniocular", "multiocular", "rarefaction"]
   },
   {
     "id": "uniocular",
@@ -748,11 +590,7 @@
     "id": "multiocular",
     "name": "Multiocular",
     "type": "enum",
-    "options": [
-      "soap",
-      "honey",
-      "tenis"
-    ]
+    "options": ["soap", "honey", "tenis"]
   },
   {
     "id": "soap",
@@ -769,13 +607,7 @@
   {
     "id": "mixed",
     "name": "Radiopaque and radiolucent (mixed)",
-    "options": [
-      "unusual",
-      "int-septa",
-      "dystrophic",
-      "amorph",
-      "dent-struct"
-    ]
+    "options": ["unusual", "int-septa", "dystrophic", "amorph", "dent-struct"]
   },
   {
     "id": "unusual",
@@ -797,10 +629,7 @@
     "id": "int-septa",
     "name": "Interal septa",
     "type": "enum",
-    "options": [
-      "wispy",
-      "coarse"
-    ]
+    "options": ["wispy", "coarse"]
   },
   {
     "id": "wispy",
@@ -827,11 +656,7 @@
   {
     "id": "tooth",
     "name": "Tooth",
-    "options": [
-      "dispalce-0",
-      "resorp",
-      "divergence"
-    ]
+    "options": ["dispalce-0", "resorp", "divergence"]
   },
   {
     "id": "dispalce-0",
@@ -840,10 +665,7 @@
   {
     "id": "resorp",
     "name": "Root resorption",
-    "options": [
-      "resorp-1",
-      "resorp-2"
-    ],
+    "options": ["resorp-1", "resorp-2"],
     "type": "enum"
   },
   {
@@ -866,10 +688,7 @@
     "id": "pdl-space",
     "name": "PDL space",
     "type": "enum",
-    "options": [
-      "wide-0",
-      "wide-1"
-    ]
+    "options": ["wide-0", "wide-1"]
   },
   {
     "id": "wide-0",
@@ -882,11 +701,7 @@
   {
     "id": "ian-canal",
     "name": "IAN canal",
-    "options": [
-      "dispalce-1",
-      "enlarge",
-      "destruct-0"
-    ]
+    "options": ["dispalce-1", "enlarge", "destruct-0"]
   },
   {
     "id": "dispalce-1",
@@ -903,10 +718,7 @@
   {
     "id": "maximillary-sinus",
     "name": "Maxillary sinus",
-    "options": [
-      "dispalce-2",
-      "destruct-1"
-    ]
+    "options": ["dispalce-2", "destruct-1"]
   },
   {
     "id": "dispalce-2",
@@ -919,10 +731,7 @@
   {
     "id": "periphery-bone",
     "name": "Bone periphery",
-    "options": [
-      "sclerotic-1",
-      "destruct-2"
-    ]
+    "options": ["sclerotic-1", "destruct-2"]
   },
   {
     "id": "sclerotic-1",
@@ -936,10 +745,7 @@
     "id": "corital-bone",
     "name": "Cortial bone",
     "type": "enum",
-    "options": [
-      "expand",
-      "destruct-3"
-    ]
+    "options": ["expand", "destruct-3"]
   },
   {
     "id": "expand",
@@ -953,14 +759,7 @@
     "id": "periosteal-reaction",
     "name": "Periosteal reaction",
     "type": "enum",
-    "options": [
-      "single",
-      "onion",
-      "solid",
-      "spiculated",
-      "compelx",
-      "codman"
-    ]
+    "options": ["single", "onion", "solid", "spiculated", "compelx", "codman"]
   },
   {
     "id": "single",
@@ -986,11 +785,7 @@
     "id": "spiculated",
     "name": "Spiculated",
     "type": "enum",
-    "options": [
-      "hair",
-      "divergnet",
-      "sloping"
-    ]
+    "options": ["hair", "divergnet", "sloping"]
   },
   {
     "id": "hair",

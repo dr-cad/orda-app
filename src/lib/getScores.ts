@@ -6,28 +6,23 @@ interface IProps {
   diseases: IDisease[];
 }
 
-export default async function getScores({ diseases, symptoms }: IProps): Promise<IScore[]> {
-  const nominators: number[] = diseases.map((disease, i) => getDiseaseProbablity(disease, symptoms));
-  const dinaminator = nominators.reduce((a, b) => a + b, 0);
-  return diseases.map((disease, i) => ({ ...disease, value: nominators[i] / dinaminator }));
-}
-
-const getDiseaseProbablity = (disease: IDisease, symptoms: ISymptom[]): number => {
-  const result = disease.factors.reduce((a, b) => a * getSingleRate(b, symptoms), 1);
-  return result;
-};
+const epsilon = 0.01;
+const manipulateRate = (rate: number) => (rate === -1 ? epsilon : rate);
 
 const getSingleRate = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
-  const dfranges = factor.ranges ? _.orderBy(factor.ranges, (a) => manipulateRate(a.rate), "desc") : null;
+  // This will check if ranges-array exists and sort them by their rate
+  const dfranges = factor.ranges ? _.orderBy(factor.ranges, (a) => manipulateRate(a.rate), "desc") : null; // dfranges = disease factor ranges
 
   for (let symptom of symptoms) {
     if (symptom.id === factor.sid) {
       switch (symptom.type) {
         case "range":
-          dfranges!.forEach((range) => {
+          if (!Array.isArray(dfranges)) return 1;
+          for (let range of dfranges) {
             if (
               typeof symptom.value !== "object" ||
-              (typeof symptom.value === "object" && (!symptom.value?.a || !symptom.value?.b))
+              (typeof symptom.value === "object" && !symptom.value) ||
+              (typeof symptom.value === "object" && (!symptom.value.a || !symptom.value.b))
             ) {
               console.error(
                 `Type mismatch for symptom.value ${symptom.id} expected range but got ${typeof symptom.value}`,
@@ -38,15 +33,16 @@ const getSingleRate = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
             if (symptom.value.a >= range.a && symptom.value.b <= range.b) {
               return manipulateRate(range.rate);
             }
-          });
-          return 1;
+          }
+          return 1; // TODO
         case "number":
-          dfranges!.forEach((range) => {
-            if (symptom.value! >= range.a && symptom.value! <= range.b) {
+          if (!Array.isArray(dfranges)) return 1;
+          for (let range of dfranges) {
+            if ((symptom.value! as number) >= range.a && (symptom.value! as number) <= range.b) {
               return manipulateRate(range.rate);
             }
-          });
-          return 1;
+          }
+          return 1; // TODO
         case "boolean":
         default:
           return symptom.value ? manipulateRate(factor.rate!) : 1;
@@ -58,5 +54,13 @@ const getSingleRate = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
   return 1;
 };
 
-const epsilon = 0.01;
-const manipulateRate = (rate: number) => (rate === -1 ? epsilon : rate);
+const getDiseaseProbablity = (disease: IDisease, symptoms: ISymptom[]): number => {
+  const result = disease.factors.reduce((a, b) => a * getSingleRate(b, symptoms), 1);
+  return result;
+};
+
+export default async function getScores({ diseases, symptoms }: IProps): Promise<IScore[]> {
+  const nominators: number[] = diseases.map((disease, i) => getDiseaseProbablity(disease, symptoms));
+  const dinaminator = nominators.reduce((a, b) => a + b, 0);
+  return diseases.map((disease, i) => ({ ...disease, value: nominators[i] / dinaminator }));
+}

@@ -1,4 +1,4 @@
-export type Value = string | number | { a: number; b: number } | null;
+export type Value = string | number | IRange | null;
 export type Desc = string | { title: string; image: string };
 
 export interface ISymptomRaw {
