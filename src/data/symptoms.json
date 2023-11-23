@@ -282,7 +282,7 @@
     "name": "Clinical examination",
     "desc": "Observable Findings and Clinical examination",
     "page": true,
-    "options": ["appearance", "hemorrhage", "consist", "tooth-exam", "vitality", "aspiration", "auscultation"]
+    "options": ["appearance", "hemorrhage", "consist", "tooth-exam", "aspiration", "auscultation"]
   },
   {
     "id": "tooth-exam",
