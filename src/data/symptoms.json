@@ -41,14 +41,59 @@
   },
   {
     "id": "pat-his-cli-fin",
-    "name": "Patient history & Clinical findings",
+    "name": "Patient history and Clinical findings",
     "page": true,
-    "options": ["dental-prob", "recent-gingival", "delayed", "history-of-surgery", "sys-dis", "sig-blood", "hist-radio"]
+    "options": ["recent-gingival", "teeth-num", "history-of-surgery", "sys-dis", "sig-blood", "hist-radio"]
   },
   {
     "id": "recent-gingival",
     "name": "Gingival or periodontal problem",
     "desc": ""
+  },
+  {
+    "id": "teeth-num",
+    "name": "Teeth shape,number and condition",
+    "options": ["delayed", "super", "malform"]
+  },
+  {
+    "id": "super",
+    "name": "Supernumerary tooth"
+  },
+  {
+    "id": "malform",
+    "name": "Malformed tooth"
+  },
+  {
+    "id": "delayed",
+    "name": "Impacted or missing tooth",
+    "type": "enum",
+    "options": ["localized-1", "generalized-1"]
+  },
+  {
+    "id": "localized-1",
+    "name": "Localized",
+    "options": ["primary-1", "permanent-1"]
+  },
+  {
+    "id": "primary-1",
+    "name": "Primary tooth"
+  },
+  {
+    "id": "permanent-1",
+    "name": "Permanent tooth"
+  },
+  {
+    "id": "generalized-1",
+    "name": "Generalized",
+    "options": ["primary-2", "permanent-2"]
+  },
+  {
+    "id": "primary-2",
+    "name": "Primary tooth"
+  },
+  {
+    "id": "permanent-2",
+    "name": "Permanent tooth"
   },
   {
     "id": "history-of-surgery",
@@ -104,14 +149,8 @@
   },
   {
     "id": "hist-radio",
-    "name": "History of radiotherapy & chemotherapy",
+    "name": "History of radiotherapy and chemotherapy",
     "desc": ""
-  },
-  {
-    "id": "dental-prob",
-    "name": "Existing problem or previously treated (The specific tooth)",
-    "desc": "Deep caries or restoration, pervious rootcanal treatment, malformation, tooth color change",
-    "open": true
   },
   {
     "id": "sys-dis",
@@ -189,7 +228,7 @@
   },
   {
     "id": "paresth-anes",
-    "name": "Paresthesia & anesthesia"
+    "name": "Paresthesia and anesthesia"
   },
   {
     "id": "bleeding",
@@ -217,41 +256,10 @@
     "id": "localized-0",
     "name": "Localized"
   },
-  {
-    "id": "delayed",
-    "name": "Impacted or missing tooth",
-    "type": "enum",
-    "options": ["localized-1", "generalized-1"]
-  },
-  {
-    "id": "localized-1",
-    "name": "Localized",
-    "options": ["primary-1", "permanent-1"]
-  },
-  {
-    "id": "primary-1",
-    "name": "Primary tooth"
-  },
-  {
-    "id": "permanent-1",
-    "name": "Permanent tooth"
-  },
-  {
-    "id": "generalized-1",
-    "name": "Generalized",
-    "options": ["primary-2", "permanent-2"]
-  },
-  {
-    "id": "primary-2",
-    "name": "Primary tooth"
-  },
-  {
-    "id": "permanent-2",
-    "name": "Permanent tooth"
-  },
+  
   {
     "id": "onset-course",
-    "name": "Onset & course",
+    "name": "Onset and course",
     "page": true,
     "type": "enum",
     "required": true,
@@ -272,23 +280,24 @@
   {
     "id": "clinical-exam",
     "name": "Clinical examination",
-    "desc": "Observable Findings & Clinical examination",
+    "desc": "Observable Findings and Clinical examination",
     "page": true,
-    "options": ["appearance", "hemorrhage", "consist", "vitality", "percussion", "aspiration", "auscultation"]
+    "options": ["appearance", "hemorrhage", "consist", "tooth-exam", "vitality", "aspiration", "auscultation"]
+  },
+  {
+    "id": "tooth-exam",
+    "name": "Tooth examination",
+    "options": ["vitality", "percussion"]
   },
   {
     "id": "vitality",
     "name": "Tooth vitality",
     "type": "enum",
-    "options": ["vital", "nonvital"]
-  },
-  {
-    "id": "vital",
-    "name": "Vital tooth"
+    "options": ["nonvital"]
   },
   {
     "id": "nonvital",
-    "name": "Nonvital"
+    "name": "Nonvital tooth"
   },
   {
     "id": "hemorrhage",
@@ -456,7 +465,7 @@
   },
   {
     "id": "soft-capsule",
-    "name": "Soft capsule"
+    "name": "Radiolucent rim (Soft capsule)"
   },
   {
     "id": "ill-defined",
@@ -470,7 +479,7 @@
   },
   {
     "id": "invasive",
-    "name": "Invasive Border"
+    "name": "Invasive and Destructive border"
   },
   {
     "id": "location",
@@ -648,7 +657,6 @@
       "pdl-space",
       "ian-canal",
       "maximillary-sinus",
-      "periphery-bone",
       "corital-bone",
       "periosteal-reaction"
     ]
@@ -726,19 +734,6 @@
   },
   {
     "id": "destruct-1",
-    "name": "Destruction"
-  },
-  {
-    "id": "periphery-bone",
-    "name": "Bone periphery",
-    "options": ["sclerotic-1", "destruct-2"]
-  },
-  {
-    "id": "sclerotic-1",
-    "name": "Sclerotic bone"
-  },
-  {
-    "id": "destruct-2",
     "name": "Destruction"
   },
   {
