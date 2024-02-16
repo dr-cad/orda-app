@@ -14,7 +14,18 @@ interface IInnerProps {
   parent: ISymptom;
 }
 
-export default function Symptom({ id, parent }: IProps) {
+export default function SymptomsGroup({ symptom }: { symptom: ISymptom }) {
+  if (!Array.isArray(symptom.options) || symptom.options.length === 0) return null;
+  return (
+    <Fragment>
+      {symptom.options.map((id, i) => (
+        <Symptom key={id} id={id} parent={symptom} />
+      ))}
+    </Fragment>
+  );
+}
+
+function Symptom({ id, parent }: IProps) {
   const toggleExpanded = useStore((s) => s.toggleExpanded);
   const symptoms = useStore((s) => s.symptoms);
   const updateSymptom = useStore((s) => s.updateSymptom);
@@ -29,22 +40,34 @@ export default function Symptom({ id, parent }: IProps) {
       if (!symptom.type || symptom.type === "enum") {
         // for radio or checkbox
         updateSymptom(id, !symptom.value, parent);
-        toggleExpanded(symptom.id);
-      } else {
-        // for inputs
-        toggleExpanded(symptom.id);
       }
+      toggleExpanded(symptom.id);
     },
     [id, parent, symptom, toggleExpanded, updateSymptom]
   );
 
   if (!symptom) return null;
+
+  const hasDesc = !!symptom.desc;
+  const hasInput = !!symptom.type && symptom.type !== "enum";
+  const hasOptions = Array.isArray(symptom.options) && symptom.options.length !== 0;
+  const expandable = hasDesc || hasInput || hasOptions;
+
   return (
-    <TreeItem nodeId={symptom.id} onClick={handleClick} label={<Label symptom={symptom} parent={parent} />}>
-      <Desc symptom={symptom} />
-      <Input symptom={symptom} parent={parent} />
-      <Options symptom={symptom} />
-    </TreeItem>
+    <TreeItem
+      nodeId={symptom.id}
+      onClick={handleClick}
+      label={<Label symptom={symptom} parent={parent} />}
+      children={
+        expandable && (
+          <Fragment>
+            <Desc {...symptom} />
+            <Input symptom={symptom} parent={parent} />
+            <SymptomsGroup symptom={symptom} />
+          </Fragment>
+        )
+      }
+    />
   );
 }
 
@@ -55,7 +78,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
       label={
         <Typography sx={{ display: "flex", gap: 1 }}>
           {symptom.name}
-          <span style={{ color: symptom.required ? "orangered" : "inherit" }}>{symptom.required ? " *" : ""}</span>
+          {symptom.required && <span style={{ color: "orangered" }}>{" *"}</span>}
         </Typography>
       }
       control={
@@ -69,7 +92,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
   );
 };
 
-const Desc = ({ symptom }: { symptom: ISymptom }) => {
+const Desc = (symptom: ISymptom) => {
   if (!symptom.desc) return null;
   return (
     <Stack p={2}>
@@ -97,7 +120,7 @@ const Input = React.memo(({ symptom, parent }: IInnerProps) => {
 
   console.log("symptom", symptom);
 
-  if (!symptom.type || !symptom.type || symptom.type === "enum") return null;
+  if (!symptom.type || symptom.type === "enum") return null;
   return (
     <Stack p={2}>
       {symptom.type === "string" ? (
@@ -151,14 +174,3 @@ const Input = React.memo(({ symptom, parent }: IInnerProps) => {
     </Stack>
   );
 });
-
-export function Options({ symptom }: { symptom: ISymptom }) {
-  if (!symptom.options) return null;
-  return (
-    <Fragment>
-      {symptom.options.map((option, i) => (
-        <Symptom key={i} id={option} parent={symptom} />
-      ))}
-    </Fragment>
-  );
-}

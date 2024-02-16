@@ -35,9 +35,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "asbuild": "asc assembly/index.ts --target release",
-    "pull": "git fetch && git pull",
-    "push": "git add . && git commit -m\"added new data\" && git push"
+    "asbuild": "asc assembly/index.ts --target release"
   },
   "eslintConfig": {
     "extends": [

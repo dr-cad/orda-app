@@ -1,5 +1,9 @@
 import rawSymptoms from "../data/symptoms.json";
-import { ISymptomRaw } from "../types/interfaces";
+import { IDisease, ISymptom, ISymptomRaw } from "../types/interfaces";
+import getRawDiseases from "./diseases";
+import { epsilon } from "./scores";
+
+const alwaysVisible = ["pat-info", "pat-name", "pat-age"];
 
 export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms) {
   const validate = () => {
@@ -42,5 +46,25 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms) {
     return [];
   }
 
-  return data;
+  // remove unnecessary children
+  const dataFiltered = data.filter(
+    (item) => alwaysVisible.includes(item.id) || getIsSymptomProbable(item, getRawDiseases(), data)
+  );
+
+  return dataFiltered;
+}
+
+export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[], symptoms: ISymptom[]): boolean {
+  if (symptom.page || Array.isArray(symptom.options)) return true;
+  for (const disease of diseases) {
+    for (const factor of disease.factors) {
+      if (factor.sid === symptom.id) {
+        // when there is a diease factor with higher rate than epsilon
+        // show the symptom related to the factor - else hide it
+        const rate = factor.rate || 0;
+        if (rate > epsilon) return true;
+      }
+    }
+  }
+  return false;
 }

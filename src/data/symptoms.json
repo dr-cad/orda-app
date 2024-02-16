@@ -256,7 +256,7 @@
     "id": "localized-0",
     "name": "Localized"
   },
-  
+
   {
     "id": "onset-course",
     "name": "Onset and course",
@@ -407,7 +407,8 @@
     "id": "type",
     "name": "Type",
     "type": "enum",
-    "options": ["solitary", "multiple-seprate", "diffuse"]
+    "options": ["solitary", "multiple-seprate", "diffuse"],
+    "required": true
   },
   {
     "id": "shape-size",
@@ -651,15 +652,7 @@
   {
     "id": "effects-surr",
     "name": "Effects on surrending",
-    "options": [
-      "tooth",
-      "dura",
-      "pdl-space",
-      "ian-canal",
-      "maximillary-sinus",
-      "corital-bone",
-      "periosteal-reaction"
-    ]
+    "options": ["tooth", "dura", "pdl-space", "ian-canal", "maximillary-sinus", "corital-bone", "periosteal-reaction"]
   },
   {
     "id": "tooth",

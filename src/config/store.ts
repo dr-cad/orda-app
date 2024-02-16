@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { create } from "zustand";
-import getRawDiseases from "../lib/getRawDiseases";
-import getRawSymptoms from "../lib/getRawSymptoms";
+import getRawDiseases from "../lib/diseases";
+import getRawSymptoms from "../lib/symptoms";
 import { IDisease, ISymptom } from "../types/interfaces";
 import { persist, createJSONStorage } from "zustand/middleware";
 

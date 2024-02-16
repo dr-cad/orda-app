@@ -1,8 +1,8 @@
 import { Box, Button, Divider, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { useStore } from "../config/store";
-import getScores from "../lib/getScores";
-import { IDisease, IScore } from "../types/interfaces";
+import getScores from "../lib/scores";
+import { IDisease, IScoredDisease } from "../types/interfaces";
 
 async function parseJsonFile(file: Blob) {
   return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ export default function DiseasesPage() {
   const diseases = useStore((s) => s.diseases);
   const updateDiseases = useStore((s) => s.updateDiseases);
 
-  const [scores, setScores] = useState<IScore[]>([]);
+  const [scores, setScores] = useState<IScoredDisease[]>([]);
 
   useEffect(() => {
     const updateScores = async () => {
@@ -59,7 +59,7 @@ export default function DiseasesPage() {
   );
 }
 
-const DiseaseScore = ({ value, name }: IScore) => {
+const DiseaseScore = ({ value, name }: IScoredDisease) => {
   return (
     <Fragment>
       <ListItem sx={{ justifyContent: "space-between" }}>

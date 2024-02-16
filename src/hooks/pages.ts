@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import getRawSymptoms from "../lib/getRawSymptoms";
+import getRawSymptoms from "../lib/symptoms";
 
 export function usePageIndex() {
   // const symptoms = useStore((s) => s.symptoms);

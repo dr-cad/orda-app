@@ -10,7 +10,6 @@ export interface ISymptomRaw {
   required?: boolean;
   // type?: "number" | "string" | "enum" | "none";
   type?: string;
-  // options?: ISymptomRaw[];
   options?: string[];
   open?: boolean;
 }
@@ -40,6 +39,6 @@ export interface IDiseaseFactorRange extends IRange {
   rate: number;
 }
 
-export interface IScore extends IDisease {
+export interface IScoredDisease extends IDisease {
   value: number;
 }
