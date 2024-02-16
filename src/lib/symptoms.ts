@@ -47,9 +47,25 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms) {
   }
 
   // remove unnecessary children
-  const dataFiltered = data.filter(
-    (item) => alwaysVisible.includes(item.id) || getIsSymptomProbable(item, getRawDiseases(), data)
-  );
+  const diseases = getRawDiseases();
+
+  let dataFiltered = data;
+  for (let i = 0; i < 5; ++i) {
+    // eslint-disable-next-line no-loop-func
+    dataFiltered = dataFiltered.filter((item) => {
+      if (alwaysVisible.includes(item.id)) return true;
+      if (Array.isArray(item.options)) {
+        item.options = item.options.filter((option) => {
+          const optItem = data.find((x) => x.id === option);
+          return optItem && getIsSymptomProbable(optItem, diseases, data);
+        });
+        if (item.options.length > 0) return true;
+        item.options = undefined;
+      }
+      if (getIsSymptomProbable(item, diseases, data)) return true;
+      return false;
+    });
+  }
 
   return dataFiltered;
 }
@@ -62,7 +78,7 @@ export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[],
         // when there is a diease factor with higher rate than epsilon
         // show the symptom related to the factor - else hide it
         const rate = factor.rate || 0;
-        if (rate > epsilon) return true;
+        if (rate > epsilon || !!factor.ranges) return true;
       }
     }
   }

@@ -66,18 +66,3 @@ export default async function getScores({ diseases, symptoms }: IProps): Promise
   const dinaminator = nominators.reduce((a, b) => a + b, 0); // Σi{P(Di)} * ∏j{P(Sj|Di)}
   return diseases.map((disease, i) => ({ ...disease, value: nominators[i] / dinaminator }));
 }
-
-// export function getIsSymptomProbable(symptom: ISymptom, diseases: IDisease[], symptoms: ISymptom[]): boolean {
-//   if (symptom.page || Array.isArray(symptom.options)) return true;
-//   for (const disease of diseases) {
-//     for (const factor of disease.factors) {
-//       if (factor.sid === symptom.id) {
-//         // when there is a diease factor with higher rate than epsilon
-//         // show the symptom related to the factor - else hide it
-//         const rate = factor.rate || 0;
-//         if (rate > epsilon) return true;
-//       }
-//     }
-//   }
-//   return false;
-// }
