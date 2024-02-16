@@ -1,8 +1,11 @@
 import { Box, Button, Divider, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import seedrandom from "seedrandom";
+import TreeMap, { TreeMapItem } from "../components/TreeMap";
 import { useStore } from "../config/store";
 import getScores from "../lib/scores";
 import { IDisease, IScoredDisease } from "../types/interfaces";
+import html2canvas from "html2canvas";
 
 async function parseJsonFile(file: Blob) {
   return new Promise((resolve, reject) => {
@@ -14,6 +17,8 @@ async function parseJsonFile(file: Blob) {
 }
 
 export default function DiseasesPage() {
+  const _treeMapBox = useRef();
+
   const symptoms = useStore((s) => s.symptoms);
   const diseases = useStore((s) => s.diseases);
   const updateDiseases = useStore((s) => s.updateDiseases);
@@ -43,6 +48,31 @@ export default function DiseasesPage() {
     input.click();
   };
 
+  const handleDownload = async () => {
+    const canvas = await html2canvas(_treeMapBox.current!);
+    const data = canvas.toDataURL("image/jpg");
+    const link = document.createElement("a");
+
+    link.href = data;
+    link.download = "downloaded-image.jpg";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const treeMapData: TreeMapItem = useMemo(
+    () => ({
+      name: "scores",
+      children: scores.map<TreeMapItem>((score) => ({
+        name: score.name,
+        loc: score.value,
+        color: `hsl(${seedrandom(score.id)() * 360}, 70%, 50%)`,
+      })),
+    }),
+    [scores]
+  );
+
   return (
     <Stack overflow="scroll" p={2} gap={2}>
       <Typography variant="h5" fontWeight={700}>
@@ -53,8 +83,12 @@ export default function DiseasesPage() {
           <DiseaseScore key={i} {...score} />
         ))}
       </List>
-      <Box flex={1} />
+      <Box height={4} />
       <Button onClick={handleUpload}>Upload Diseases</Button>
+      <Box ref={_treeMapBox} id="treemap-box" height="50vh">
+        <TreeMap data={treeMapData} />
+      </Box>
+      <Button onClick={handleDownload}>Download</Button>
     </Stack>
   );
 }
