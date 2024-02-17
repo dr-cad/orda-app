@@ -81,6 +81,7 @@ function Symptom({ id, parent }: IProps) {
 }
 
 const Label = ({ symptom, parent }: IInnerProps) => {
+  const hasInput = !!symptom.type && symptom.type !== "enum";
   return (
     <FormControlLabel
       value={symptom.id}
@@ -95,7 +96,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
       control={
         parent.type === "enum" ? (
           <Radio size="small" checked={!!symptom.value} />
-        ) : symptom.options ? (
+        ) : symptom.options || hasInput ? (
           <Box sx={{ width: 12 }} />
         ) : (
           <Checkbox size="small" checked={!!symptom.value} />

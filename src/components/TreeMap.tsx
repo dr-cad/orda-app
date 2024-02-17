@@ -18,7 +18,6 @@ export default function TreeMap({ data }: TreeMapDataProps<TreeMapItem>) {
       tile="binary"
       leavesOnly={true}
       innerPadding={5}
-      // margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
       label={(e) => e.data.name + " (" + e.formattedValue + ")"}
       labelSkipSize={15}
       labelTextColor={"#fff"}
