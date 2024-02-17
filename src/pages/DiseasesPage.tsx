@@ -50,7 +50,7 @@ export default function DiseasesPage() {
   );
 
   return (
-    <Stack overflow="scroll" p={2} gap={2}>
+    <Stack p={2} gap={2} sx={{ overflowY: "auto", overflowX: "hidden" }}>
       <Box ref={_treeMapBox} id="treemap-box" height="50vh" sx={{ borderRadius: 4, overflow: "hidden" }}>
         <TreeMap data={treeMapData} />
         <Box sx={{ position: "absolute", top: 25, left: 25, display: "flex" }}>
