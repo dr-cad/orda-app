@@ -1,4 +1,4 @@
-import { ArrowUpward, CropFree } from "@mui/icons-material";
+import { CropFree } from "@mui/icons-material";
 import { Box, Divider, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import html2canvas from "html2canvas";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
@@ -6,23 +6,13 @@ import seedrandom from "seedrandom";
 import TreeMap, { TreeMapItem } from "../components/TreeMap";
 import { useStore } from "../config/store";
 import getScores from "../lib/scores";
-import { IDisease, IScoredDisease } from "../types/interfaces";
-
-async function parseJsonFile(file: Blob) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.onload = (event) => resolve(JSON.parse(String(event.target?.result) ?? ""));
-    fileReader.onerror = (error) => reject(error);
-    fileReader.readAsText(file);
-  });
-}
+import { IScoredDisease } from "../types/interfaces";
 
 export default function DiseasesPage() {
   const _treeMapBox = useRef();
 
   const symptoms = useStore((s) => s.symptoms);
   const diseases = useStore((s) => s.diseases);
-  const updateDiseases = useStore((s) => s.updateDiseases);
 
   const [scores, setScores] = useState<IScoredDisease[]>([]);
 
@@ -34,28 +24,13 @@ export default function DiseasesPage() {
     updateScores();
   }, [diseases, symptoms]);
 
-  const handleUpload = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.onchange = async (_) => {
-      // you can use this method to get file and perform respective operations
-      const files = Array.from(input.files ?? []);
-      const file = files[0];
-      if (!file) return;
-      const object = await parseJsonFile(file);
-      console.log(object);
-      updateDiseases(object as IDisease[]);
-    };
-    input.click();
-  };
-
   const handleDownload = async () => {
     const canvas = await html2canvas(_treeMapBox.current!);
-    const data = canvas.toDataURL("image/jpg");
+    const data = canvas.toDataURL("image/png");
     const link = document.createElement("a");
 
     link.href = data;
-    link.download = "downloaded-image.jpg";
+    link.download = `ORDA ${new Date().toLocaleString()}.png`;
 
     document.body.appendChild(link);
     link.click();
@@ -81,9 +56,6 @@ export default function DiseasesPage() {
         <Box sx={{ position: "absolute", top: 25, left: 25, display: "flex" }}>
           <IconButton aria-label="delete" size="small" onClick={handleDownload}>
             <CropFree />
-          </IconButton>
-          <IconButton aria-label="delete" size="small" onClick={handleUpload}>
-            <ArrowUpward />
           </IconButton>
         </Box>
       </Box>
