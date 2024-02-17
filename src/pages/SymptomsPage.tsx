@@ -18,7 +18,7 @@ function SymptomsPage() {
   if (!currPage) return <p>404</p>;
 
   return (
-    <Stack gap={4} flex={1} overflow="scroll">
+    <Stack gap={4} flex={1} sx={{ overflowY: "auto", overflowX: "hidden" }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center" pt={2} pl={3}>
         <Stack>
           <Typography variant="h5" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>

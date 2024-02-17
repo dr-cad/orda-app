@@ -14,7 +14,7 @@ const theme = createTheme({
         InputProps: { disableUnderline: true, inputProps: { sx: { py: 0.5 } } },
       },
       styleOverrides: {
-        root: { backgroundColor: "#ffffff0e", padding: "3px 12px", borderRadius: 14 },
+        root: { backgroundColor: "#ffffff0d", padding: "3px 12px", borderRadius: 14 },
       },
     },
   },
