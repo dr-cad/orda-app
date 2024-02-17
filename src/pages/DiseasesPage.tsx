@@ -1,11 +1,12 @@
-import { Box, Button, Divider, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { ArrowUpward, CloudUpload, CropFree, FileDownload, FileUpload, Upload, UploadFile } from "@mui/icons-material";
+import { Box, Divider, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import html2canvas from "html2canvas";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import seedrandom from "seedrandom";
 import TreeMap, { TreeMapItem } from "../components/TreeMap";
 import { useStore } from "../config/store";
 import getScores from "../lib/scores";
 import { IDisease, IScoredDisease } from "../types/interfaces";
-import html2canvas from "html2canvas";
 
 async function parseJsonFile(file: Blob) {
   return new Promise((resolve, reject) => {
@@ -77,6 +78,14 @@ export default function DiseasesPage() {
     <Stack overflow="scroll" p={2} gap={2}>
       <Box ref={_treeMapBox} id="treemap-box" height="50vh" sx={{ borderRadius: 4, overflow: "hidden" }}>
         <TreeMap data={treeMapData} />
+        <Box sx={{ position: "absolute", top: 25, left: 25, display: "flex" }}>
+          <IconButton aria-label="delete" size="small" onClick={handleDownload}>
+            <CropFree />
+          </IconButton>
+          <IconButton aria-label="delete" size="small" onClick={handleUpload}>
+            <ArrowUpward />
+          </IconButton>
+        </Box>
       </Box>
       <Box height={4} />
       <List>
@@ -84,8 +93,6 @@ export default function DiseasesPage() {
           <DiseaseScore key={i} {...score} />
         ))}
       </List>
-      <Button onClick={handleUpload}>Upload Diseases (Dev Mode)</Button>
-      <Button onClick={handleDownload}>Download</Button>
     </Stack>
   );
 }
