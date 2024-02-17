@@ -1,8 +1,8 @@
-import TreeItem from "@mui/lab/TreeItem";
 import { Box, Checkbox, FormControlLabel, Radio, Stack, TextField, Typography } from "@mui/material";
 import React, { Fragment, MouseEventHandler, useCallback, useMemo } from "react";
 import { useStore } from "../config/store";
 import { IRange, ISymptom, Value } from "../types/interfaces";
+import { StyledTreeItem } from "./styled";
 
 interface IProps {
   id: string;
@@ -62,7 +62,7 @@ function Symptom({ id, parent }: IProps) {
   if (!symptom) return null;
 
   return (
-    <TreeItem
+    <StyledTreeItem
       nodeId={symptom.id}
       onClick={handleClick}
       label={<Label symptom={symptom} parent={parent} />}

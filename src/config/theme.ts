@@ -8,8 +8,15 @@ const theme = createTheme({
     fontFamily: 'Lato,"Source Sans Pro",Helvetica,Arial,sans-serif',
   },
   components: {
-    // MuiButton: { defaultProps: { variant: "contained" } },
-    MuiTextField: { defaultProps: { variant: "standard" } },
+    MuiTextField: {
+      defaultProps: {
+        variant: "standard",
+        InputProps: { disableUnderline: true, inputProps: { sx: { py: 0.5 } } },
+      },
+      styleOverrides: {
+        root: { backgroundColor: "#ffffff0e", padding: "3px 12px", borderRadius: 14 },
+      },
+    },
   },
 });
 

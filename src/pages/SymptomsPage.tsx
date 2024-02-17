@@ -1,11 +1,10 @@
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { ClearAllRounded } from "@mui/icons-material";
 import TreeView from "@mui/lab/TreeView";
 import { Button, Stack, Typography } from "@mui/material";
 import SymptomsGroup from "../components/Symptom";
+import { CloseSquare, MinusSquare, PlusSquare } from "../components/styled";
 import { useStore } from "../config/store";
 import { usePageIndex } from "../hooks/pages";
-import { ClearAllRounded } from "@mui/icons-material";
 
 function SymptomsPage() {
   const { currPage } = usePageIndex();
@@ -20,7 +19,7 @@ function SymptomsPage() {
 
   return (
     <Stack gap={4} flex={1} overflow="scroll">
-      <Stack direction="row" justifyContent="space-between" alignItems="center" pt={2} pl={4}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" pt={2} pl={3}>
         <Stack>
           <Typography variant="h5" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>
             {currPage.name}
@@ -41,13 +40,14 @@ function SymptomsPage() {
         </Button>
       </Stack>
       <TreeView
-        defaultCollapseIcon={<ExpandMoreIcon />}
-        defaultExpandIcon={<ChevronRightIcon />}
+        defaultCollapseIcon={<MinusSquare />}
+        defaultExpandIcon={<PlusSquare />}
+        defaultEndIcon={<CloseSquare />}
         expanded={expanded}
         selected={[]}
         onNodeSelect={() => {}}
         onNodeToggle={() => {}}
-        sx={{ flex: 1, overflowY: "auto" }}>
+        sx={{ flex: 1, overflowY: "auto", px: 2 }}>
         <SymptomsGroup symptom={currPage} />
       </TreeView>
     </Stack>

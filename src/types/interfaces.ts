@@ -8,8 +8,8 @@ export interface ISymptomRaw {
   caption?: string;
   page?: boolean;
   required?: boolean;
-  // type?: "number" | "string" | "enum" | "none";
-  type?: string;
+  type?: "number" | "string" | "enum" | "none" | string;
+  // type?: string;
   options?: string[];
   open?: boolean;
 }
