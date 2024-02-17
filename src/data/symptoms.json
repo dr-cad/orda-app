@@ -41,7 +41,7 @@
   },
   {
     "id": "pat-his-cli-fin",
-    "name": "Patient history and Clinical findings",
+    "name": "Patient history \nand Clinical findings",
     "page": true,
     "options": ["recent-gingival", "teeth-num", "history-of-surgery", "sys-dis", "sig-blood", "hist-radio"]
   },

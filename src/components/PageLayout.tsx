@@ -1,22 +1,10 @@
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { Done } from "@mui/icons-material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Pagination, PaginationItem, Stack } from "@mui/material";
 import { usePageIndex } from "../hooks/pages";
 
-export default function PageLayout({
-  children,
-}: {
-  children: React.ReactChild;
-}) {
-  const {
-    isResult,
-    pageIndex,
-    canGoBack,
-    canGoForward,
-    handlePrev,
-    handleNext,
-    handleResult,
-  } = usePageIndex();
+export default function PageLayout({ children }: { children: React.ReactNode }) {
+  const { isResult, canGoForward, handleTo, handleResult } = usePageIndex();
 
   // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
   let vh = window.innerHeight;
@@ -27,70 +15,32 @@ export default function PageLayout({
       gap={2}
       justifyContent="space-between"
       alignItems="stretch"
-      sx={{ height: [vh, "100vh"] }}
-    >
+      sx={{ height: [vh, "100vh"] }}>
       {children}
-
-      <Stack
-        direction="row"
-        gap={1}
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        {canGoBack ? (
-          <Stack
-            direction="row"
-            width={80}
-            alignItems="center"
-            sx={{ cursor: "pointer" }}
-            onClick={handlePrev}
-          >
-            <IconButton //
-              // flex={1}
-              // variant="contained"
-              color="primary"
-            >
-              <ChevronLeftIcon />
-            </IconButton>
-            <Typography
-              variant="caption"
-              textTransform="uppercase"
-              color={canGoBack ? "primary" : "#666"}
-            >
-              Previous
-            </Typography>
-          </Stack>
-        ) : (
-          <Box width={90} />
-        )}
-        <Typography textTransform="uppercase" variant="subtitle2">
-          {isResult ? "Result" : pageIndex + 1}
-        </Typography>
-        {!isResult ? (
-          <Stack
-            direction="row"
-            width={90}
-            alignItems="center"
-            sx={{ cursor: "pointer" }}
-            onClick={canGoForward ? handleNext : handleResult}
-          >
-            <Typography
-              variant="caption"
-              textTransform="uppercase"
-              color={canGoForward ? "primary" : "green"}
-            >
-              {canGoForward ? "Next" : "Result"}
-            </Typography>
-            <IconButton
-              // variant="contained"
-              color={canGoForward ? "primary" : "success"}
-            >
-              <ChevronRightIcon />
-            </IconButton>
-          </Stack>
-        ) : (
-          <Box width={90} />
-        )}
+      <Stack direction="row" gap={1} justifyContent="center" alignItems="center" sx={{ py: 2 }}>
+        <Pagination
+          count={6}
+          color="primary"
+          shape="rounded"
+          hidePrevButton
+          onChange={(e, p) => {
+            handleTo(p);
+          }}
+          renderItem={(item) => {
+            const isNext = item.type === "next";
+            const isDone = isNext && !canGoForward;
+            return (
+              <PaginationItem
+                slots={{ next: canGoForward ? ChevronRightIcon : Done }}
+                {...item}
+                disabled={isDone ? false : item.disabled}
+                onClick={isDone ? handleResult : item.onClick}
+                selected={isResult ? isDone : item.selected}
+                color={isDone ? "secondary" : item.color}
+              />
+            );
+          }}
+        />
       </Stack>
     </Stack>
   );

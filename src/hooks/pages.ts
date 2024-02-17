@@ -17,6 +17,9 @@ export function usePageIndex() {
   const canGoBack = pageIndex > 0 || isResult;
   const canGoForward = !isResult && pageIndex < pages?.length - 1;
 
+  const handleTo = (i: number) => {
+    if (0 < i && i < pages.length + 1) nav("/list/" + i);
+  };
   const handlePrev = () => {
     if (canGoBack) nav("/list/" + (!isResult ? pageIndex : pages?.length));
   };
@@ -33,6 +36,7 @@ export function usePageIndex() {
     currPage,
     canGoBack,
     canGoForward,
+    handleTo,
     handlePrev,
     handleNext,
     handleResult,

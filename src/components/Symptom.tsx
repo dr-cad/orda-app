@@ -1,5 +1,5 @@
 import TreeItem from "@mui/lab/TreeItem";
-import { Checkbox, FormControlLabel, Radio, Stack, TextField, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Radio, Stack, TextField, Typography } from "@mui/material";
 import React, { Fragment, MouseEventHandler, useCallback, useMemo } from "react";
 import { useStore } from "../config/store";
 import { IRange, ISymptom, Value } from "../types/interfaces";
@@ -46,12 +46,20 @@ function Symptom({ id, parent }: IProps) {
     [id, parent, symptom, toggleExpanded, updateSymptom]
   );
 
-  if (!symptom) return null;
+  const expandable = useMemo(() => {
+    if (!symptom) return false;
+    const hasDesc = !!symptom.desc;
+    const hasInput = !!symptom.type && symptom.type !== "enum";
+    const hasOptions = Array.isArray(symptom.options) && symptom.options.length !== 0;
+    return hasDesc || hasInput || hasOptions;
+  }, [symptom]);
 
-  const hasDesc = !!symptom.desc;
-  const hasInput = !!symptom.type && symptom.type !== "enum";
-  const hasOptions = Array.isArray(symptom.options) && symptom.options.length !== 0;
-  const expandable = hasDesc || hasInput || hasOptions;
+  const spaceAfter = useMemo(() => {
+    const firstOption = parent.page && parent.options!.indexOf(id) === 0;
+    return expandable ? (parent.page ? (firstOption ? 0 : 4) : 2) : 0;
+  }, [expandable, id, parent.options, parent.page]);
+
+  if (!symptom) return null;
 
   return (
     <TreeItem
@@ -67,6 +75,7 @@ function Symptom({ id, parent }: IProps) {
           </Fragment>
         )
       }
+      sx={{ mt: spaceAfter }}
     />
   );
 }
@@ -76,14 +85,18 @@ const Label = ({ symptom, parent }: IInnerProps) => {
     <FormControlLabel
       value={symptom.id}
       label={
-        <Typography sx={{ display: "flex", gap: 1 }}>
+        <Typography
+          sx={{ display: "flex", gap: 1, alignItems: "center", mt: 0.5 }}
+          color={!!symptom.value ? "primary" : undefined}>
           {symptom.name}
-          {symptom.required && <span style={{ color: "orangered" }}>{" *"}</span>}
+          {symptom.required && <Typography sx={{ color: "orangered" }}>{" *"}</Typography>}
         </Typography>
       }
       control={
         parent.type === "enum" ? (
           <Radio size="small" checked={!!symptom.value} />
+        ) : symptom.options ? (
+          <Box sx={{ width: 12 }} />
         ) : (
           <Checkbox size="small" checked={!!symptom.value} />
         )
@@ -118,8 +131,6 @@ const Input = React.memo(({ symptom, parent }: IInnerProps) => {
     [parent, symptom.id, updateSymptom]
   );
 
-  console.log("symptom", symptom);
-
   if (!symptom.type || symptom.type === "enum") return null;
   return (
     <Stack p={2}>
@@ -136,7 +147,7 @@ const Input = React.memo(({ symptom, parent }: IInnerProps) => {
         <TextField
           id={symptom.id + "-textfield"}
           size="small"
-          type="number"
+          type="tel"
           placeholder={symptom.name}
           value={symptom.value ?? ""}
           onChange={(e) => handleChange(e.target.value)}

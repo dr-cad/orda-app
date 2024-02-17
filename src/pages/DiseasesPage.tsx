@@ -66,7 +66,7 @@ export default function DiseasesPage() {
       name: "scores",
       children: scores.map<TreeMapItem>((score) => ({
         name: score.name,
-        loc: score.value,
+        value: score.value,
         color: `hsl(${seedrandom(score.id)() * 360}, 70%, 50%)`,
       })),
     }),
@@ -75,19 +75,16 @@ export default function DiseasesPage() {
 
   return (
     <Stack overflow="scroll" p={2} gap={2}>
-      <Typography variant="h5" fontWeight={700}>
-        Result
-      </Typography>
+      <Box ref={_treeMapBox} id="treemap-box" height="50vh" sx={{ borderRadius: 4, overflow: "hidden" }}>
+        <TreeMap data={treeMapData} />
+      </Box>
+      <Box height={4} />
       <List>
         {scores.map((score, i) => (
           <DiseaseScore key={i} {...score} />
         ))}
       </List>
-      <Box height={4} />
-      <Button onClick={handleUpload}>Upload Diseases</Button>
-      <Box ref={_treeMapBox} id="treemap-box" height="50vh">
-        <TreeMap data={treeMapData} />
-      </Box>
+      <Button onClick={handleUpload}>Upload Diseases (Dev Mode)</Button>
       <Button onClick={handleDownload}>Download</Button>
     </Stack>
   );

@@ -5,6 +5,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import SymptomsGroup from "../components/Symptom";
 import { useStore } from "../config/store";
 import { usePageIndex } from "../hooks/pages";
+import { ClearAllRounded } from "@mui/icons-material";
 
 function SymptomsPage() {
   const { currPage } = usePageIndex();
@@ -21,15 +22,20 @@ function SymptomsPage() {
     <Stack gap={4} flex={1} overflow="scroll">
       <Stack direction="row" justifyContent="space-between" alignItems="center" pt={2} pl={4}>
         <Stack>
-          <Typography variant="h5" fontWeight={700}>
+          <Typography variant="h5" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>
             {currPage.name}
           </Typography>
           <Typography variant="subtitle2" fontWeight={500} color="#444">
             {typeof currPage.desc === "string" ? currPage.desc : null}
           </Typography>
         </Stack>
-        <Button variant="outlined" size="small" color="error" sx={{ ml: 2, mr: 2 }} onClick={handleReset}>
-          <Typography variant="caption" textTransform="uppercase" sx={{ cursor: "pointer" }}>
+        <Button
+          size="small"
+          color="error"
+          sx={{ ml: 2, mr: 2, display: "flex", alignItems: "center", px: 2 }}
+          startIcon={<ClearAllRounded />}
+          onClick={handleReset}>
+          <Typography variant="caption" textTransform="uppercase" sx={{ cursor: "pointer", mt: 0.58 }}>
             Reset
           </Typography>
         </Button>
