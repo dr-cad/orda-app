@@ -2,7 +2,9 @@ import rawDiseases from "../data/diseases.json";
 import rawSymptoms from "../data/symptoms.json";
 import { IDisease } from "../types/interfaces";
 
-export default function getRawDiseases(data: IDisease[] = rawDiseases) {
+export default function getRawDiseases() {
+  const data: IDisease[] = rawDiseases;
+
   const validate = () => {
     let idRepo: string[] = [];
     for (let item of data) {

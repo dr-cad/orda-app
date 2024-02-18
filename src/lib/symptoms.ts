@@ -11,7 +11,9 @@ type ValidationError = {
 
 const alwaysVisible = ["pat-info", "pat-name", "pat-age"];
 
-export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms): ISymptom[] {
+export default function getRawSymptoms(): ISymptom[] {
+  const data: ISymptomRaw[] = rawSymptoms;
+
   const validate = (): ValidationError | null => {
     let idRepo: string[] = [];
     for (let item of data) {

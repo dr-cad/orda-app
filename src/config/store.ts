@@ -46,7 +46,6 @@ interface Store {
   expanded: string[];
   toggleExpanded: (id: string) => void;
   diseases: IDisease[];
-  updateDiseases: (object: IDisease[]) => void;
 }
 
 export const useStore = create(
@@ -89,7 +88,6 @@ export const useStore = create(
           return { expanded: Array.from(list) };
         }),
       diseases: getRawDiseases(),
-      updateDiseases: (object) => set(() => ({ diseases: getRawDiseases(object as IDisease[]) })),
     }),
     { name: "app-storage", storage: createJSONStorage(() => sessionStorage) }
   )
