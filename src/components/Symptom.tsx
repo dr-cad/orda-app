@@ -93,9 +93,8 @@ const Label = ({ symptom, parent }: IInnerProps) => {
       label={
         <Typography
           sx={{ display: "flex", gap: 1, alignItems: "center" }}
-          color={!!symptom.value ? "primary" : undefined}>
+          color={!!symptom.value ? (symptom.type === "enum" ? "warning.light" : "primary") : undefined}>
           {symptom.name}
-          {symptom.type === "enum" && <Typography sx={{ color: "warning.main" }}>{" !"}</Typography>}
           {symptom.required && <Typography sx={{ color: "error.main" }}>{" *"}</Typography>}
         </Typography>
       }
