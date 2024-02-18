@@ -1,6 +1,6 @@
 import { Done } from "@mui/icons-material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { Pagination, PaginationItem, Stack } from "@mui/material";
+import { Pagination, PaginationItem, Stack, paginationItemClasses } from "@mui/material";
 import { usePageIndex } from "../hooks/pages";
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
@@ -36,7 +36,11 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
                 disabled={isDone ? false : item.disabled}
                 onClick={isDone ? handleResult : item.onClick}
                 selected={isResult ? isDone : item.selected}
-                color={isDone ? "secondary" : item.color}
+                sx={{
+                  [`&.${paginationItemClasses.root}, &.${paginationItemClasses.root}:hover`]: {
+                    background: isResult && isDone ? "#00bd5e" : undefined,
+                  },
+                }}
               />
             );
           }}

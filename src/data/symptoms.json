@@ -52,7 +52,7 @@
   },
   {
     "id": "teeth-num",
-    "name": "Teeth shape,number and condition",
+    "name": "Teeth shape, number and condition",
     "options": ["delayed", "super", "malform"]
   },
   {

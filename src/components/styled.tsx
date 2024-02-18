@@ -32,8 +32,8 @@ export const StyledTreeItem = styled(CustomTreeItem)(({ theme }) => ({
     display: "none",
   },
   [`& .${treeItemClasses.group}`]: {
-    marginLeft: 15,
-    paddingLeft: 18,
+    marginLeft: 19,
+    paddingLeft: 6,
     borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
   },
 }));

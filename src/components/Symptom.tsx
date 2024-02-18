@@ -78,7 +78,7 @@ function Symptom({ id, parent }: IProps) {
           </Fragment>
         )
       }
-      sx={{ mt: mt, mb: mb }}
+      sx={{ mt, mb }}
     />
   );
 }
@@ -92,7 +92,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
       value={symptom.id}
       label={
         <Typography
-          sx={{ display: "flex", gap: 1, alignItems: "center", mt: 0.5 }}
+          sx={{ display: "flex", gap: 1, alignItems: "center" }}
           color={!!symptom.value ? "primary" : undefined}>
           {symptom.name}
           {symptom.required && <Typography sx={{ color: "orangered" }}>{" *"}</Typography>}

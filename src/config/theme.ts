@@ -5,7 +5,19 @@ const theme = createTheme({
     mode: "dark",
   },
   typography: {
-    fontFamily: 'Lato,"Source Sans Pro",Helvetica,Arial,sans-serif',
+    fontFamily: [
+      '"Exo 2"',
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
   },
   components: {
     MuiTextField: {
