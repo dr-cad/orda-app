@@ -1,12 +1,18 @@
 import rawSymptoms from "../data/symptoms.json";
-import { IDisease, ISymptom, ISymptomRaw } from "../types/interfaces";
+import { IDisease, ISymptomRaw } from "../types/interfaces";
+import { ISymptom, SymptomType } from "./../types/interfaces";
 import getRawDiseases from "./diseases";
 import { epsilon } from "./scores";
 
+type ValidationError = {
+  item: ISymptomRaw;
+  message: string;
+};
+
 const alwaysVisible = ["pat-info", "pat-name", "pat-age"];
 
-export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms) {
-  const validate = () => {
+export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms): ISymptom[] {
+  const validate = (): ValidationError | null => {
     let idRepo: string[] = [];
     for (let item of data) {
       if (!item.id) {
@@ -49,7 +55,7 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms) {
   // remove unnecessary children
   const diseases = getRawDiseases();
 
-  let dataFiltered = data;
+  let dataFiltered = [...data];
   for (let i = 0; i < 5; ++i) {
     // eslint-disable-next-line no-loop-func
     dataFiltered = dataFiltered.filter((item) => {
@@ -57,20 +63,26 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms) {
       if (Array.isArray(item.options)) {
         item.options = item.options.filter((option) => {
           const optItem = data.find((x) => x.id === option);
-          return optItem && getIsSymptomProbable(optItem, diseases, data);
+          return optItem && getIsSymptomProbable(optItem, diseases);
         });
         if (item.options.length > 0) return true;
         item.options = undefined;
       }
-      if (getIsSymptomProbable(item, diseases, data)) return true;
+      if (getIsSymptomProbable(item, diseases)) return true;
       return false;
     });
   }
 
-  return dataFiltered;
+  // fill empty types with enum
+  const dataRetyped = dataFiltered.map<ISymptom>((item) => ({
+    ...item,
+    type: ["enum", "number", "range", "string"].includes(item.type || "") ? (item.type as SymptomType) : "enum",
+  }));
+
+  return dataRetyped;
 }
 
-export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[], symptoms: ISymptom[]): boolean {
+export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[]): boolean {
   if (symptom.page || Array.isArray(symptom.options)) return true;
   for (const disease of diseases) {
     for (const factor of disease.factors) {

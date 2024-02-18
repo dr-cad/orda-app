@@ -40,7 +40,6 @@ const getSymptomProbablity = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
             }
           }
           return inactive;
-        case "boolean":
         default:
           if (symptom.value) return manipulateRate(factor.rate!);
           return inactive;

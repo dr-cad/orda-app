@@ -1,5 +1,6 @@
 export type Value = string | number | IRange | null;
 export type Desc = string | { title: string; image: string };
+export type SymptomType = "number" | "string" | "enum" | "range";
 
 export interface ISymptomRaw {
   id: string;
@@ -8,7 +9,7 @@ export interface ISymptomRaw {
   caption?: string;
   page?: boolean;
   required?: boolean;
-  type?: "number" | "string" | "enum" | "none" | string;
+  type?: string;
   // type?: string;
   options?: string[];
   open?: boolean;
@@ -16,6 +17,7 @@ export interface ISymptomRaw {
 
 export interface ISymptom extends ISymptomRaw {
   value?: Value;
+  type: SymptomType;
 }
 
 export interface IDisease {

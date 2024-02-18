@@ -29,6 +29,9 @@ export const StyledTreeItem = styled(CustomTreeItem)(({ theme }) => ({
       opacity: 0.3,
     },
   },
+  [`& .${treeItemClasses.iconContainer}:has(> .close)`]: {
+    display: "none",
+  },
   [`& .${treeItemClasses.group}`]: {
     marginLeft: 15,
     paddingLeft: 18,

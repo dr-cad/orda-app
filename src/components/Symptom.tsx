@@ -37,7 +37,7 @@ function Symptom({ id, parent }: IProps) {
       e.preventDefault();
       e.stopPropagation();
       if (!symptom) return;
-      if (!symptom.type || symptom.type === "enum") {
+      if (symptom.type === "enum") {
         // for radio or checkbox
         updateSymptom(id, !symptom.value, parent);
       }
@@ -49,7 +49,7 @@ function Symptom({ id, parent }: IProps) {
   const expandable = useMemo(() => {
     if (!symptom) return false;
     const hasDesc = !!symptom.desc;
-    const hasInput = !!symptom.type && symptom.type !== "enum";
+    const hasInput = symptom.type !== "enum";
     const hasOptions = Array.isArray(symptom.options) && symptom.options.length !== 0;
     return hasDesc || hasInput || hasOptions;
   }, [symptom]);
@@ -81,7 +81,9 @@ function Symptom({ id, parent }: IProps) {
 }
 
 const Label = ({ symptom, parent }: IInnerProps) => {
-  const hasInput = !!symptom.type && symptom.type !== "enum";
+  const hasInput = symptom.type !== "enum";
+  const isParent = Array.isArray(symptom.options);
+  const noValue = hasInput || isParent;
   return (
     <FormControlLabel
       value={symptom.id}
@@ -94,10 +96,10 @@ const Label = ({ symptom, parent }: IInnerProps) => {
         </Typography>
       }
       control={
-        parent.type === "enum" ? (
-          <Radio size="small" checked={!!symptom.value} />
-        ) : symptom.options || hasInput ? (
+        noValue ? (
           <Box sx={{ width: 12 }} />
+        ) : parent.type === "enum" ? (
+          <Radio size="small" checked={!!symptom.value} />
         ) : (
           <Checkbox size="small" checked={!!symptom.value} />
         )
@@ -132,7 +134,7 @@ const Input = React.memo(({ symptom, parent }: IInnerProps) => {
     [parent, symptom.id, updateSymptom]
   );
 
-  if (!symptom.type || symptom.type === "enum") return null;
+  if (symptom.type === "enum") return null;
   return (
     <Stack p={2}>
       {symptom.type === "string" ? (
