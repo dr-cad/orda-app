@@ -93,7 +93,13 @@ const Label = ({ symptom, parent }: IInnerProps) => {
       label={
         <Typography
           sx={{ display: "flex", gap: 1, alignItems: "center" }}
-          color={!!symptom.value ? (symptom.type === "enum" ? "warning.light" : "primary") : undefined}>
+          color={
+            !!symptom.value
+              ? symptom.type === "enum" && symptom.options?.length !== 1
+                ? "warning.light"
+                : "primary"
+              : undefined
+          }>
           {symptom.name}
           {symptom.required && <Typography sx={{ color: "error.main" }}>{" *"}</Typography>}
         </Typography>
@@ -101,7 +107,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
       control={
         noButton ? (
           <Box sx={{ width: 12 }} />
-        ) : parent.type === "enum" ? (
+        ) : parent.type === "enum" && parent.options?.length !== 1 ? (
           <Radio size="small" checked={!!symptom.value} />
         ) : (
           <Checkbox size="small" checked={!!symptom.value} />
