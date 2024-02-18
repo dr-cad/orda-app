@@ -119,7 +119,7 @@ const Desc = (symptom: ISymptom) => {
       ) : (
         <div>
           <div>{symptom.desc!.title}</div>
-          <img alt={symptom.desc!.title} src={symptom.desc!.image} />
+          <img alt={symptom.desc!.title} src={symptom.desc!.image} style={{ width: "60vw", height: "auto" }} />
         </div>
       )}
     </Stack>
