@@ -4,7 +4,7 @@ import { Pagination, PaginationItem, Stack, paginationItemClasses } from "@mui/m
 import { usePageIndex } from "../hooks/pages";
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
-  const { isResult, canGoForward, handleTo, handleResult } = usePageIndex();
+  const { isResult, canGoForward, handleTo, handleResult, pageIndex } = usePageIndex();
 
   // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
   let vh = window.innerHeight;
@@ -20,6 +20,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
       <Stack direction="row" gap={1} justifyContent="center" alignItems="center" sx={{ py: 2 }}>
         <Pagination
           count={6}
+          defaultPage={pageIndex + 1}
           color="primary"
           shape="rounded"
           hidePrevButton

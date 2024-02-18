@@ -29,6 +29,7 @@ const theme = createTheme({
         root: { backgroundColor: "#ffffff0d", padding: "3px 12px", borderRadius: 14 },
       },
     },
+    MuiPaginationItem: {},
   },
 });
 

@@ -34,7 +34,7 @@ function SymptomsPage() {
           sx={{ ml: 2, mr: 2, display: "flex", alignItems: "center", px: 2 }}
           startIcon={<ClearAllRounded />}
           onClick={handleReset}>
-          <Typography variant="caption" textTransform="uppercase" sx={{ cursor: "pointer", mt: 0.58 }}>
+          <Typography variant="caption" textTransform="uppercase" sx={{ cursor: "pointer" }}>
             Reset
           </Typography>
         </Button>
