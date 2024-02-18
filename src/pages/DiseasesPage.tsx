@@ -77,7 +77,7 @@ export default function DiseasesPage() {
 const DiseaseScore = ({ value, name }: IScoredDisease) => {
   return (
     <Fragment>
-      <ListItem sx={{ justifyContent: "space-between" }}>
+      <ListItem sx={{ justifyContent: "space-between", opacity: value > 0.25 ? 1 : 0.35 }}>
         <ListItemText primary={name} />
         <Typography sx={{ textAlign: "end" }}>{Math.round(value * 100) / 100}</Typography>
       </ListItem>
