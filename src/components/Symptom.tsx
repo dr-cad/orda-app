@@ -14,8 +14,8 @@ interface IInnerProps {
   parent: ISymptom;
 }
 
-function useSymptom(symptom: ISymptom | undefined, parent: ISymptom) {
-  const hasInput = useMemo(() => !(parent.type === "enum" || symptom?.type === "enum" || symptom?.type === "none"), []);
+function useSymptom(symptom: ISymptom | undefined) {
+  const hasInput = useMemo(() => !(symptom?.type === "enum" || symptom?.type === "none"), [symptom?.type]);
   const expandable = useMemo(() => {
     if (!symptom) return false;
     const hasDesc = !!symptom.desc;
@@ -42,7 +42,7 @@ function Symptom({ id, parent }: IProps) {
   const updateSymptom = useStore((s) => s.updateSymptom);
 
   const symptom = useMemo(() => symptoms.find((i) => i.id === id), [id, symptoms]);
-  const { expandable } = useSymptom(symptom, parent);
+  const { expandable } = useSymptom(symptom);
 
   const handleClick: MouseEventHandler = useCallback(
     async (e) => {
@@ -83,7 +83,7 @@ function Symptom({ id, parent }: IProps) {
 }
 
 const Label = ({ symptom, parent }: IInnerProps) => {
-  const hasInput = !(parent.type === "enum" || symptom.type === "enum" || symptom.type === "none");
+  const { hasInput } = useSymptom(symptom);
   const isParent = Array.isArray(symptom.options);
   const noButton = hasInput || isParent;
   return (
@@ -126,8 +126,8 @@ const Desc = (symptom: ISymptom) => {
   );
 };
 
-const Input = React.memo(({ symptom, parent }: IInnerProps) => {
-  const hasInput = !(parent.type === "enum" || symptom.type === "enum" || symptom.type === "none");
+const Input = React.memo(({ symptom }: IInnerProps) => {
+  const { hasInput } = useSymptom(symptom);
   const updateSymptom = useStore((s) => s.updateSymptom);
 
   const handleChange = useCallback(

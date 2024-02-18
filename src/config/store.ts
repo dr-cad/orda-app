@@ -23,9 +23,9 @@ const recursivelyResetItem = (arr: ISymptom[], id: string) => {
 const recursivelyResetParents = (arr: ISymptom[], id: string) => {
   // find a parent which has this id as a child
   const parent = arr.find((p) => p.options?.includes(id));
-  if (parent && parent.type === "enum") {
+  if (parent) {
     console.log("Cleaning Parent", parent.id);
-    recursivelyResetItem(arr, parent.id);
+    if (parent.type === "enum") recursivelyResetItem(arr, parent.id);
     recursivelyResetParents(arr, parent.id);
   }
 };
