@@ -24,6 +24,10 @@ const CustomTreeItem = React.forwardRef((props: TreeItemProps, ref: React.Ref<HT
 ));
 
 export const StyledTreeItem = styled(CustomTreeItem)(({ theme }) => ({
+  [`& .${treeItemClasses.iconContainer}`]: {
+    marginLeft: 4,
+    marginRight: 6,
+  },
   [`& .${treeItemClasses.iconContainer}:has(> .close)`]: {
     display: "none",
   },

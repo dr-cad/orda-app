@@ -56,9 +56,10 @@ function Symptom({ id, parent }: IProps) {
     [id, parent, symptom, toggleExpanded, updateSymptom]
   );
 
-  const spaceAfter = useMemo(() => {
-    const firstOption = parent.page && parent.options!.indexOf(id) === 0;
-    return expandable ? (parent.page ? (firstOption ? 0 : 4) : 2) : 0;
+  const [mt, mb] = useMemo(() => {
+    const firstOption = parent.options!.indexOf(id) === 0;
+    const space = expandable ? (parent.page ? (firstOption ? 0 : 4) : 1) : 0;
+    return [space, expandable ? space : 0];
   }, [expandable, id, parent.options, parent.page]);
 
   if (!symptom) return null;
@@ -77,7 +78,7 @@ function Symptom({ id, parent }: IProps) {
           </Fragment>
         )
       }
-      sx={{ mt: spaceAfter }}
+      sx={{ mt: mt, mb: mb }}
     />
   );
 }
