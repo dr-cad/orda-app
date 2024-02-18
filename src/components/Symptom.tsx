@@ -50,9 +50,7 @@ function Symptom({ id, parent }: IProps) {
       e.stopPropagation();
       if (!symptom) return;
       const isBoolLeaf = (parent.type === "enum" || symptom.type === "none") && !symptom.options;
-      if (isBoolLeaf) {
-        updateSymptom(id, !symptom.value); // for radio or checkbox
-      }
+      if (isBoolLeaf) updateSymptom(id, !symptom.value); // for radio or checkbox
       toggleExpanded(symptom.id);
     },
     [id, parent, symptom, toggleExpanded, updateSymptom]

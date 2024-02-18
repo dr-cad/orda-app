@@ -20,21 +20,6 @@ const recursivelyResetItem = (arr: ISymptom[], id: string) => {
   } else console.error("Couldn't find option", id);
 };
 
-const recursivelyResetEnumParents = (arr: ISymptom[], id: string) => {
-  // find a parent which has this id as a child
-  const parent = arr.find((p) => p.options?.includes(id));
-  if (parent) {
-    if (parent.type === "enum") {
-      console.log("Cleaning Parent", parent.id);
-      for (const option of parent.options ?? []) {
-        if (option === id) continue;
-        recursivelyResetItem(arr, parent.id);
-      }
-    }
-    recursivelyResetEnumParents(arr, parent.id);
-  }
-};
-
 const recursivelyUpdateParents = (arr: ISymptom[], id: string) => {
   // find a parent which has this id as a child
   const parent = arr.find((p) => p.options?.includes(id));
@@ -42,9 +27,10 @@ const recursivelyUpdateParents = (arr: ISymptom[], id: string) => {
     console.log("Updating Parent", parent.id);
     parent.value = false;
     for (const option of parent.options ?? []) {
-      // reset enum parents
+      // reset siblings of enum parent
       if (parent.type === "enum" && option !== id) recursivelyResetItem(arr, option);
-      // set ancestors
+      // set ancestors whom have value
+      // it works: because it fills from inner parents to outer ones
       const item = arr.find((item) => item.id === option);
       if (!!item?.value) parent.value = true;
     }

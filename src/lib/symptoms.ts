@@ -86,12 +86,13 @@ export default function getRawSymptoms(): ISymptom[] {
   }
 
   // fill empty types with none
-  const dataRetyped = dataFiltered.map<ISymptom>((item) => ({
+  const dataMapped = dataFiltered.map<ISymptom>((item) => ({
     ...item,
     type: item.type ? (item.type as SymptomType) : "none",
+    open: item.open ?? (item.options?.length ?? 0) < 3,
   }));
 
-  return dataRetyped;
+  return dataMapped;
 }
 
 export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[]): boolean {
