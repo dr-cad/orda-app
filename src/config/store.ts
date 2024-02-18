@@ -5,7 +5,7 @@ import getRawSymptoms from "../lib/symptoms";
 import { IDisease, ISymptom } from "../types/interfaces";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-const resetSymptom = (arr: ISymptom[], id: string) => {
+const recursivelyResetItem = (arr: ISymptom[], id: string) => {
   // populate item
   let item = arr.find((x) => x.id === id);
   // reset if found
@@ -15,9 +15,19 @@ const resetSymptom = (arr: ISymptom[], id: string) => {
     item.value = null;
     // reset each child recursively
     if (Array.isArray(item.options)) {
-      item.options.forEach((o) => resetSymptom(arr, o));
+      item.options.forEach((o) => recursivelyResetItem(arr, o));
     }
   } else console.error("Couldn't find option", id);
+};
+
+const recursivelyResetParents = (arr: ISymptom[], id: string) => {
+  // find a parent which has this id as a child
+  const parent = arr.find((p) => p.options?.includes(id));
+  if (parent && parent.type === "enum") {
+    console.log("Cleaning Parent", parent.id);
+    recursivelyResetItem(arr, parent.id);
+    recursivelyResetParents(arr, parent.id);
+  }
 };
 
 const getRawExpanded = () => {
@@ -31,7 +41,7 @@ const getRawExpanded = () => {
 
 interface Store {
   symptoms: ISymptom[];
-  updateSymptom: (id: string, value: any, parent: ISymptom | null) => ISymptom[] | undefined;
+  updateSymptom: (id: string, value: any) => ISymptom[] | undefined;
   resetSymptoms: (...args: any[]) => void;
   expanded: string[];
   toggleExpanded: (id: string) => void;
@@ -43,7 +53,7 @@ export const useStore = create(
   persist<Store>(
     (set, get) => ({
       symptoms: getRawSymptoms(),
-      updateSymptom: (id, value, parent) => {
+      updateSymptom: (id, value) => {
         let result = undefined;
         set(
           produce((s) => {
@@ -51,9 +61,9 @@ export const useStore = create(
             let item = arr.find((i) => i.id === id);
             if (item) {
               // check item of enum parent -> reset parent -r
-              if (parent && parent.type === "enum") resetSymptom(arr, parent.id);
+              recursivelyResetParents(arr, item.id);
               // if unset occured and has options -> reset item -r
-              if (!value && Array.isArray(item.options)) resetSymptom(arr, item.id);
+              if (!value) recursivelyResetItem(arr, item.id);
               // update/reset value
               console.log("Setting", id, value);
               item.value = value;

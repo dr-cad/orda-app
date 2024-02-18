@@ -41,6 +41,8 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms): ISymp
           }
         }
       }
+
+      // TODO enum parent should not contain "none" child
     }
     return null;
   };
@@ -74,10 +76,13 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms): ISymp
   }
 
   // fill empty types with enum
-  const dataRetyped = dataFiltered.map<ISymptom>((item) => ({
-    ...item,
-    type: ["enum", "number", "range", "string"].includes(item.type || "") ? (item.type as SymptomType) : "enum",
-  }));
+  const dataRetyped = dataFiltered.map<ISymptom>((item) => {
+    const hasExplicitType = ["enum", "number", "range", "none", "string"].includes(item.type || "");
+    return {
+      ...item,
+      type: hasExplicitType ? (item.type as SymptomType) : "none",
+    };
+  });
 
   return dataRetyped;
 }

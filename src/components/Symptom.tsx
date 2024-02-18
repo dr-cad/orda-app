@@ -14,6 +14,17 @@ interface IInnerProps {
   parent: ISymptom;
 }
 
+function useSymptom(symptom: ISymptom | undefined, parent: ISymptom) {
+  const hasInput = useMemo(() => !(parent.type === "enum" || symptom?.type === "enum" || symptom?.type === "none"), []);
+  const expandable = useMemo(() => {
+    if (!symptom) return false;
+    const hasDesc = !!symptom.desc;
+    const hasOptions = Array.isArray(symptom.options) && symptom.options.length !== 0;
+    return hasDesc || hasInput || hasOptions;
+  }, [hasInput, symptom]);
+  return { expandable, hasInput };
+}
+
 export default function SymptomsGroup({ symptom }: { symptom: ISymptom }) {
   if (!Array.isArray(symptom.options) || symptom.options.length === 0) return null;
   return (
@@ -31,28 +42,19 @@ function Symptom({ id, parent }: IProps) {
   const updateSymptom = useStore((s) => s.updateSymptom);
 
   const symptom = useMemo(() => symptoms.find((i) => i.id === id), [id, symptoms]);
+  const { expandable } = useSymptom(symptom, parent);
 
   const handleClick: MouseEventHandler = useCallback(
     async (e) => {
       e.preventDefault();
       e.stopPropagation();
       if (!symptom) return;
-      if (symptom.type === "enum") {
-        // for radio or checkbox
-        updateSymptom(id, !symptom.value, parent);
-      }
+      const isBoolLeaf = (parent.type === "enum" || symptom.type === "none") && !symptom.options;
+      if (isBoolLeaf) updateSymptom(id, !symptom.value); // for radio or checkbox
       toggleExpanded(symptom.id);
     },
     [id, parent, symptom, toggleExpanded, updateSymptom]
   );
-
-  const expandable = useMemo(() => {
-    if (!symptom) return false;
-    const hasDesc = !!symptom.desc;
-    const hasInput = symptom.type !== "enum";
-    const hasOptions = Array.isArray(symptom.options) && symptom.options.length !== 0;
-    return hasDesc || hasInput || hasOptions;
-  }, [symptom]);
 
   const spaceAfter = useMemo(() => {
     const firstOption = parent.page && parent.options!.indexOf(id) === 0;
@@ -81,9 +83,9 @@ function Symptom({ id, parent }: IProps) {
 }
 
 const Label = ({ symptom, parent }: IInnerProps) => {
-  const hasInput = symptom.type !== "enum";
+  const hasInput = !(parent.type === "enum" || symptom.type === "enum" || symptom.type === "none");
   const isParent = Array.isArray(symptom.options);
-  const noValue = hasInput || isParent;
+  const noButton = hasInput || isParent;
   return (
     <FormControlLabel
       value={symptom.id}
@@ -96,7 +98,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
         </Typography>
       }
       control={
-        noValue ? (
+        noButton ? (
           <Box sx={{ width: 12 }} />
         ) : parent.type === "enum" ? (
           <Radio size="small" checked={!!symptom.value} />
@@ -125,16 +127,17 @@ const Desc = (symptom: ISymptom) => {
 };
 
 const Input = React.memo(({ symptom, parent }: IInnerProps) => {
+  const hasInput = !(parent.type === "enum" || symptom.type === "enum" || symptom.type === "none");
   const updateSymptom = useStore((s) => s.updateSymptom);
 
   const handleChange = useCallback(
     (value: Value) => {
-      updateSymptom(symptom.id, value, parent);
+      updateSymptom(symptom.id, value);
     },
-    [parent, symptom.id, updateSymptom]
+    [symptom.id, updateSymptom]
   );
 
-  if (symptom.type === "enum") return null;
+  if (!hasInput) return null;
   return (
     <Stack p={2}>
       {symptom.type === "string" ? (
