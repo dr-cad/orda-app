@@ -1,5 +1,5 @@
 import { Box, Checkbox, FormControlLabel, Radio, Stack, TextField, Typography } from "@mui/material";
-import React, { Fragment, MouseEventHandler, useCallback, useMemo } from "react";
+import React, { Fragment, MouseEventHandler, useCallback, useMemo, useState } from "react";
 import { useStore } from "../config/store";
 import { IRange, ISymptom, Value } from "../types/interfaces";
 import { StyledTreeItem } from "./styled";
@@ -118,15 +118,20 @@ const Label = ({ symptom, parent }: IInnerProps) => {
 };
 
 const Desc = (symptom: ISymptom) => {
+  const [hideImage, setHideImage] = useState(false);
   if (!symptom.desc) return null;
   return (
     <Stack p={2}>
       {typeof symptom.desc === "string" ? (
         <div>{symptom.desc}</div>
       ) : (
-        <div>
-          <div>{symptom.desc!.title}</div>
-          <img alt={symptom.desc!.title} src={symptom.desc!.image} style={{ width: "65vw", height: "auto" }} />
+        <div onClick={() => setHideImage((s) => !s)} style={{ cursor: "pointer" }}>
+          <div>
+            {symptom.desc!.title + ": "}
+            <span>{hideImage ? "+" : ""}</span>
+          </div>
+          <Box sx={{ height: 18 }} />
+          {!hideImage && <img alt={symptom.desc!.title} src={symptom.desc!.image} className="desc-img" />}
         </div>
       )}
     </Stack>
