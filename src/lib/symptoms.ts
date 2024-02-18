@@ -9,6 +9,8 @@ type ValidationError = {
   message: string;
 };
 
+const MAX_LEVELS_POSSIBLE = 5;
+const symptomTypes = ["enum", "number", "range", "none", "string"];
 const alwaysVisible = ["pat-info", "pat-name", "pat-age"];
 
 export default function getRawSymptoms(): ISymptom[] {
@@ -17,6 +19,7 @@ export default function getRawSymptoms(): ISymptom[] {
   const validate = (): ValidationError | null => {
     let idRepo: string[] = [];
     for (let item of data) {
+      // validate item.id
       if (!item.id) {
         return { item, message: "No Id defined" };
       }
@@ -30,12 +33,14 @@ export default function getRawSymptoms(): ISymptom[] {
         };
       }
 
+      // check duplicate
       if (idRepo.includes(item.id)) {
         return { item, message: "Duplicate id found: " + item.id };
       } else {
         idRepo.push(item.id);
       }
 
+      // check children
       if (!!item.options) {
         for (let childId of item.options) {
           if (!data.find((x) => x.id === childId)) {
@@ -44,7 +49,10 @@ export default function getRawSymptoms(): ISymptom[] {
         }
       }
 
-      // TODO enum parent should not contain "none" child
+      // validate type string
+      if (item.type && !symptomTypes.includes(item.type)) {
+        return { item, message: "Symptom type is invalid: " + item.type };
+      }
     }
     return null;
   };
@@ -60,7 +68,7 @@ export default function getRawSymptoms(): ISymptom[] {
   const diseases = getRawDiseases();
 
   let dataFiltered = [...data];
-  for (let i = 0; i < 5; ++i) {
+  for (let i = 0; i < MAX_LEVELS_POSSIBLE; ++i) {
     // eslint-disable-next-line no-loop-func
     dataFiltered = dataFiltered.filter((item) => {
       if (alwaysVisible.includes(item.id)) return true;
@@ -77,14 +85,11 @@ export default function getRawSymptoms(): ISymptom[] {
     });
   }
 
-  // fill empty types with enum
-  const dataRetyped = dataFiltered.map<ISymptom>((item) => {
-    const hasExplicitType = ["enum", "number", "range", "none", "string"].includes(item.type || "");
-    return {
-      ...item,
-      type: hasExplicitType ? (item.type as SymptomType) : "none",
-    };
-  });
+  // fill empty types with none
+  const dataRetyped = dataFiltered.map<ISymptom>((item) => ({
+    ...item,
+    type: item.type ? (item.type as SymptomType) : "none",
+  }));
 
   return dataRetyped;
 }
@@ -97,7 +102,8 @@ export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[])
         // when there is a diease factor with higher rate than epsilon
         // show the symptom related to the factor - else hide it
         const rate = factor.rate || 0;
-        if (rate > epsilon || !!factor.ranges) return true;
+        if (factor.ranges) return true; // TODO
+        if (rate > epsilon) return true;
       }
     }
   }

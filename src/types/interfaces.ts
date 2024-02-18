@@ -1,4 +1,4 @@
-export type Value = string | number | IRange | null;
+export type Value = string | number | IRange | boolean;
 export type Desc = string | { title: string; image: string };
 export type SymptomType = "number" | "string" | "enum" | "none" | "range";
 

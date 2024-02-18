@@ -50,7 +50,9 @@ function Symptom({ id, parent }: IProps) {
       e.stopPropagation();
       if (!symptom) return;
       const isBoolLeaf = (parent.type === "enum" || symptom.type === "none") && !symptom.options;
-      if (isBoolLeaf) updateSymptom(id, !symptom.value); // for radio or checkbox
+      if (isBoolLeaf) {
+        updateSymptom(id, !symptom.value); // for radio or checkbox
+      }
       toggleExpanded(symptom.id);
     },
     [id, parent, symptom, toggleExpanded, updateSymptom]
@@ -95,7 +97,8 @@ const Label = ({ symptom, parent }: IInnerProps) => {
           sx={{ display: "flex", gap: 1, alignItems: "center" }}
           color={!!symptom.value ? "primary" : undefined}>
           {symptom.name}
-          {symptom.required && <Typography sx={{ color: "orangered" }}>{" *"}</Typography>}
+          {symptom.type === "enum" && <Typography sx={{ color: "warning.main" }}>{" !"}</Typography>}
+          {symptom.required && <Typography sx={{ color: "error.main" }}>{" *"}</Typography>}
         </Typography>
       }
       control={

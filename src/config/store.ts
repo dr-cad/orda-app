@@ -2,7 +2,7 @@ import { produce } from "immer";
 import { create } from "zustand";
 import getRawDiseases from "../lib/diseases";
 import getRawSymptoms from "../lib/symptoms";
-import { IDisease, ISymptom } from "../types/interfaces";
+import { IDisease, ISymptom, Value } from "../types/interfaces";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 const recursivelyResetItem = (arr: ISymptom[], id: string) => {
@@ -12,7 +12,7 @@ const recursivelyResetItem = (arr: ISymptom[], id: string) => {
   if (item) {
     console.log("Removing", item.id);
     // reset self
-    item.value = null;
+    item.value = undefined;
     // reset each child recursively
     if (Array.isArray(item.options)) {
       item.options.forEach((o) => recursivelyResetItem(arr, o));
@@ -20,7 +20,7 @@ const recursivelyResetItem = (arr: ISymptom[], id: string) => {
   } else console.error("Couldn't find option", id);
 };
 
-const recursivelyResetParents = (arr: ISymptom[], id: string) => {
+const recursivelyResetEnumParents = (arr: ISymptom[], id: string) => {
   // find a parent which has this id as a child
   const parent = arr.find((p) => p.options?.includes(id));
   if (parent) {
@@ -31,7 +31,24 @@ const recursivelyResetParents = (arr: ISymptom[], id: string) => {
         recursivelyResetItem(arr, parent.id);
       }
     }
-    recursivelyResetParents(arr, parent.id);
+    recursivelyResetEnumParents(arr, parent.id);
+  }
+};
+
+const recursivelyUpdateParents = (arr: ISymptom[], id: string) => {
+  // find a parent which has this id as a child
+  const parent = arr.find((p) => p.options?.includes(id));
+  if (parent) {
+    console.log("Updating Parent", parent.id);
+    parent.value = false;
+    for (const option of parent.options ?? []) {
+      // reset enum parents
+      if (parent.type === "enum" && option !== id) recursivelyResetItem(arr, option);
+      // set ancestors
+      const item = arr.find((item) => item.id === option);
+      if (!!item?.value) parent.value = true;
+    }
+    recursivelyUpdateParents(arr, parent.id);
   }
 };
 
@@ -46,7 +63,7 @@ const getRawExpanded = () => {
 
 interface Store {
   symptoms: ISymptom[];
-  updateSymptom: (id: string, value: any) => ISymptom[] | undefined;
+  updateSymptom: (id: string, value: Value) => ISymptom[] | undefined;
   resetSymptoms: (...args: any[]) => void;
   expanded: string[];
   toggleExpanded: (id: string) => void;
@@ -64,13 +81,12 @@ export const useStore = create(
             let arr: ISymptom[] = s.symptoms;
             let item = arr.find((i) => i.id === id);
             if (item) {
-              // check item of enum parent -> reset parent -r
-              recursivelyResetParents(arr, item.id);
               // if unset occured and has options -> reset item -r
               if (!value) recursivelyResetItem(arr, item.id);
               // update/reset value
-              console.log("Setting", id, value);
+              console.log("Updating", id, value);
               item.value = value;
+              recursivelyUpdateParents(arr, item.id);
               result = arr;
             } else {
               console.error("Couldnt find item", id);
