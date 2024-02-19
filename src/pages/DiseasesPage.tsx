@@ -25,9 +25,6 @@ export default function DiseasesPage() {
   }, [diseases, symptoms]);
 
   const handleDownload = async () => {
-    const saveBtn = document.getElementById("save-btn");
-    if (saveBtn) saveBtn.style.setProperty("opacity", "0");
-
     const canvas = await html2canvas(_treeMapBox.current!);
     const data = canvas.toDataURL("image/png");
     const link = document.createElement("a");
@@ -38,8 +35,6 @@ export default function DiseasesPage() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    if (saveBtn) saveBtn.style.setProperty("opacity", "1");
   };
 
   const treeMapData: TreeMapItem = useMemo(
@@ -56,8 +51,10 @@ export default function DiseasesPage() {
 
   return (
     <Stack p={2} gap={2} sx={{ overflowY: "auto", overflowX: "hidden" }}>
-      <Box ref={_treeMapBox} id="treemap-box" height="50vh" sx={{ borderRadius: 4, overflow: "hidden" }}>
-        <TreeMap data={treeMapData} />
+      <Box sx={{ borderRadius: 4, overflow: "hidden" }}>
+        <Box ref={_treeMapBox} height="50vh">
+          <TreeMap data={treeMapData} />
+        </Box>
         <Box sx={{ position: "absolute", top: 25, left: 25, display: "flex" }}>
           <IconButton aria-label="save" id="save-btn" size="small" onClick={handleDownload}>
             <CropFree />
