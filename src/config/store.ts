@@ -38,11 +38,11 @@ const recursivelyUpdateParents = (arr: ISymptom[], id: string) => {
   }
 };
 
-const getRawExpanded = () => {
+const getRawExpanded = (openAll = false) => {
   const rawSymptoms = getRawSymptoms();
   const expandedSet = new Set<string>();
   rawSymptoms.forEach((i) => {
-    if (i.open) expandedSet.add(i.id);
+    if (openAll || i.open) expandedSet.add(i.id);
   });
   return Array.from(expandedSet);
 };
@@ -50,10 +50,12 @@ const getRawExpanded = () => {
 interface Store {
   symptoms: ISymptom[];
   updateSymptom: (id: string, value: Value) => ISymptom[] | undefined;
-  resetSymptoms: (...args: any[]) => void;
   expanded: string[];
   toggleExpanded: (id: string) => void;
+  collapseAll: () => void;
+  expandAll: () => void;
   diseases: IDisease[];
+  reset: () => void;
 }
 
 export const useStore = create(
@@ -82,9 +84,13 @@ export const useStore = create(
         );
         return result;
       },
-      resetSymptoms: () => {
-        set(() => ({ symptoms: getRawSymptoms() }));
-        console.log(get().symptoms);
+      reset: () => {
+        set(() => ({
+          // ...
+          symptoms: getRawSymptoms(),
+          expanded: getRawExpanded(),
+          diseases: getRawDiseases(),
+        }));
       },
       expanded: getRawExpanded(),
       toggleExpanded: (id) =>
@@ -94,6 +100,12 @@ export const useStore = create(
           else list.add(id);
           return { expanded: Array.from(list) };
         }),
+      collapseAll: () => {
+        set(() => ({ expanded: [] }));
+      },
+      expandAll: () => {
+        set(() => ({ expanded: getRawExpanded(true) }));
+      },
       diseases: getRawDiseases(),
     }),
     { name: "app-storage", storage: createJSONStorage(() => sessionStorage) }

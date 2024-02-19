@@ -9,7 +9,6 @@ type ValidationError = {
   message: string;
 };
 
-const MAX_LEVELS_POSSIBLE = 5;
 const symptomTypes = ["enum", "number", "range", "none", "string"];
 const alwaysVisible = ["pat-info", "pat-name", "pat-age"];
 
@@ -65,25 +64,9 @@ export default function getRawSymptoms(): ISymptom[] {
   }
 
   // remove unnecessary children
-  const diseases = getRawDiseases();
 
   let dataFiltered = [...data];
-  for (let i = 0; i < MAX_LEVELS_POSSIBLE; ++i) {
-    // eslint-disable-next-line no-loop-func
-    dataFiltered = dataFiltered.filter((item) => {
-      if (alwaysVisible.includes(item.id)) return true;
-      if (Array.isArray(item.options)) {
-        item.options = item.options.filter((option) => {
-          const optItem = data.find((x) => x.id === option);
-          return optItem && getIsSymptomProbable(optItem, diseases);
-        });
-        if (item.options.length > 0) return true;
-        item.options = undefined;
-      }
-      if (getIsSymptomProbable(item, diseases)) return true;
-      return false;
-    });
-  }
+  dataFiltered = dataFiltered.filter(filterSymptomProbable());
 
   // fill empty types with none
   const dataMapped = dataFiltered.map<ISymptom>((item) => ({
@@ -93,6 +76,28 @@ export default function getRawSymptoms(): ISymptom[] {
   }));
 
   return dataMapped;
+}
+
+function filterSymptomProbable() {
+  const diseases = getRawDiseases();
+
+  const recursivelyFilterSymptomProbable = (item: ISymptomRaw, index: number, data: ISymptomRaw[]) => {
+    if (alwaysVisible.includes(item.id)) return true;
+    // if item has any probable children
+    if (Array.isArray(item.options)) {
+      item.options = item.options.filter((option) => {
+        const optItem = data.find((x) => x.id === option);
+        return optItem && recursivelyFilterSymptomProbable(optItem, index, data);
+      });
+      if (item.options.length > 0) return true;
+      item.options = undefined;
+    }
+    // if item is probable itself
+    if (getIsSymptomProbable(item, diseases)) return true;
+    return false;
+  };
+
+  return recursivelyFilterSymptomProbable;
 }
 
 export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[]): boolean {

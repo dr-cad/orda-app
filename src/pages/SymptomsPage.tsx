@@ -1,6 +1,12 @@
-import { ClearAllRounded } from "@mui/icons-material";
+import {
+  ClearAllRounded,
+  ExpandLessRounded,
+  ExpandMoreRounded,
+  UnfoldLessRounded,
+  UnfoldMoreRounded,
+} from "@mui/icons-material";
 import TreeView from "@mui/lab/TreeView";
-import { Button, Stack, Typography } from "@mui/material";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import SymptomsGroup from "../components/Symptom";
 import { CloseSquare, MinusSquare, PlusSquare } from "../components/styled";
 import { useStore } from "../config/store";
@@ -8,18 +14,16 @@ import { usePageIndex } from "../hooks/pages";
 
 function SymptomsPage() {
   const { currPage } = usePageIndex();
-  const resetSymptoms = useStore((s) => s.resetSymptoms);
+  const reset = useStore((s) => s.reset);
+  const collapseAll = useStore((s) => s.collapseAll);
+  const expandAll = useStore((s) => s.expandAll);
   const expanded = useStore((s) => s.expanded);
-
-  const handleReset = () => {
-    resetSymptoms();
-  };
 
   if (!currPage) return <p>404</p>;
 
   return (
     <Stack gap={4} flex={1} sx={{ overflowY: "auto", overflowX: "hidden" }}>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" pt={2} pl={3}>
+      <Stack direction="row" alignItems="center" pt={2} pl={3}>
         <Stack>
           <Typography variant="h5" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>
             {currPage.name}
@@ -28,16 +32,18 @@ function SymptomsPage() {
             {typeof currPage.desc === "string" ? currPage.desc : null}
           </Typography>
         </Stack>
-        <Button
+        <Box flex="1 0 0" />
+        <IconButton
           size="small"
-          color="error"
-          sx={{ ml: 2, mr: 2, display: "flex", alignItems: "center", px: 2 }}
-          startIcon={<ClearAllRounded />}
-          onClick={handleReset}>
-          <Typography variant="caption" textTransform="uppercase" sx={{ cursor: "pointer" }}>
-            Reset
-          </Typography>
-        </Button>
+          color={expanded.length > 0 ? "warning" : "default"}
+          onClick={expanded.length > 0 ? collapseAll : expandAll}>
+          {expanded.length > 0 ? <ExpandLessRounded /> : <ExpandMoreRounded />}
+        </IconButton>
+        <Box flex="0 0 12px" />
+        <IconButton size="small" color="error" onClick={reset}>
+          <ClearAllRounded />
+        </IconButton>
+        <Box flex="0 0 12px" />
       </Stack>
       <TreeView
         defaultCollapseIcon={<MinusSquare />}

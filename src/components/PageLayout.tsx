@@ -39,7 +39,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
                 selected={isResult ? isDone : item.selected}
                 sx={{
                   [`&.${paginationItemClasses.root}, &.${paginationItemClasses.root}:hover`]: {
-                    background: isResult && isDone ? "#00bd5e" : undefined,
+                    backgroundColor: isResult && isDone ? "success.main" : undefined,
                   },
                 }}
               />
