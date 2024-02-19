@@ -4,6 +4,11 @@ const theme = createTheme({
   palette: {
     mode: "dark",
     background: { default: "#0f212e" },
+    primary: { main: "#15c4bf" },
+    success: { main: "#15c46f" },
+    warning: { main: "#c4b515" },
+    error: { main: "#c43e15" },
+    info: { main: "#1578c4" },
   },
   typography: {
     fontFamily: [

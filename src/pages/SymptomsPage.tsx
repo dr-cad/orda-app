@@ -22,7 +22,7 @@ function SymptomsPage() {
           <Typography variant="h5" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>
             {currPage.name}
           </Typography>
-          <Typography variant="subtitle2" fontWeight={500} color="#444">
+          <Typography variant="subtitle2" fontWeight={500} sx={{ opacity: 0.45 }}>
             {typeof currPage.desc === "string" ? currPage.desc : null}
           </Typography>
         </Stack>

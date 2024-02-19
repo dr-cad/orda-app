@@ -1,5 +1,28 @@
+::-webkit-scrollbar,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  --theme-color: #15c4bf;
+  --background-color: #0f212e;
+
+  --bg-mask: rgba(255, 255, 255, 0.3);
+  --scroll-size: 5px;
+  --scroll-radius: 20px;
+  --scroll-track: rgba(0, 0, 0, 0.4);
+  --scroll-thumb: linear-gradient(
+    var(--bg-mask) 20%,
+    transparent 20%,
+    transparent 40%,
+    var(--bg-mask) 40%,
+    var(--bg-mask) 60%,
+    transparent 60%,
+    transparent 80%,
+    var(--bg-mask) 80%
+  );
+  --scroll-thumb-color: var(--theme-color);
+}
+
 body {
-  background-color: #0f212e;
+  background-color: var(--background-color);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
@@ -15,4 +38,30 @@ img.desc-img {
   max-width: 65vw;
   height: auto;
   border-radius: 14px;
+}
+
+#root {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+@supports not (selector(::-webkit-scrollbar-thumb)) {
+  scrollbar-color: var(--scroll-thumb-color) var(--scroll-track);
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: var(--scroll-size);
+  height: var(--scroll-size);
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--scroll-track);
+  border-radius: var(--scroll-radius);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-color);
+  background-image: var(--scroll-thumb);
+  border-radius: var(--scroll-radius);
 }

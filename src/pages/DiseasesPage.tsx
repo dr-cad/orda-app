@@ -51,11 +51,11 @@ export default function DiseasesPage() {
 
   return (
     <Stack p={2} gap={2} sx={{ overflowY: "auto", overflowX: "hidden" }}>
-      <Box sx={{ borderRadius: 4, overflow: "hidden" }}>
+      <Box sx={{ borderRadius: 4, overflow: "hidden", position: "relative" }}>
         <Box ref={_treeMapBox} height="50vh">
           <TreeMap data={treeMapData} />
         </Box>
-        <Box sx={{ position: "absolute", top: 25, left: 25, display: "flex" }}>
+        <Box sx={{ position: "absolute", top: 12, left: 12, display: "flex" }}>
           <IconButton aria-label="save" id="save-btn" size="small" onClick={handleDownload}>
             <CropFree />
           </IconButton>
