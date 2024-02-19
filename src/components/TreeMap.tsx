@@ -20,7 +20,10 @@ export default function TreeMap({ data }: TreeMapDataProps<TreeMapItem>) {
       innerPadding={5}
       label={(e) => e.data.name + " (" + e.formattedValue + ")"}
       labelSkipSize={15}
-      labelTextColor={"#fff"}
+      labelTextColor={{
+        from: "color",
+        modifiers: [["darker", 3]],
+      }}
       orientLabel={false}
       parentLabelPosition="left"
       parentLabelTextColor={{
@@ -28,7 +31,7 @@ export default function TreeMap({ data }: TreeMapDataProps<TreeMapItem>) {
         modifiers: [["brighter", 2]],
       }}
       // colors={({ data }) => data.color ?? "red"}
-      colors={{ scheme: "dark2" }}
+      colors={{ scheme: "accent" }}
       nodeOpacity={1}
       borderWidth={0}
     />

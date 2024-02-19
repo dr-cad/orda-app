@@ -13,6 +13,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
       overflow="hidden"
       flex={1}
       gap={2}
+      pt="env(safe-area-inset-top)"
       justifyContent="space-between"
       alignItems="stretch"
       sx={{ height: [vh, "100vh"] }}>

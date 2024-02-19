@@ -3,6 +3,7 @@ import { createTheme, responsiveFontSizes } from "@mui/material";
 const theme = createTheme({
   palette: {
     mode: "dark",
+    background: { default: "#0f212e" },
   },
   typography: {
     fontFamily: [
