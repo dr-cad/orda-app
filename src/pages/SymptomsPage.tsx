@@ -1,12 +1,6 @@
-import {
-  ClearAllRounded,
-  ExpandLessRounded,
-  ExpandMoreRounded,
-  UnfoldLessRounded,
-  UnfoldMoreRounded,
-} from "@mui/icons-material";
+import { ClearAllRounded, ExpandLessRounded, ExpandMoreRounded } from "@mui/icons-material";
 import TreeView from "@mui/lab/TreeView";
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import SymptomsGroup from "../components/Symptom";
 import { CloseSquare, MinusSquare, PlusSquare } from "../components/styled";
 import { useStore } from "../config/store";
