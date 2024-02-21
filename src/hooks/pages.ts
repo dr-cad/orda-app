@@ -31,6 +31,7 @@ export function usePageIndex() {
   };
 
   return {
+    pages,
     isResult,
     pageIndex,
     currPage,

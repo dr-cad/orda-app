@@ -5,7 +5,7 @@ import { usePageIndex } from "../hooks/pages";
 import Header from "./Header";
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
-  const { isResult, canGoForward, handleTo, handleResult, pageIndex } = usePageIndex();
+  const { pages, isResult, canGoForward, handleTo, handleResult, pageIndex } = usePageIndex();
 
   // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
   let vh = window.innerHeight;
@@ -22,7 +22,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
       {children}
       <Stack py={2} direction="row" gap={1} justifyContent="center" alignItems="center">
         <Pagination
-          count={6}
+          count={pages.length}
           defaultPage={pageIndex + 1}
           color="primary"
           shape="rounded"

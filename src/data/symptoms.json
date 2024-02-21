@@ -1,13 +1,13 @@
 [
   {
     "id": "pat-info",
-    "name": "Patient's information",
+    "name": "Information",
     "page": true,
     "options": ["pat-name", "pat-gender", "pat-age"]
   },
   {
     "id": "pat-name",
-    "name": "Patient Name",
+    "name": "Full Name",
     "required": true,
     "desc": "",
     "type": "string",
@@ -15,7 +15,7 @@
   },
   {
     "id": "pat-age",
-    "name": "Patient Age",
+    "name": "Age",
     "required": true,
     "desc": "",
     "type": "number",
@@ -23,7 +23,7 @@
   },
   {
     "id": "pat-gender",
-    "name": "Patient's gender",
+    "name": "Gender",
     "required": true,
     "type": "enum",
     "options": ["pat-male", "pat-female"],
@@ -41,7 +41,8 @@
   },
   {
     "id": "pat-his-cli-fin",
-    "name": "Patient history \nand Clinical findings",
+    "name": "History",
+    "desc": "Patient's history \nand Clinical findings",
     "page": true,
     "options": ["recent-gingival", "teeth-num", "history-of-surgery", "sys-dis", "sig-blood", "hist-radio"]
   },
