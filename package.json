@@ -85,7 +85,6 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "bun scripts/test.js",
-    "asbuild": "asc assembly/index.ts --target release",
     "pull": "git fetch && git pull",
     "push": "git add . && git commit -m\"added new data\" && git push"
   },
