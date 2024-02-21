@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { ReactComponent as Logo } from "./logo.svg";
+import { ReactComponent as Logo } from "./favicon.svg";
 
 export default function Header() {
   return (
