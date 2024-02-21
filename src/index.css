@@ -1,3 +1,7 @@
+:root {
+  --app-border: 1px dashed #fff4;
+}
+
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-track,
 ::-webkit-scrollbar-thumb {
@@ -43,6 +47,14 @@ img.desc-img {
 #root {
   max-width: 480px;
   margin: 0 auto;
+  border-left: var(--app-border);
+  border-right: var(--app-border);
+}
+
+@media screen and (max-width: 480px) {
+  #root {
+    border: none;
+  }
 }
 
 @supports not (selector(::-webkit-scrollbar-thumb)) {

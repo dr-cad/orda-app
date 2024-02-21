@@ -2,6 +2,7 @@ import { Done } from "@mui/icons-material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Pagination, PaginationItem, Stack, paginationItemClasses } from "@mui/material";
 import { usePageIndex } from "../hooks/pages";
+import Header from "./Header";
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   const { isResult, canGoForward, handleTo, handleResult, pageIndex } = usePageIndex();
@@ -13,12 +14,13 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
       overflow="hidden"
       flex={1}
       gap={2}
-      pt="env(safe-area-inset-top)"
+      mt="env(safe-area-inset-top)"
       justifyContent="space-between"
       alignItems="stretch"
       sx={{ height: [vh, "100vh"] }}>
+      <Header />
       {children}
-      <Stack direction="row" gap={1} justifyContent="center" alignItems="center" sx={{ py: 2 }}>
+      <Stack py={2} direction="row" gap={1} justifyContent="center" alignItems="center">
         <Pagination
           count={6}
           defaultPage={pageIndex + 1}

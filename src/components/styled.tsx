@@ -1,5 +1,5 @@
 import { TreeItem, TreeItemProps, treeItemClasses } from "@mui/lab";
-import { Collapse, SvgIcon, SvgIconProps, alpha, styled } from "@mui/material";
+import { Collapse, SvgIcon, SvgIconProps, styled } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import { animated, useSpring } from "@react-spring/web";
 import React from "react";
@@ -34,7 +34,7 @@ export const StyledTreeItem = styled(CustomTreeItem)(({ theme }) => ({
   [`& .${treeItemClasses.group}`]: {
     marginLeft: 19,
     paddingLeft: 6,
-    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
+    borderLeft: "var(--app-border)",
   },
 }));
 
