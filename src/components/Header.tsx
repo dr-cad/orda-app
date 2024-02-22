@@ -1,8 +1,9 @@
-import { HistoryRounded, HomeOutlined, NoteAddOutlined, SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
+import { AddRounded, HistoryRounded, HomeOutlined, SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
 import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useStore } from "../config/store";
+import { downloadData } from "../lib/file";
 import { ReactComponent as Logo } from "./favicon.svg";
 
 export default function Header() {
@@ -13,16 +14,12 @@ export default function Header() {
   const symptoms = useStore((s) => s.symptoms);
   const history = useStore((s) => s.history);
   const reset = useStore((s) => s.reset);
+  const autoBackup = useStore((s) => s.autoBackup);
 
-  const handleDownloadData = async () => {
-    const prefix = "ORDA";
-    const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(history));
-    const link = document.createElement("a");
-    link.href = data;
-    link.download = `${prefix} ${new Date().toLocaleString()}.json`;
-    document.body.appendChild(link); // required for firefox
-    link.click();
-    link.remove();
+  const handleDownloadData: React.MouseEventHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    downloadData(history);
   };
 
   const handleLoadHistory = () => {
@@ -55,16 +52,19 @@ export default function Header() {
 
   const handleNewFile = () => {
     // save prev data as history
-    addHistory({ createdAt: new Date(), scores: [], symptoms });
+    addHistory({ createdAt: new Date(), scores: [], symptoms, unsaved: true });
     // clear list
     reset();
     // nav to home page 1
     nav("/list/1");
   };
 
-  const showNewBtn = useMemo(() => pathname.startsWith("/list"), [pathname]);
+  const showNewBtn = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
   const showLoadBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
-  const showSaveBtn = useMemo(() => pathname.startsWith("/result") || pathname.startsWith("/history"), [pathname]);
+  const showSaveBtn = useMemo(
+    () => (!autoBackup && pathname.startsWith("/result")) || pathname.startsWith("/history"),
+    [autoBackup, pathname]
+  );
   const showHistoryBtn = useMemo(() => !pathname.startsWith("/history"), [pathname]);
 
   return (
@@ -75,7 +75,7 @@ export default function Header() {
       justifyContent="center"
       alignItems="center"
       height={66}
-      px={1.5}
+      px={2}
       className="blur-bg"
       flexShrink={0}
       top={0}
@@ -85,7 +85,7 @@ export default function Header() {
         {showNewBtn && (
           <Tooltip title="New File">
             <IconButton onClick={handleNewFile}>
-              <NoteAddOutlined />
+              <AddRounded />
             </IconButton>
           </Tooltip>
         )}

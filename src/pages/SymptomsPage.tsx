@@ -1,4 +1,4 @@
-import { ClearAllRounded, ExpandLessRounded, ExpandMoreRounded } from "@mui/icons-material";
+import { ExpandLessRounded, ExpandMoreRounded } from "@mui/icons-material";
 import TreeView from "@mui/lab/TreeView";
 import { Box, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import SymptomsGroup from "../components/Symptom";
@@ -20,7 +20,7 @@ function SymptomsPage() {
         aria-label="symptom-page-header"
         direction="row"
         alignItems="center"
-        sx={{ py: 2, px: 2, top: 0, position: "sticky", zIndex: 100, backdropFilter: "blur(10px)" }}>
+        sx={{ py: 2, px: 2.5, pl: 3.5, top: 0, position: "sticky", zIndex: 100, backdropFilter: "blur(10px)" }}>
         <Stack>
           <Typography variant="h5" textTransform="capitalize" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>
             {currPage.name}

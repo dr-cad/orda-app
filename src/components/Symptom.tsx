@@ -15,29 +15,16 @@ interface IInnerProps {
 }
 
 function useSymptom(symptom: ISymptom | undefined) {
-  const hasInput = useMemo(() => !(symptom?.type === "enum" || symptom?.type === "none"), [symptom?.type]);
-  const expandable = useMemo(() => {
-    if (!symptom) return false;
+  const { hasInput, hasDesc, hasOptions, expandable, isEnumParent } = useMemo(() => {
+    if (!symptom) return {};
+    const hasInput = !(symptom.type === "enum" || symptom.type === "none");
     const hasDesc = !!symptom.desc;
     const hasOptions = Array.isArray(symptom.options) && symptom.options.length !== 0;
-    return hasDesc || hasInput || hasOptions;
-  }, [hasInput, symptom]);
-  const isEnumParent = useMemo(
-    () => symptom?.type === "enum" && Array.isArray(symptom.options) && symptom.options?.length > 1,
-    [symptom?.options, symptom?.type]
-  );
-  return { expandable, hasInput, isEnumParent };
-}
-
-export default function SymptomsGroup({ symptom }: { symptom: ISymptom }) {
-  if (!Array.isArray(symptom.options) || symptom.options.length === 0) return null;
-  return (
-    <Fragment>
-      {symptom.options.map((id, i) => (
-        <Symptom key={id} id={id} parent={symptom} />
-      ))}
-    </Fragment>
-  );
+    const expandable = !!symptom && (hasDesc || hasInput || hasOptions);
+    const isEnumParent = symptom.type === "enum" && Array.isArray(symptom.options) && symptom.options?.length > 1;
+    return { hasInput, hasDesc, hasOptions, expandable, isEnumParent };
+  }, [symptom]);
+  return { hasInput, hasDesc, hasOptions, expandable, isEnumParent };
 }
 
 function Symptom({ id, parent }: IProps) {
@@ -46,7 +33,7 @@ function Symptom({ id, parent }: IProps) {
   const updateSymptom = useStore((s) => s.updateSymptom);
 
   const symptom = useMemo(() => symptoms.find((i) => i.id === id), [id, symptoms]);
-  const { expandable, isEnumParent } = useSymptom(symptom);
+  const { expandable, isEnumParent, hasInput, hasDesc, hasOptions } = useSymptom(symptom);
 
   const handleClick: MouseEventHandler = useCallback(
     async (e) => {
@@ -77,9 +64,9 @@ function Symptom({ id, parent }: IProps) {
       children={
         expandable && (
           <Fragment>
-            <Desc {...symptom} />
-            <Input symptom={symptom} parent={parent} />
-            <SymptomsGroup symptom={symptom} />
+            {hasDesc && <Desc {...symptom} />}
+            {hasInput && <Input symptom={symptom} parent={parent} />}
+            {hasOptions && <SymptomsGroup symptom={symptom} />}
           </Fragment>
         )
       }
@@ -119,7 +106,6 @@ const Label = ({ symptom, parent }: IInnerProps) => {
 
 const Desc = (symptom: ISymptom) => {
   const [hideImage, setHideImage] = useState(false);
-  if (!symptom.desc) return null;
   return (
     <Stack p={2}>
       {typeof symptom.desc === "string" ? (
@@ -139,7 +125,6 @@ const Desc = (symptom: ISymptom) => {
 };
 
 const Input = React.memo(({ symptom }: IInnerProps) => {
-  const { hasInput } = useSymptom(symptom);
   const updateSymptom = useStore((s) => s.updateSymptom);
 
   const handleChange = useCallback(
@@ -149,7 +134,6 @@ const Input = React.memo(({ symptom }: IInnerProps) => {
     [symptom.id, updateSymptom]
   );
 
-  if (!hasInput) return null;
   return (
     <Stack p={2}>
       {symptom.type === "string" ? (
@@ -203,3 +187,13 @@ const Input = React.memo(({ symptom }: IInnerProps) => {
     </Stack>
   );
 });
+
+export default function SymptomsGroup({ symptom }: { symptom: ISymptom }) {
+  return (
+    <Fragment>
+      {symptom.options!.map((id, i) => (
+        <Symptom key={id} id={id} parent={symptom} />
+      ))}
+    </Fragment>
+  );
+}

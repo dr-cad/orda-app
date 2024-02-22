@@ -18,7 +18,7 @@ export default function HistoryPage() {
   );
 }
 
-const HistoryItem = ({ createdAt, symptoms, index }: IHistoryItem & { index: number }) => {
+const HistoryItem = ({ createdAt, symptoms, index, unsaved }: IHistoryItem & { index: number }) => {
   const nav = useNavigate();
   const remove = useStore((s) => s.removeHistory);
   const load = useStore((s) => s.loadHistory);
@@ -50,7 +50,11 @@ const HistoryItem = ({ createdAt, symptoms, index }: IHistoryItem & { index: num
         <CloseRounded fontSize="small" />
       </IconButton>
       <Box flex="0 0 8px" />
-      <ListItemText primary={title.toString()} />
+      <ListItemText
+        primary={title.toString()}
+        secondary={unsaved ? "(unsaved draft)" : undefined}
+        secondaryTypographyProps={{ fontSize: "0.65rem", color: "warning.main" }}
+      />
       <Typography fontSize="0.75rem" sx={{ textAlign: "end", opacity: 0.55 }}>
         {new Date(createdAt).toUTCString()}
       </Typography>

@@ -7,6 +7,7 @@ import TreeMap, { TreeMapItem } from "../components/TreeMap";
 import { useStore } from "../config/store";
 import getScores from "../lib/scores";
 import { IScoredDisease } from "../types/interfaces";
+import { downloadData } from "../lib/file";
 
 export default function DiseasesPage() {
   const backedUp = useRef(false);
@@ -15,6 +16,7 @@ export default function DiseasesPage() {
   const symptoms = useStore((s) => s.symptoms);
   const diseases = useStore((s) => s.diseases);
   const addHistory = useStore((s) => s.addHistory);
+  const autoBackup = useStore((s) => s.autoBackup);
 
   const [scores, setScores] = useState<IScoredDisease[]>([]);
 
@@ -22,13 +24,16 @@ export default function DiseasesPage() {
     const updateScores = async () => {
       const newScores = await getScores({ diseases, symptoms });
       setScores(newScores);
+      // update in-app history
       if (!backedUp.current) {
         backedUp.current = true;
-        addHistory({ createdAt: new Date(), scores: newScores, symptoms });
+        const history = addHistory({ createdAt: new Date(), scores: newScores, symptoms });
+        // download a backup file
+        if (autoBackup) downloadData(history);
       }
     };
     updateScores();
-  }, [addHistory, diseases, symptoms]);
+  }, [addHistory, autoBackup, diseases, symptoms]);
 
   const handleDownload = async () => {
     const canvas = await html2canvas(_treeMapBox.current!);

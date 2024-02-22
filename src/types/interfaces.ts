@@ -49,4 +49,6 @@ export interface IHistoryItem {
   createdAt: Date;
   symptoms: ISymptom[];
   scores: IScoredDisease[];
+  unsaved?: boolean;
+  hash?: string;
 }

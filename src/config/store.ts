@@ -1,9 +1,10 @@
+import sha256 from "crypto-js/sha256";
 import { produce } from "immer";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 import getRawDiseases from "../lib/diseases";
 import getRawSymptoms from "../lib/symptoms";
 import { IDisease, IHistoryItem, ISymptom, Value } from "../types/interfaces";
-import { persist, createJSONStorage } from "zustand/middleware";
 
 const recursivelyResetItem = (arr: ISymptom[], id: string) => {
   // populate item
@@ -57,9 +58,11 @@ interface Store {
   diseases: IDisease[];
   reset: () => void;
   history: IHistoryItem[];
-  addHistory: (history: IHistoryItem) => void;
+  addHistory: (history: IHistoryItem) => IHistoryItem[];
   removeHistory: (index: number) => void;
   loadHistory: (symptoms: ISymptom[]) => void;
+  // app settings
+  autoBackup: boolean;
 }
 
 export const useStore = create(
@@ -113,7 +116,17 @@ export const useStore = create(
       diseases: getRawDiseases(),
       history: [],
       addHistory: (item) => {
-        set((s) => ({ history: [item, ...s.history] }));
+        // hash validation for duplicate
+        const hash = sha256(JSON.stringify(item.symptoms)).toString();
+        const currentHistory = get().history;
+        if (currentHistory.some((h) => h.hash === hash)) {
+          return currentHistory;
+        }
+        // if new push-back item
+        item.hash = hash;
+        const newHistory = [item, ...currentHistory];
+        set((s) => ({ history: newHistory }));
+        return newHistory;
       },
       removeHistory: (index) => {
         set(
@@ -125,6 +138,8 @@ export const useStore = create(
       loadHistory: (symptoms) => {
         set(() => ({ symptoms }));
       },
+      // app settings
+      autoBackup: false,
     }),
     { name: "app-storage", storage: createJSONStorage(() => sessionStorage) }
   )
