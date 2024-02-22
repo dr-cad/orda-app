@@ -1,19 +1,17 @@
-import { AddRounded, HistoryRounded, HomeOutlined, SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
-import { Button, IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import { HistoryRounded, HomeOutlined, SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
+import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useStore } from "../config/store";
 import { exportHistory, importHistory } from "../lib/history";
+import NewRecordButton from "./NewRecordButton";
 import { ReactComponent as Logo } from "./favicon.svg";
 
 export default function Header() {
-  const nav = useNavigate();
   const { pathname } = useLocation();
 
   const addHistory = useStore((s) => s.addHistory);
-  const symptoms = useStore((s) => s.symptoms);
   const history = useStore((s) => s.history);
-  const reset = useStore((s) => s.reset);
   const autoBackup = useStore((s) => s.autoBackup);
   const showSnackbar = useStore((s) => s.showSnackbar);
 
@@ -30,17 +28,6 @@ export default function Header() {
     importHistory(addHistory, () => {
       showSnackbar("History file imported successfully!");
     });
-  };
-
-  const handleNewRecord = () => {
-    // save prev data as history
-    addHistory({ createdAt: new Date(), scores: [], symptoms, unsaved: true });
-    // clear list
-    reset();
-    // nav to home page 1
-    nav("/list/1");
-    // show notification
-    showSnackbar("Draft saved! You can view it any time in history page");
   };
 
   const showNewBtn = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
@@ -67,10 +54,8 @@ export default function Header() {
       borderBottom="var(--app-border)">
       <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start">
         {showNewBtn && (
-          <Tooltip title="New File">
-            <Button onClick={handleNewRecord} startIcon={<AddRounded />} size="small" sx={{ fontSize: "0.78rem" }}>
-              New
-            </Button>
+          <Tooltip title="New Record">
+            <NewRecordButton size="small" sx={{ fontSize: "0.78rem" }} />
           </Tooltip>
         )}
         {showLoadBtn && (
@@ -82,7 +67,7 @@ export default function Header() {
         )}
         {showSaveBtn && (
           <Tooltip title="Export History">
-            <IconButton aria-label="save-data" onClick={handleExportHistory} title="Download Data">
+            <IconButton onClick={handleExportHistory}>
               <SaveOutlined />
             </IconButton>
           </Tooltip>

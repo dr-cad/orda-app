@@ -1,16 +1,57 @@
-import { CloseRounded } from "@mui/icons-material";
-import { Box, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
-import { useMemo } from "react";
+import { CloseRounded, SearchRounded } from "@mui/icons-material";
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  List,
+  ListItem,
+  ListItemText,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import NewRecordButton from "../components/NewRecordButton";
 import { useStore } from "../config/store";
 import { IHistoryItem } from "../types/interfaces";
-import { useNavigate } from "react-router-dom";
 
 export default function HistoryPage() {
   const history = useStore((s) => s.history);
+  const [query, setQuery] = useState("");
+  const handleChange = (v: string) => setQuery(v);
+
+  const list = useMemo(
+    () =>
+      history.filter((h) => {
+        const patName = h.symptoms.find((s) => s.id === "pat-name")?.value as string | undefined;
+        return patName?.includes(query);
+      }),
+    [history, query]
+  );
+
   return (
     <Stack aria-label="diseases-page" flex={1} p={2} gap={2}>
+      <TextField
+        size="small"
+        type="text"
+        placeholder="Search a name"
+        value={query}
+        onChange={(e) => handleChange(e.target.value)}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end" sx={{ opacity: 0.5 }}>
+              <SearchRounded />
+            </InputAdornment>
+          ),
+          disableUnderline: true,
+        }}
+      />
       <List>
-        {history.map((item, i) => (
+        <ListItem sx={{ pb: 2, borderBottom: "var(--app-border)" }}>
+          <NewRecordButton fullWidth />
+        </ListItem>
+        {list.map((item, i) => (
           <HistoryItem key={i} index={i} {...item} />
         ))}
       </List>
