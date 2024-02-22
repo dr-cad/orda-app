@@ -36,6 +36,12 @@ export const StyledTreeItem = styled(CustomTreeItem)(({ theme }) => ({
     paddingLeft: 6,
     borderLeft: "var(--app-border)",
   },
+  [`& .${treeItemClasses.group}:hover`]: {
+    borderLeftColor: theme.palette.primary.light,
+  },
+  [`&.enum-parent .${treeItemClasses.group}:hover`]: {
+    borderLeftColor: `${theme.palette.warning.light} !important`,
+  },
 }));
 
 export function MinusSquare(props: SvgIconProps) {

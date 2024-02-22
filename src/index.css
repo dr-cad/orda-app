@@ -38,6 +38,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 img.desc-img {
   max-width: 65vw;
   height: auto;
@@ -76,4 +81,19 @@ img.desc-img {
   background-color: var(--scroll-thumb-color);
   background-image: var(--scroll-thumb);
   border-radius: var(--scroll-radius);
+}
+
+.blur-bg,
+.blur-bg-dark {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.blur-bg-dark {
+  background-color: #0005;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
 }

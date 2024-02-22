@@ -11,7 +11,16 @@ export default function TreeMap({ data }: TreeMapDataProps<TreeMapItem>) {
   return (
     <ResponsiveTreeMap
       data={data}
-      theme={{ tooltip: { container: { background: "#0005", borderRadius: 14 } } }}
+      theme={{
+        tooltip: {
+          container: {
+            background: "#0005",
+            borderRadius: 14,
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+          },
+        },
+      }}
       identity="name"
       value="value"
       valueFormat=" >-1.0%"

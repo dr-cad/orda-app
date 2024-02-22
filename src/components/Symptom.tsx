@@ -22,7 +22,11 @@ function useSymptom(symptom: ISymptom | undefined) {
     const hasOptions = Array.isArray(symptom.options) && symptom.options.length !== 0;
     return hasDesc || hasInput || hasOptions;
   }, [hasInput, symptom]);
-  return { expandable, hasInput };
+  const isEnumParent = useMemo(
+    () => symptom?.type === "enum" && Array.isArray(symptom.options) && symptom.options?.length > 1,
+    [symptom?.options, symptom?.type]
+  );
+  return { expandable, hasInput, isEnumParent };
 }
 
 export default function SymptomsGroup({ symptom }: { symptom: ISymptom }) {
@@ -42,7 +46,7 @@ function Symptom({ id, parent }: IProps) {
   const updateSymptom = useStore((s) => s.updateSymptom);
 
   const symptom = useMemo(() => symptoms.find((i) => i.id === id), [id, symptoms]);
-  const { expandable } = useSymptom(symptom);
+  const { expandable, isEnumParent } = useSymptom(symptom);
 
   const handleClick: MouseEventHandler = useCallback(
     async (e) => {
@@ -66,6 +70,7 @@ function Symptom({ id, parent }: IProps) {
 
   return (
     <StyledTreeItem
+      id={"symptom:" + symptom.id}
       nodeId={symptom.id}
       onClick={handleClick}
       label={<Label symptom={symptom} parent={parent} />}
@@ -79,12 +84,13 @@ function Symptom({ id, parent }: IProps) {
         )
       }
       sx={{ mt, mb }}
+      className={isEnumParent ? "enum-parent" : ""}
     />
   );
 }
 
 const Label = ({ symptom, parent }: IInnerProps) => {
-  const { hasInput } = useSymptom(symptom);
+  const { hasInput, isEnumParent } = useSymptom(symptom);
   const isParent = Array.isArray(symptom.options);
   const noButton = hasInput || isParent;
   return (
@@ -93,13 +99,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
       label={
         <Typography
           sx={{ display: "flex", gap: 1, alignItems: "center" }}
-          color={
-            !!symptom.value
-              ? symptom.type === "enum" && symptom.options?.length !== 1
-                ? "warning.light"
-                : "primary"
-              : undefined
-          }>
+          color={!!symptom.value ? (isEnumParent ? "warning.light" : "primary") : undefined}>
           {symptom.name}
           {symptom.required && <Typography sx={{ color: "error.main" }}>{" *"}</Typography>}
         </Typography>
@@ -175,7 +175,7 @@ const Input = React.memo(({ symptom }: IInnerProps) => {
           <TextField
             id={symptom.id + "-textfield-1"}
             size="small"
-            type="number"
+            type="tel"
             placeholder="Start"
             value={(symptom.value as IRange)?.a ?? ""}
             onChange={(e) =>
@@ -188,7 +188,7 @@ const Input = React.memo(({ symptom }: IInnerProps) => {
           <TextField
             id={symptom.id + "-textfield-2"}
             size="small"
-            type="number"
+            type="tel"
             placeholder="End"
             value={(symptom.value as IRange)?.b ?? ""}
             onChange={(e) =>

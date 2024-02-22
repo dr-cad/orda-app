@@ -1,6 +1,6 @@
 import { ClearAllRounded, ExpandLessRounded, ExpandMoreRounded } from "@mui/icons-material";
 import TreeView from "@mui/lab/TreeView";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import SymptomsGroup from "../components/Symptom";
 import { CloseSquare, MinusSquare, PlusSquare } from "../components/styled";
 import { useStore } from "../config/store";
@@ -16,10 +16,14 @@ function SymptomsPage() {
   if (!currPage) return <p>404</p>;
 
   return (
-    <Stack gap={4} flex={1} sx={{ overflowY: "auto", overflowX: "hidden" }}>
-      <Stack direction="row" alignItems="center" pt={2} pl={3}>
+    <Stack flex={1} sx={{ height: "fit-content", position: "relative" }}>
+      <Stack
+        aria-label="symptom-page-header"
+        direction="row"
+        alignItems="center"
+        sx={{ py: 2, pl: 2, top: 0, position: "sticky", zIndex: 100, backdropFilter: "blur(10px)" }}>
         <Stack>
-          <Typography variant="h5" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>
+          <Typography variant="h5" textTransform="capitalize" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>
             {currPage.name}
           </Typography>
           <Typography variant="subtitle2" fontWeight={500} sx={{ opacity: 0.45 }}>
@@ -27,16 +31,20 @@ function SymptomsPage() {
           </Typography>
         </Stack>
         <Box flex="1 0 0" />
-        <IconButton
-          size="small"
-          color={expanded.length > 0 ? "warning" : "default"}
-          onClick={expanded.length > 0 ? collapseAll : expandAll}>
-          {expanded.length > 0 ? <ExpandLessRounded /> : <ExpandMoreRounded />}
-        </IconButton>
+        <Tooltip title={expanded.length > 0 ? "Collapse all" : "Expand all"}>
+          <IconButton
+            size="small"
+            color={expanded.length > 0 ? "warning" : "default"}
+            onClick={expanded.length > 0 ? collapseAll : expandAll}>
+            {expanded.length > 0 ? <ExpandLessRounded /> : <ExpandMoreRounded />}
+          </IconButton>
+        </Tooltip>
         <Box flex="0 0 12px" />
-        <IconButton size="small" color="error" onClick={reset}>
-          <ClearAllRounded />
-        </IconButton>
+        <Tooltip title="Clear all">
+          <IconButton size="small" color="error" onClick={reset}>
+            <ClearAllRounded />
+          </IconButton>
+        </Tooltip>
         <Box flex="0 0 12px" />
       </Stack>
       <TreeView
@@ -47,7 +55,7 @@ function SymptomsPage() {
         selected={[]}
         onNodeSelect={() => {}}
         onNodeToggle={() => {}}
-        sx={{ flex: 1, overflowY: "auto", px: 2 }}>
+        sx={{ height: "fit-content", px: 2 }}>
         <SymptomsGroup symptom={currPage} />
       </TreeView>
     </Stack>

@@ -36,6 +36,15 @@ const theme = createTheme({
       },
     },
     MuiPaginationItem: {},
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          background: "#0005",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+        },
+      },
+    },
   },
 });
 

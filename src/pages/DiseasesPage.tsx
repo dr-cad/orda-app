@@ -1,5 +1,5 @@
-import { CropFree } from "@mui/icons-material";
-import { Box, Divider, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { ImageOutlined } from "@mui/icons-material";
+import { Box, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import html2canvas from "html2canvas";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import seedrandom from "seedrandom";
@@ -28,13 +28,11 @@ export default function DiseasesPage() {
     const canvas = await html2canvas(_treeMapBox.current!);
     const data = canvas.toDataURL("image/png");
     const link = document.createElement("a");
-
-    link.href = data;
-    link.download = `ORDA ${new Date().toLocaleString()}.png`;
-
+    link.setAttribute("href", data);
+    link.setAttribute("download", `ORDA ${new Date().toLocaleString()}.png`);
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    link.remove();
   };
 
   const treeMapData: TreeMapItem = useMemo(
@@ -50,14 +48,14 @@ export default function DiseasesPage() {
   );
 
   return (
-    <Stack aria-label="diseases-page" flex={1} p={2} gap={2} sx={{ overflowY: "auto", overflowX: "hidden" }}>
+    <Stack aria-label="diseases-page" flex={1} p={2} gap={2}>
       <Box sx={{ borderRadius: 4, overflow: "hidden", position: "relative" }}>
         <Box ref={_treeMapBox} height="50vh">
           <TreeMap data={treeMapData} />
         </Box>
         <Box sx={{ position: "absolute", top: 12, left: 12, display: "flex" }}>
-          <IconButton aria-label="save" id="save-btn" size="small" onClick={handleDownload}>
-            <CropFree />
+          <IconButton aria-label="download-image" size="small" onClick={handleDownload} title="Download Image">
+            <ImageOutlined />
           </IconButton>
         </Box>
       </Box>
@@ -74,11 +72,11 @@ export default function DiseasesPage() {
 const DiseaseScore = ({ value, name }: IScoredDisease) => {
   return (
     <Fragment>
-      <ListItem sx={{ justifyContent: "space-between", opacity: value > 0.25 ? 1 : 0.35 }}>
+      <ListItem
+        sx={{ justifyContent: "space-between", opacity: value > 0.25 ? 1 : 0.35, borderBottom: "var(--app-border)" }}>
         <ListItemText primary={name} />
         <Typography sx={{ textAlign: "end" }}>{Math.round(value * 100) / 100}</Typography>
       </ListItem>
-      <Divider />
     </Fragment>
   );
 };
