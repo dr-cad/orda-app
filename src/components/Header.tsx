@@ -21,6 +21,10 @@ export default function Header() {
     link.remove();
   };
 
+  const handleLoadHistory = () => {
+    // TODO
+  };
+
   const showLoadBtn = useMemo(() => pathname.startsWith("/list") || pathname.startsWith("/history"), [pathname]);
   const showSaveBtn = useMemo(() => pathname.startsWith("/result") || pathname.startsWith("/history"), [pathname]);
   const showHistoryBtn = useMemo(() => !pathname.startsWith("/history"), [pathname]);
@@ -41,7 +45,7 @@ export default function Header() {
       borderBottom="var(--app-border)">
       <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start">
         {showLoadBtn && (
-          <IconButton>
+          <IconButton onClick={handleLoadHistory}>
             <UploadFileOutlined />
           </IconButton>
         )}

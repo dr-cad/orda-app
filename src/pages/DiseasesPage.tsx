@@ -9,6 +9,7 @@ import getScores from "../lib/scores";
 import { IScoredDisease } from "../types/interfaces";
 
 export default function DiseasesPage() {
+  const backedUp = useRef(false);
   const _treeMapBox = useRef();
 
   const symptoms = useStore((s) => s.symptoms);
@@ -21,7 +22,10 @@ export default function DiseasesPage() {
     const updateScores = async () => {
       const newScores = await getScores({ diseases, symptoms });
       setScores(newScores);
-      addHistory({ createdAt: new Date(), scores: newScores, symptoms });
+      if (!backedUp.current) {
+        backedUp.current = true;
+        addHistory({ createdAt: new Date(), scores: newScores, symptoms });
+      }
     };
     updateScores();
   }, [addHistory, diseases, symptoms]);
