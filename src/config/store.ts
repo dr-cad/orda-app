@@ -141,6 +141,6 @@ export const useStore = create(
       // app settings
       autoBackup: false,
     }),
-    { name: "app-storage", storage: createJSONStorage(() => sessionStorage) }
+    { name: "app-storage", storage: createJSONStorage(() => localStorage) }
   )
 );

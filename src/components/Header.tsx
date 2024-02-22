@@ -34,7 +34,6 @@ export default function Header() {
       reader.onload = (readerEvent) => {
         try {
           const content = readerEvent.target!.result;
-          console.log(content);
           if (!content) throw new Error("empty file");
           const data = JSON.parse(content!.toString());
           if (!Array.isArray(data)) throw new Error("wrong content");
