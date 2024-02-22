@@ -32,7 +32,7 @@ const HistoryItem = ({ createdAt, symptoms, index }: IHistoryItem & { index: num
       }}
       onClick={() => load(symptoms)}>
       <IconButton size="small" color="error" onClick={() => remove(index)}>
-        <CloseRounded />
+        <CloseRounded fontSize="small" />
       </IconButton>
       <Box flex="0 0 8px" />
       <ListItemText primary={title.toString()} />
