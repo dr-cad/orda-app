@@ -7,14 +7,12 @@ import SymptomsPage from "./pages/SymptomsPage";
 function App() {
   return (
     <BrowserRouter>
-      <PageLayout>
-        <Routes>
-          <Route path="/history" element={<HistoryPage />} />
-          <Route path="/result" element={<DiseasesPage />} />
-          <Route path="/list/:pageIndex" element={<SymptomsPage />} />
-          <Route path="*" element={<Navigate to="/list/1" replace />} />
-        </Routes>
-      </PageLayout>
+      <Routes>
+        <Route path="/history" element={<PageLayout children={<HistoryPage />} />} />
+        <Route path="/result" element={<PageLayout children={<DiseasesPage />} />} />
+        <Route path="/list/:pageIndex" element={<PageLayout children={<SymptomsPage />} />} />
+        <Route path="*" element={<Navigate to="/list/1" replace />} />
+      </Routes>
     </BrowserRouter>
   );
 }

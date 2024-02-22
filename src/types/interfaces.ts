@@ -44,3 +44,9 @@ export interface IDiseaseFactorRange extends IRange {
 export interface IScoredDisease extends IDisease {
   value: number;
 }
+
+export interface IHistoryItem {
+  createdAt: Date;
+  symptoms: ISymptom[];
+  scores: IScoredDisease[];
+}

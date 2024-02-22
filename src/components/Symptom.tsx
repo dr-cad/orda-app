@@ -101,7 +101,7 @@ const Label = ({ symptom, parent }: IInnerProps) => {
           sx={{ display: "flex", gap: 1, alignItems: "center" }}
           color={!!symptom.value ? (isEnumParent ? "warning.light" : "primary") : undefined}>
           {symptom.name}
-          {symptom.required && <Typography sx={{ color: "error.main" }}>{" *"}</Typography>}
+          {symptom.required && <span style={{ color: "red" }}>{" *"}</span>}
         </Typography>
       }
       control={

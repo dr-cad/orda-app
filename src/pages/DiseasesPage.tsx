@@ -13,6 +13,7 @@ export default function DiseasesPage() {
 
   const symptoms = useStore((s) => s.symptoms);
   const diseases = useStore((s) => s.diseases);
+  const addHistory = useStore((s) => s.addHistory);
 
   const [scores, setScores] = useState<IScoredDisease[]>([]);
 
@@ -20,9 +21,10 @@ export default function DiseasesPage() {
     const updateScores = async () => {
       const newScores = await getScores({ diseases, symptoms });
       setScores(newScores);
+      addHistory({ createdAt: new Date(), scores: newScores, symptoms });
     };
     updateScores();
-  }, [diseases, symptoms]);
+  }, [addHistory, diseases, symptoms]);
 
   const handleDownload = async () => {
     const canvas = await html2canvas(_treeMapBox.current!);

@@ -2,7 +2,7 @@ import { produce } from "immer";
 import { create } from "zustand";
 import getRawDiseases from "../lib/diseases";
 import getRawSymptoms from "../lib/symptoms";
-import { IDisease, ISymptom, Value } from "../types/interfaces";
+import { IDisease, IHistoryItem, ISymptom, Value } from "../types/interfaces";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 const recursivelyResetItem = (arr: ISymptom[], id: string) => {
@@ -56,6 +56,10 @@ interface Store {
   expandAll: () => void;
   diseases: IDisease[];
   reset: () => void;
+  history: IHistoryItem[];
+  addHistory: (history: IHistoryItem) => void;
+  removeHistory: (index: number) => void;
+  loadHistory: (symptoms: ISymptom[]) => void;
 }
 
 export const useStore = create(
@@ -65,7 +69,7 @@ export const useStore = create(
       updateSymptom: (id, value) => {
         let result = undefined;
         set(
-          produce((s) => {
+          produce((s: Store) => {
             let arr: ISymptom[] = s.symptoms;
             let item = arr.find((i) => i.id === id);
             if (item) {
@@ -107,6 +111,20 @@ export const useStore = create(
         set(() => ({ expanded: getRawExpanded(true) }));
       },
       diseases: getRawDiseases(),
+      history: [],
+      addHistory: (item) => {
+        set((s) => ({ history: [item, ...s.history] }));
+      },
+      removeHistory: (index) => {
+        set(
+          produce((s: Store) => {
+            s.history.splice(index, 1);
+          })
+        );
+      },
+      loadHistory: (symptoms) => {
+        set(() => ({ symptoms }));
+      },
     }),
     { name: "app-storage", storage: createJSONStorage(() => sessionStorage) }
   )

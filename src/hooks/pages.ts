@@ -1,19 +1,20 @@
 import { useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import getRawSymptoms from "../lib/symptoms";
+import { useStore } from "../config/store";
 
 export function usePageIndex() {
-  // const symptoms = useStore((s) => s.symptoms);
-  const symptoms = getRawSymptoms();
+  const symptoms = useStore((s) => s.symptoms);
   const nav = useNavigate();
   const { pageIndex: pi } = useParams();
-  const location = useLocation();
+  const { pathname } = useLocation();
+
+  const show = useMemo(() => pathname.startsWith("/list") || pathname.startsWith("/result"), [pathname]);
 
   const pageIndex = useMemo(() => (pi ? parseInt(pi) - 1 : 0), [pi]);
   const pages = useMemo(() => symptoms.filter((i) => i.page), [symptoms]);
   const currPage = pages[pageIndex];
 
-  const isResult = location.pathname === "/result";
+  const isResult = pathname.startsWith("/result");
   const canGoBack = pageIndex > 0 || isResult;
   const canGoForward = !isResult && pageIndex < pages?.length - 1;
 
@@ -31,6 +32,7 @@ export function usePageIndex() {
   };
 
   return {
+    show,
     pages,
     isResult,
     pageIndex,
