@@ -1,9 +1,9 @@
 import { AddRounded, HistoryRounded, HomeOutlined, SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
-import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import { Button, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useStore } from "../config/store";
-import { downloadData } from "../lib/file";
+import { exportHistory, importHistory } from "../lib/history";
 import { ReactComponent as Logo } from "./favicon.svg";
 
 export default function Header() {
@@ -15,47 +15,32 @@ export default function Header() {
   const history = useStore((s) => s.history);
   const reset = useStore((s) => s.reset);
   const autoBackup = useStore((s) => s.autoBackup);
+  const showSnackbar = useStore((s) => s.showSnackbar);
 
-  const handleDownloadData: React.MouseEventHandler = (e) => {
+  const handleExportHistory: React.MouseEventHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    downloadData(history);
+    exportHistory(history);
+    showSnackbar("History file exported successfully!");
   };
 
-  const handleLoadHistory = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.multiple = false;
-    input.accept = "application/json";
-    input.onchange = (e) => {
-      const file = (e.target as any).files[0];
-      const reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = (readerEvent) => {
-        try {
-          const content = readerEvent.target!.result;
-          if (!content) throw new Error("empty file");
-          const data = JSON.parse(content!.toString());
-          if (!Array.isArray(data)) throw new Error("wrong content");
-          data.forEach((item) => addHistory(item));
-          nav("/history");
-        } catch (e) {
-          if (e instanceof Error) {
-            alert(e.message);
-          }
-        }
-      };
-    };
-    input.click();
+  const handleImportHistory: React.MouseEventHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    importHistory(addHistory, () => {
+      showSnackbar("History file imported successfully!");
+    });
   };
 
-  const handleNewFile = () => {
+  const handleNewRecord = () => {
     // save prev data as history
     addHistory({ createdAt: new Date(), scores: [], symptoms, unsaved: true });
     // clear list
     reset();
     // nav to home page 1
     nav("/list/1");
+    // show notification
+    showSnackbar("Draft saved! You can view it any time in history page");
   };
 
   const showNewBtn = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
@@ -83,21 +68,21 @@ export default function Header() {
       <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start">
         {showNewBtn && (
           <Tooltip title="New File">
-            <IconButton onClick={handleNewFile}>
-              <AddRounded />
-            </IconButton>
+            <Button onClick={handleNewRecord} startIcon={<AddRounded />} size="small" sx={{ fontSize: "0.78rem" }}>
+              New
+            </Button>
           </Tooltip>
         )}
         {showLoadBtn && (
           <Tooltip title="Import History">
-            <IconButton onClick={handleLoadHistory}>
+            <IconButton onClick={handleImportHistory}>
               <UploadFileOutlined />
             </IconButton>
           </Tooltip>
         )}
         {showSaveBtn && (
           <Tooltip title="Export History">
-            <IconButton aria-label="save-data" onClick={handleDownloadData} title="Download Data">
+            <IconButton aria-label="save-data" onClick={handleExportHistory} title="Download Data">
               <SaveOutlined />
             </IconButton>
           </Tooltip>

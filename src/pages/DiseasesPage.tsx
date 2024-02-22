@@ -5,9 +5,9 @@ import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import seedrandom from "seedrandom";
 import TreeMap, { TreeMapItem } from "../components/TreeMap";
 import { useStore } from "../config/store";
+import { exportHistory } from "../lib/history";
 import getScores from "../lib/scores";
 import { IScoredDisease } from "../types/interfaces";
-import { downloadData } from "../lib/file";
 
 export default function DiseasesPage() {
   const backedUp = useRef(false);
@@ -29,7 +29,7 @@ export default function DiseasesPage() {
         backedUp.current = true;
         const history = addHistory({ createdAt: new Date(), scores: newScores, symptoms });
         // download a backup file
-        if (autoBackup) downloadData(history);
+        if (autoBackup) exportHistory(history);
       }
     };
     updateScores();

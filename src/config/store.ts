@@ -61,6 +61,12 @@ interface Store {
   addHistory: (history: IHistoryItem) => IHistoryItem[];
   removeHistory: (index: number) => void;
   loadHistory: (symptoms: ISymptom[]) => void;
+  // app ui
+  initialized: boolean;
+  setInitialized: () => void;
+  snackbar: { message: string; color?: string } | null;
+  showSnackbar: (message: string, color?: string) => void;
+  hideSnackbar: () => void;
   // app settings
   autoBackup: boolean;
 }
@@ -92,12 +98,11 @@ export const useStore = create(
         return result;
       },
       reset: () => {
-        set(() => ({
-          // ...
+        set({
           symptoms: getRawSymptoms(),
           expanded: getRawExpanded(),
           diseases: getRawDiseases(),
-        }));
+        });
       },
       expanded: getRawExpanded(),
       toggleExpanded: (id) =>
@@ -108,10 +113,10 @@ export const useStore = create(
           return { expanded: Array.from(list) };
         }),
       collapseAll: () => {
-        set(() => ({ expanded: [] }));
+        set({ expanded: [] });
       },
       expandAll: () => {
-        set(() => ({ expanded: getRawExpanded(true) }));
+        set({ expanded: getRawExpanded(true) });
       },
       diseases: getRawDiseases(),
       history: [],
@@ -136,7 +141,19 @@ export const useStore = create(
         );
       },
       loadHistory: (symptoms) => {
-        set(() => ({ symptoms }));
+        set({ symptoms });
+      },
+      // app ui
+      initialized: false,
+      setInitialized: () => {
+        set({ initialized: true });
+      },
+      snackbar: null,
+      showSnackbar: (message: string, color?: string) => {
+        set({ snackbar: { message, color } });
+      },
+      hideSnackbar: () => {
+        set({ snackbar: null });
       },
       // app settings
       autoBackup: false,

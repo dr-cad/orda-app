@@ -22,6 +22,8 @@ const HistoryItem = ({ createdAt, symptoms, index, unsaved }: IHistoryItem & { i
   const nav = useNavigate();
   const remove = useStore((s) => s.removeHistory);
   const load = useStore((s) => s.loadHistory);
+  const showSnackbar = useStore((s) => s.showSnackbar);
+
   const title = useMemo(() => symptoms.find((s) => s.id === "pat-name")?.value ?? "ORDA", [symptoms]);
 
   const handleLoad: React.MouseEventHandler = (e) => {
@@ -29,12 +31,14 @@ const HistoryItem = ({ createdAt, symptoms, index, unsaved }: IHistoryItem & { i
     e.stopPropagation();
     load(symptoms);
     nav("/");
+    showSnackbar("History record loaded!");
   };
 
   const handleRemove: React.MouseEventHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
     remove(index);
+    showSnackbar("History record removed!");
   };
 
   return (

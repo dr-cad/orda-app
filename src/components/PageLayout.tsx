@@ -1,6 +1,7 @@
 import { Stack } from "@mui/material";
 import Header from "./Header";
 import Pagination from "./Pagination";
+import Snackbar from "./Snackbar";
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
@@ -17,6 +18,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
       <Header />
       {children}
       <Pagination />
+      <Snackbar />
     </Stack>
   );
 }
