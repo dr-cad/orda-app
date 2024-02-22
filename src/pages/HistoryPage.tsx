@@ -48,13 +48,11 @@ export default function HistoryPage() {
         }}
       />
       <List>
-        <ListItem sx={{ pb: 2, borderBottom: "var(--app-border)" }}>
-          <NewRecordButton fullWidth />
-        </ListItem>
         {list.map((item, i) => (
           <HistoryItem key={i} index={i} {...item} />
         ))}
       </List>
+      <NewRecordButton fullWidth />
     </Stack>
   );
 }
