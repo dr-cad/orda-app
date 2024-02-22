@@ -12,9 +12,7 @@ type ValidationError = {
 const symptomTypes = ["enum", "number", "range", "none", "string"];
 const alwaysVisible = ["pat-info", "pat-name", "pat-age"];
 
-export default function getRawSymptoms(): ISymptom[] {
-  const data: ISymptomRaw[] = rawSymptoms;
-
+export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms): ISymptom[] {
   const validate = (): ValidationError | null => {
     let idRepo: string[] = [];
     for (let item of data) {

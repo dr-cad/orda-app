@@ -1,31 +1,69 @@
-import { HistoryRounded, HomeOutlined, SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
-import { IconButton, Stack, Typography } from "@mui/material";
+import { HistoryRounded, HomeOutlined, NoteAddOutlined, SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
+import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useStore } from "../config/store";
 import { ReactComponent as Logo } from "./favicon.svg";
 
 export default function Header() {
+  const nav = useNavigate();
   const { pathname } = useLocation();
 
+  const addHistory = useStore((s) => s.addHistory);
   const symptoms = useStore((s) => s.symptoms);
+  const history = useStore((s) => s.history);
+  const reset = useStore((s) => s.reset);
 
   const handleDownloadData = async () => {
-    const prefix = symptoms.find((s) => s.id === "pat-name")?.value ?? "ORDA";
-    const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify([symptoms]));
+    const prefix = "ORDA";
+    const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(history));
     const link = document.createElement("a");
-    link.setAttribute("href", data);
-    link.setAttribute("download", `${prefix} ${new Date().toLocaleString()}.json`);
+    link.href = data;
+    link.download = `${prefix} ${new Date().toLocaleString()}.json`;
     document.body.appendChild(link); // required for firefox
     link.click();
     link.remove();
   };
 
   const handleLoadHistory = () => {
-    // TODO
+    const input = document.createElement("input");
+    input.type = "file";
+    input.multiple = false;
+    input.accept = "application/json";
+    input.onchange = (e) => {
+      const file = (e.target as any).files[0];
+      const reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = (readerEvent) => {
+        try {
+          const content = readerEvent.target!.result;
+          console.log(content);
+          if (!content) throw new Error("empty file");
+          const data = JSON.parse(content!.toString());
+          if (!Array.isArray(data)) throw new Error("wrong content");
+          data.forEach((item) => addHistory(item));
+          nav("/history");
+        } catch (e) {
+          if (e instanceof Error) {
+            alert(e.message);
+          }
+        }
+      };
+    };
+    input.click();
   };
 
-  const showLoadBtn = useMemo(() => pathname.startsWith("/list") || pathname.startsWith("/history"), [pathname]);
+  const handleNewFile = () => {
+    // save prev data as history
+    addHistory({ createdAt: new Date(), scores: [], symptoms });
+    // clear list
+    reset();
+    // nav to home page 1
+    nav("/list/1");
+  };
+
+  const showNewBtn = useMemo(() => pathname.startsWith("/list"), [pathname]);
+  const showLoadBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
   const showSaveBtn = useMemo(() => pathname.startsWith("/result") || pathname.startsWith("/history"), [pathname]);
   const showHistoryBtn = useMemo(() => !pathname.startsWith("/history"), [pathname]);
 
@@ -44,15 +82,26 @@ export default function Header() {
       zIndex={99}
       borderBottom="var(--app-border)">
       <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start">
+        {showNewBtn && (
+          <Tooltip title="New File">
+            <IconButton onClick={handleNewFile}>
+              <NoteAddOutlined />
+            </IconButton>
+          </Tooltip>
+        )}
         {showLoadBtn && (
-          <IconButton onClick={handleLoadHistory}>
-            <UploadFileOutlined />
-          </IconButton>
+          <Tooltip title="Import History">
+            <IconButton onClick={handleLoadHistory}>
+              <UploadFileOutlined />
+            </IconButton>
+          </Tooltip>
         )}
         {showSaveBtn && (
-          <IconButton aria-label="save-data" onClick={handleDownloadData} title="Download Data">
-            <SaveOutlined />
-          </IconButton>
+          <Tooltip title="Export History">
+            <IconButton aria-label="save-data" onClick={handleDownloadData} title="Download Data">
+              <SaveOutlined />
+            </IconButton>
+          </Tooltip>
         )}
       </Stack>
       <NavLink

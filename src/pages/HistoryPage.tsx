@@ -3,6 +3,7 @@ import { Box, IconButton, List, ListItem, ListItemText, Stack, Typography } from
 import { useMemo } from "react";
 import { useStore } from "../config/store";
 import { IHistoryItem } from "../types/interfaces";
+import { useNavigate } from "react-router-dom";
 
 export default function HistoryPage() {
   const history = useStore((s) => s.history);
@@ -18,9 +19,23 @@ export default function HistoryPage() {
 }
 
 const HistoryItem = ({ createdAt, symptoms, index }: IHistoryItem & { index: number }) => {
+  const nav = useNavigate();
   const remove = useStore((s) => s.removeHistory);
   const load = useStore((s) => s.loadHistory);
   const title = useMemo(() => symptoms.find((s) => s.id === "pat-name")?.value ?? "ORDA", [symptoms]);
+
+  const handleLoad: React.MouseEventHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    load(symptoms);
+    nav("/");
+  };
+
+  const handleRemove: React.MouseEventHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    remove(index);
+  };
 
   return (
     <ListItem
@@ -30,14 +45,14 @@ const HistoryItem = ({ createdAt, symptoms, index }: IHistoryItem & { index: num
         borderBottom: "var(--app-border)",
         cursor: "pointer",
       }}
-      onClick={() => load(symptoms)}>
-      <IconButton size="small" color="error" onClick={() => remove(index)}>
+      onClick={handleLoad}>
+      <IconButton size="small" color="error" onClick={handleRemove}>
         <CloseRounded fontSize="small" />
       </IconButton>
       <Box flex="0 0 8px" />
       <ListItemText primary={title.toString()} />
       <Typography fontSize="0.75rem" sx={{ textAlign: "end", opacity: 0.55 }}>
-        {createdAt?.toUTCString()}
+        {new Date(createdAt).toUTCString()}
       </Typography>
     </ListItem>
   );

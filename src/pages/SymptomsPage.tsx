@@ -8,7 +8,6 @@ import { usePageIndex } from "../hooks/pages";
 
 function SymptomsPage() {
   const { currPage } = usePageIndex();
-  const reset = useStore((s) => s.reset);
   const collapseAll = useStore((s) => s.collapseAll);
   const expandAll = useStore((s) => s.expandAll);
   const expanded = useStore((s) => s.expanded);
@@ -21,7 +20,7 @@ function SymptomsPage() {
         aria-label="symptom-page-header"
         direction="row"
         alignItems="center"
-        sx={{ py: 2, pl: 2, top: 0, position: "sticky", zIndex: 100, backdropFilter: "blur(10px)" }}>
+        sx={{ py: 2, px: 2, top: 0, position: "sticky", zIndex: 100, backdropFilter: "blur(10px)" }}>
         <Stack>
           <Typography variant="h5" textTransform="capitalize" fontWeight={700} sx={{ whiteSpace: "pre-line" }}>
             {currPage.name}
@@ -39,13 +38,6 @@ function SymptomsPage() {
             {expanded.length > 0 ? <ExpandLessRounded /> : <ExpandMoreRounded />}
           </IconButton>
         </Tooltip>
-        <Box flex="0 0 12px" />
-        <Tooltip title="Clear all">
-          <IconButton size="small" color="error" onClick={reset}>
-            <ClearAllRounded />
-          </IconButton>
-        </Tooltip>
-        <Box flex="0 0 12px" />
       </Stack>
       <TreeView
         defaultCollapseIcon={<MinusSquare />}
