@@ -94,6 +94,6 @@ img.desc-img {
 }
 
 .sticky {
-  position: -webkit-sticky;
-  position: sticky;
+  position: -webkit-sticky !important;
+  position: sticky !important;
 }

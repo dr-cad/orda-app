@@ -31,8 +31,10 @@ export default function HistoryPage() {
   );
 
   return (
-    <Stack aria-label="diseases-page" flex={1} p={2} gap={2}>
+    <Stack aria-label="diseases-page" flex={1} p={2} gap={2} position="relative">
       <TextField
+        className="sticky blur-bg"
+        sx={{ top: 20, zIndex: 99 }}
         size="small"
         type="text"
         placeholder="Search a name"
@@ -40,7 +42,7 @@ export default function HistoryPage() {
         onChange={(e) => handleChange(e.target.value)}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end" sx={{ opacity: 0.5 }}>
+            <InputAdornment position="end" sx={{ opacity: 0.15 }}>
               <SearchRounded />
             </InputAdornment>
           ),
