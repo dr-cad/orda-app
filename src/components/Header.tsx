@@ -2,9 +2,9 @@ import {
   HistoryRounded,
   HomeOutlined,
   SaveOutlined,
-  SickOutlined,
-  SickRounded,
   UploadFileOutlined,
+  VisibilityOffOutlined,
+  VisibilityOutlined,
 } from "@mui/icons-material";
 import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
@@ -25,7 +25,7 @@ export default function Header() {
   const setMode = useStore((s) => s.setMode);
 
   const toggleMode = () => {
-    setMode(mode === "normal" ? "prevalance" : "normal");
+    setMode(mode === "raw" ? "prevalance" : "raw");
   };
 
   const handleExportHistory: React.MouseEventHandler = (e) => {
@@ -87,9 +87,9 @@ export default function Header() {
           </Tooltip>
         )}
         {showModeBtn && (
-          <Tooltip title="Toggle Mode">
-            <IconButton value="bold" color={mode === "prevalance" ? "primary" : "warning"} onClick={toggleMode}>
-              {mode === "prevalance" ? <SickRounded /> : <SickOutlined />}
+          <Tooltip title={mode === "prevalance" ? "Raw Results" : "Prevalanced Results"}>
+            <IconButton value="bold" sx={{ color: mode === "prevalance" ? "primary" : "#fff5" }} onClick={toggleMode}>
+              {mode === "prevalance" ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
             </IconButton>
           </Tooltip>
         )}

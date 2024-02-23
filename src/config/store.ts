@@ -48,7 +48,7 @@ const getRawExpanded = (openAll = false) => {
   return Array.from(expandedSet);
 };
 
-type AppMode = "prevalance" | "normal";
+type AppMode = "prevalance" | "raw";
 
 interface Store {
   symptoms: ISymptom[];

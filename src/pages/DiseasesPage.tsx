@@ -52,7 +52,7 @@ export default function DiseasesPage() {
       name: "scores",
       children: scores.map<TreeMapItem>((score) => ({
         name: score.name,
-        value: mode === "normal" ? score.value : score.pvalue,
+        value: mode === "raw" ? score.value : score.pvalue,
         color: `hsl(${seedrandom(score.id)() * 360}, 70%, 50%)`,
       })),
     }),
@@ -83,21 +83,24 @@ export default function DiseasesPage() {
 
 const DiseaseScore = ({ value, name, pvalue, preval }: IScoredDisease) => {
   const mode = useStore((s) => s.mode);
-  const output = useMemo(() => (mode === "normal" ? value : pvalue), [mode, pvalue, value]);
   return (
     <Fragment>
       <ListItem
         sx={{
           justifyContent: "space-between",
-          opacity: output > 0.25 ? 1 : 0.35,
+          opacity: value > 0.25 ? 1 : 0.35,
           borderBottom: "var(--app-border)",
         }}>
         <ListItemText primary={name} />
-        <Typography sx={{ textAlign: "end" }}>{Math.round(output * 100) / 100}</Typography>
-        {mode === "prevalance" && (
-          <Typography sx={{ textAlign: "end", opacity: 0.5, ml: 1 }} fontSize="0.75rem">
-            ({(preval * 100).toFixed(0)}%)
-          </Typography>
+        {mode === "prevalance" ? (
+          <Fragment>
+            <Typography sx={{ textAlign: "end" }}>{(pvalue * 100).toFixed(0)}%</Typography>
+            <Typography sx={{ textAlign: "end", opacity: 0.5, ml: 1 }} fontSize="0.75rem">
+              ({value.toFixed(2)})
+            </Typography>
+          </Fragment>
+        ) : (
+          <Typography sx={{ textAlign: "end" }}>{(value * 100).toFixed(0)}%</Typography>
         )}
       </ListItem>
     </Fragment>
