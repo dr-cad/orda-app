@@ -13,6 +13,7 @@ export default function DiseasesPage() {
   const backedUp = useRef(false);
   const _treeMapBox = useRef();
 
+  const mode = useStore((s) => s.mode);
   const symptoms = useStore((s) => s.symptoms);
   const diseases = useStore((s) => s.diseases);
   const addHistory = useStore((s) => s.addHistory);
@@ -39,8 +40,8 @@ export default function DiseasesPage() {
     const canvas = await html2canvas(_treeMapBox.current!);
     const data = canvas.toDataURL("image/png");
     const link = document.createElement("a");
-    link.setAttribute("href", data);
-    link.setAttribute("download", `ORDA ${new Date().toLocaleString()}.png`);
+    link.href = data;
+    link.download = `ORDA ${new Date().toLocaleString()}.png`;
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -51,11 +52,11 @@ export default function DiseasesPage() {
       name: "scores",
       children: scores.map<TreeMapItem>((score) => ({
         name: score.name,
-        value: score.value,
+        value: mode === "normal" ? score.value : score.pvalue,
         color: `hsl(${seedrandom(score.id)() * 360}, 70%, 50%)`,
       })),
     }),
-    [scores]
+    [mode, scores]
   );
 
   return (
@@ -80,13 +81,24 @@ export default function DiseasesPage() {
   );
 }
 
-const DiseaseScore = ({ value, name }: IScoredDisease) => {
+const DiseaseScore = ({ value, name, pvalue, preval }: IScoredDisease) => {
+  const mode = useStore((s) => s.mode);
+  const output = useMemo(() => (mode === "normal" ? value : pvalue), [mode, pvalue, value]);
   return (
     <Fragment>
       <ListItem
-        sx={{ justifyContent: "space-between", opacity: value > 0.25 ? 1 : 0.35, borderBottom: "var(--app-border)" }}>
+        sx={{
+          justifyContent: "space-between",
+          opacity: output > 0.25 ? 1 : 0.35,
+          borderBottom: "var(--app-border)",
+        }}>
         <ListItemText primary={name} />
-        <Typography sx={{ textAlign: "end" }}>{Math.round(value * 100) / 100}</Typography>
+        <Typography sx={{ textAlign: "end" }}>{Math.round(output * 100) / 100}</Typography>
+        {mode === "prevalance" && (
+          <Typography sx={{ textAlign: "end", opacity: 0.5, ml: 1 }} fontSize="0.75rem">
+            ({(preval * 100).toFixed(0)}%)
+          </Typography>
+        )}
       </ListItem>
     </Fragment>
   );

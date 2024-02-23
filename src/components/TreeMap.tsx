@@ -1,11 +1,19 @@
 import { ResponsiveTreeMap, TreeMapDataProps } from "@nivo/treemap";
 
-export interface TreeMapItem {
+interface BaseTreeMapItem {
   name: string;
   color?: string;
-  children?: TreeMapItem[];
+}
+
+interface TreeMapChild extends BaseTreeMapItem {
   value?: number;
 }
+
+interface TreeMapParent extends BaseTreeMapItem {
+  children?: TreeMapItem[];
+}
+
+export type TreeMapItem = TreeMapChild | TreeMapParent;
 
 export default function TreeMap({ data }: TreeMapDataProps<TreeMapItem>) {
   return (

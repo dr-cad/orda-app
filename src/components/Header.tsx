@@ -1,4 +1,11 @@
-import { HistoryRounded, HomeOutlined, SaveOutlined, UploadFileOutlined } from "@mui/icons-material";
+import {
+  HistoryRounded,
+  HomeOutlined,
+  SaveOutlined,
+  SickOutlined,
+  SickRounded,
+  UploadFileOutlined,
+} from "@mui/icons-material";
 import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -12,8 +19,14 @@ export default function Header() {
 
   const addHistory = useStore((s) => s.addHistory);
   const history = useStore((s) => s.history);
-  const autoBackup = useStore((s) => s.autoBackup);
   const showSnackbar = useStore((s) => s.showSnackbar);
+  const autoBackup = useStore((s) => s.autoBackup);
+  const mode = useStore((s) => s.mode);
+  const setMode = useStore((s) => s.setMode);
+
+  const toggleMode = () => {
+    setMode(mode === "normal" ? "prevalance" : "normal");
+  };
 
   const handleExportHistory: React.MouseEventHandler = (e) => {
     e.preventDefault();
@@ -32,6 +45,7 @@ export default function Header() {
 
   const showNewBtn = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
   const showLoadBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
+  const showModeBtn = useMemo(() => pathname.startsWith("/result"), [pathname]);
   const showSaveBtn = useMemo(
     () => (!autoBackup && pathname.startsWith("/result")) || pathname.startsWith("/history"),
     [autoBackup, pathname]
@@ -69,6 +83,13 @@ export default function Header() {
           <Tooltip title="Export History">
             <IconButton onClick={handleExportHistory}>
               <SaveOutlined />
+            </IconButton>
+          </Tooltip>
+        )}
+        {showModeBtn && (
+          <Tooltip title="Toggle Mode">
+            <IconButton value="bold" color={mode === "prevalance" ? "primary" : "warning"} onClick={toggleMode}>
+              {mode === "prevalance" ? <SickRounded /> : <SickOutlined />}
             </IconButton>
           </Tooltip>
         )}

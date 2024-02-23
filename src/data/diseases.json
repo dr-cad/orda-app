@@ -2,6 +2,7 @@
   {
     "id": "radicular",
     "name": "Radicular Cyst",
+    "preval": 0.8,
     "factors": [
       {
         "sid": "pat-age",
@@ -13,8 +14,8 @@
       { "sid": "pat-male", "rate": 0.55 },
       { "sid": "pat-female", "rate": 0.45 },
       { "sid": "recent-gingival", "rate": -1 },
-      { "sid": "super", "rate": -1},
-      { "sid": "malform", "rate": -1},
+      { "sid": "super", "rate": -1 },
+      { "sid": "malform", "rate": -1 },
       { "sid": "primary-1", "rate": -1 },
       { "sid": "permanent-1", "rate": -1 },
       { "sid": "primary-2", "rate": -1 },
@@ -157,6 +158,7 @@
   {
     "id": "dentigerous",
     "name": "Dentigerous Cyst",
+    "preval": 0.4,
     "factors": [
       {
         "sid": "pat-age",
@@ -168,8 +170,8 @@
       { "sid": "pat-male", "rate": 0.5 },
       { "sid": "pat-female", "rate": 0.5 },
       { "sid": "recent-gingival", "rate": -1 },
-      { "sid": "super", "rate": -1},
-      { "sid": "malform", "rate": -1},
+      { "sid": "super", "rate": -1 },
+      { "sid": "malform", "rate": -1 },
       { "sid": "primary-1", "rate": 0.1 },
       { "sid": "permanent-1", "rate": 0.9 },
       { "sid": "primary-2", "rate": -1 },

@@ -48,6 +48,8 @@ const getRawExpanded = (openAll = false) => {
   return Array.from(expandedSet);
 };
 
+type AppMode = "prevalance" | "normal";
+
 interface Store {
   symptoms: ISymptom[];
   updateSymptom: (id: string, value: Value) => ISymptom[] | undefined;
@@ -69,6 +71,8 @@ interface Store {
   hideSnackbar: () => void;
   // app settings
   autoBackup: boolean;
+  mode: AppMode;
+  setMode: (mode: AppMode) => void;
 }
 
 export const useStore = create(
@@ -157,6 +161,10 @@ export const useStore = create(
       },
       // app settings
       autoBackup: false,
+      mode: "prevalance",
+      setMode: (mode) => {
+        set({ mode });
+      },
     }),
     { name: "app-storage", storage: createJSONStorage(() => localStorage) }
   )

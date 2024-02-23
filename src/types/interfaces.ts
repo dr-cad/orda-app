@@ -23,6 +23,7 @@ export interface ISymptom extends ISymptomRaw {
 export interface IDisease {
   id: string;
   name: string;
+  preval: number;
   factors: IDiseaseFactor[];
 }
 
@@ -43,6 +44,7 @@ export interface IDiseaseFactorRange extends IRange {
 
 export interface IScoredDisease extends IDisease {
   value: number;
+  pvalue: number;
 }
 
 export interface IHistoryItem {

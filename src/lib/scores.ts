@@ -54,14 +54,19 @@ const getSymptomProbablity = (factor: IDiseaseFactor, symptoms: ISymptom[]) => {
 // nominator
 const getDiseaseProbablity = (disease: IDisease, symptoms: ISymptom[]): number => {
   console.groupCollapsed("Disease", disease.name);
-  const p0 = 1;
   const mul = disease.factors.reduce((v, factor) => v * getSymptomProbablity(factor, symptoms), 1);
   console.groupEnd();
-  return mul * p0; // P(Di) * ∏j{P(Sj|Di)}
+  return mul; // P(Di) * ∏j{P(Sj|Di)}
 };
 
 export default async function getScores({ diseases, symptoms }: IProps): Promise<IScoredDisease[]> {
   const nominators: number[] = diseases.map((disease) => getDiseaseProbablity(disease, symptoms));
   const dinaminator = nominators.reduce((a, b) => a + b, 0); // Σi{P(Di)} * ∏j{P(Sj|Di)}
-  return diseases.map((disease, i) => ({ ...disease, value: nominators[i] / dinaminator }));
+  const pnominators: number[] = diseases.map((disease) => disease.preval * getDiseaseProbablity(disease, symptoms));
+  const pdinaminator = pnominators.reduce((a, b) => a + b, 0); // Σi{P(Di)} * ∏j{P(Sj|Di)}
+  return diseases.map((disease, i) => ({
+    ...disease,
+    value: nominators[i] / dinaminator,
+    pvalue: pnominators[i] / pdinaminator,
+  }));
 }
