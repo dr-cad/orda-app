@@ -6,7 +6,7 @@ import {
   VisibilityOffOutlined,
   VisibilityOutlined,
 } from "@mui/icons-material";
-import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import { Button, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useStore } from "../config/store";
@@ -20,7 +20,6 @@ export default function Header() {
   const addHistory = useStore((s) => s.addHistory);
   const history = useStore((s) => s.history);
   const showSnackbar = useStore((s) => s.showSnackbar);
-  const autoBackup = useStore((s) => s.autoBackup);
   const mode = useStore((s) => s.mode);
   const setMode = useStore((s) => s.setMode);
 
@@ -46,10 +45,7 @@ export default function Header() {
   const showNewBtn = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
   const showLoadBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
   const showModeBtn = useMemo(() => pathname.startsWith("/result"), [pathname]);
-  const showSaveBtn = useMemo(
-    () => (!autoBackup && pathname.startsWith("/result")) || pathname.startsWith("/history"),
-    [autoBackup, pathname]
-  );
+  const showSaveBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
   const showHistoryBtn = useMemo(() => !pathname.startsWith("/history"), [pathname]);
 
   return (
@@ -87,10 +83,14 @@ export default function Header() {
           </Tooltip>
         )}
         {showModeBtn && (
-          <Tooltip title={mode === "prevalance" ? "Raw Results" : "Prevalanced Results"}>
-            <IconButton value="bold" sx={{ color: mode === "prevalance" ? "primary" : "#fff5" }} onClick={toggleMode}>
-              {mode === "prevalance" ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
-            </IconButton>
+          <Tooltip title="Toggle prevalanced mode to consider spread factor">
+            <Button
+              value="bold"
+              sx={{ color: mode === "prevalance" ? "primary" : "#fff5", fontSize: "0.85rem" }}
+              startIcon={mode === "prevalance" ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+              onClick={toggleMode}>
+              {mode === "raw" ? "Raw Results" : "Prevalanced"}
+            </Button>
           </Tooltip>
         )}
       </Stack>
