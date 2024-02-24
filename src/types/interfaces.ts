@@ -10,7 +10,6 @@ export interface ISymptomRaw {
   page?: boolean;
   required?: boolean;
   type?: string;
-  // type?: string;
   options?: string[];
   open?: boolean;
 }

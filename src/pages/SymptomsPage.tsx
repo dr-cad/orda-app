@@ -5,12 +5,21 @@ import SymptomsGroup from "../components/Symptom";
 import { CloseSquare, MinusSquare, PlusSquare } from "../components/styled";
 import { useStore } from "../config/store";
 import { usePageIndex } from "../hooks/pages";
+import { useMemo } from "react";
 
 function SymptomsPage() {
   const { currPage } = usePageIndex();
   const collapseAll = useStore((s) => s.collapseAll);
   const expandAll = useStore((s) => s.expandAll);
-  const expanded = useStore((s) => s.expanded);
+  const symptoms = useStore((s) => s.symptoms);
+
+  const expanded = useMemo(() => {
+    const expandedSet = new Set<string>();
+    symptoms.forEach((i) => {
+      if (i.open) expandedSet.add(i.id);
+    });
+    return Array.from(expandedSet);
+  }, [symptoms]);
 
   if (!currPage) return <p>404</p>;
 

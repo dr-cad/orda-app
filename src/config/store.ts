@@ -14,6 +14,7 @@ const recursivelyResetItem = (arr: ISymptom[], id: string) => {
     console.log("Removing", item.id);
     // reset self
     item.value = undefined;
+    item.open = false; // close the item
     // reset each child recursively
     if (Array.isArray(item.options)) {
       item.options.forEach((o) => recursivelyResetItem(arr, o));
@@ -39,21 +40,12 @@ const recursivelyUpdateParents = (arr: ISymptom[], id: string) => {
   }
 };
 
-const getRawExpanded = (openAll = false) => {
-  const rawSymptoms = getRawSymptoms();
-  const expandedSet = new Set<string>();
-  rawSymptoms.forEach((i) => {
-    if (openAll || i.open) expandedSet.add(i.id);
-  });
-  return Array.from(expandedSet);
-};
-
 type AppMode = "prevalance" | "raw";
+type ChartMode = "treemap" | "bar";
 
 interface Store {
   symptoms: ISymptom[];
   updateSymptom: (id: string, value: Value) => ISymptom[] | undefined;
-  expanded: string[];
   toggleExpanded: (id: string) => void;
   collapseAll: () => void;
   expandAll: () => void;
@@ -72,7 +64,9 @@ interface Store {
   // app settings
   autoBackup: boolean;
   mode: AppMode;
+  chartMode: ChartMode;
   setMode: (mode: AppMode) => void;
+  setChartMode: (mode: ChartMode) => void;
 }
 
 export const useStore = create(
@@ -104,23 +98,35 @@ export const useStore = create(
       reset: () => {
         set({
           symptoms: getRawSymptoms(),
-          expanded: getRawExpanded(),
           diseases: getRawDiseases(),
         });
       },
-      expanded: getRawExpanded(),
-      toggleExpanded: (id) =>
-        set((s) => {
-          const list = new Set(s.expanded);
-          if (list.has(id)) list.delete(id);
-          else list.add(id);
-          return { expanded: Array.from(list) };
-        }),
+      toggleExpanded: (id) => {
+        set(
+          produce((s: Store) => {
+            const item = s.symptoms.find((item) => item.id === id);
+            if (!item) return; // TODO handle
+            item.open = !item.open;
+          })
+        );
+      },
       collapseAll: () => {
-        set({ expanded: [] });
+        set(
+          produce((s: Store) => {
+            s.symptoms.forEach((item) => {
+              item.open = false;
+            });
+          })
+        );
       },
       expandAll: () => {
-        set({ expanded: getRawExpanded(true) });
+        set(
+          produce((s: Store) => {
+            s.symptoms.forEach((item) => {
+              item.open = true;
+            });
+          })
+        );
       },
       diseases: getRawDiseases(),
       history: [],
@@ -164,6 +170,10 @@ export const useStore = create(
       mode: "prevalance",
       setMode: (mode) => {
         set({ mode });
+      },
+      chartMode: "bar",
+      setChartMode: (chartMode) => {
+        set({ chartMode: chartMode });
       },
     }),
     { name: "app-storage", storage: createJSONStorage(() => localStorage) }

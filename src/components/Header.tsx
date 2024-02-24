@@ -62,10 +62,10 @@ export default function Header() {
       top={0}
       zIndex={99}
       borderBottom="var(--app-border)">
-      <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start">
+      <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start" overflow="hidden">
         {showNewBtn && (
           <Tooltip title="New Record">
-            <NewRecordButton size="small" sx={{ fontSize: "0.78rem" }} />
+            <NewRecordButton size="small" sx={{ fontSize: "0.75rem" }} />
           </Tooltip>
         )}
         {showLoadBtn && (
@@ -86,10 +86,12 @@ export default function Header() {
           <Tooltip title="Toggle prevalanced mode to consider spread factor">
             <Button
               value="bold"
-              sx={{ color: mode === "prevalance" ? "primary" : "#fff5", fontSize: "0.85rem" }}
+              sx={{ color: mode === "prevalance" ? "primary" : "#fff5" }}
               startIcon={mode === "prevalance" ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
               onClick={toggleMode}>
-              {mode === "raw" ? "Raw Results" : "Prevalanced"}
+              <Typography fontSize="0.65rem" className="text-ellipsis">
+                {mode === "raw" ? "Raw Results" : "Prevalanced"}
+              </Typography>
             </Button>
           </Tooltip>
         )}

@@ -62,9 +62,11 @@ img.desc-img {
   }
 }
 
-@supports not (selector(::-webkit-scrollbar-thumb)) {
-  scrollbar-color: var(--scroll-thumb-color) var(--scroll-track);
-  scrollbar-width: thin;
+@supports not selector(::-webkit-scrollbar-thumb) {
+  * {
+    scrollbar-color: var(--scroll-thumb-color) var(--scroll-track);
+    scrollbar-width: auto;
+  }
 }
 
 *::-webkit-scrollbar {
@@ -96,4 +98,17 @@ img.desc-img {
 .sticky {
   position: -webkit-sticky !important;
   position: sticky !important;
+}
+
+.text-ellipsis {
+  flex: 1 1 auto;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.abs-center-x {
+  left: 50%;
+  transform: translateX(-50%);
 }

@@ -18,17 +18,17 @@ export type TreeMapItem = TreeMapChild | TreeMapParent;
 export default function TreeMap({ data }: TreeMapDataProps<TreeMapItem>) {
   return (
     <ResponsiveTreeMap
-      data={data}
       theme={{
         tooltip: {
           container: {
-            background: "#0005",
+            background: "#000a",
             borderRadius: 14,
             backdropFilter: "blur(10px)",
             WebkitBackdropFilter: "blur(10px)",
           },
         },
       }}
+      data={data}
       identity="name"
       value="value"
       valueFormat=" >-1.0%"

@@ -1,5 +1,5 @@
 import { AddRounded } from "@mui/icons-material";
-import { Button, ButtonTypeMap, ExtendButtonBase } from "@mui/material";
+import { Button, ButtonTypeMap, ExtendButtonBase, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../config/store";
 
@@ -24,7 +24,9 @@ const NewRecordButton: ExtendButtonBase<ButtonTypeMap<{}, "button">> = (props: a
 
   return (
     <Button onClick={handleNewRecord} startIcon={<AddRounded />} sx={{ borderRadius: 4 }} {...props}>
-      New Record
+      <Typography fontSize="0.65rem" className="text-ellipsis">
+        New Record
+      </Typography>
     </Button>
   );
 };

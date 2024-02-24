@@ -67,11 +67,15 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms): ISymp
   dataFiltered = dataFiltered.filter(filterSymptomProbable());
 
   // fill empty types with none
-  const dataMapped = dataFiltered.map<ISymptom>((item) => ({
-    ...item,
-    type: item.type ? (item.type as SymptomType) : "none",
-    open: item.open ?? (item.options?.length ?? 0) < 3,
-  }));
+  const dataMapped = dataFiltered.map<ISymptom>((item) => {
+    const hasEnoughChildren = Array.isArray(item.options) && item.options.length < 3;
+    const hasEnumParent = !!dataFiltered.find((parent) => parent.options?.includes(item.id) && parent.type === "enum");
+    return {
+      ...item,
+      type: item.type ? (item.type as SymptomType) : "none",
+      open: item.open ?? (hasEnoughChildren || !hasEnumParent),
+    };
+  });
 
   return dataMapped;
 }
