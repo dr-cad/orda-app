@@ -32,7 +32,7 @@ export default function BarChart({ data }: ResponsiveBarSvgProps<BarDatum>) {
       data={data}
       keys={[Keys.raw, Keys.pval]}
       indexBy={Keys.title}
-      margin={{ top: 80, right: 0, bottom: 25, left: 0 }}
+      margin={{ top: 80, right: 0, bottom: 50, left: 0 }}
       padding={0.3}
       groupMode="grouped"
       valueScale={{ type: "linear" }}
@@ -58,9 +58,34 @@ export default function BarChart({ data }: ResponsiveBarSvgProps<BarDatum>) {
       axisTop={null}
       axisRight={null}
       axisBottom={{
-        tickSize: 5,
+        tickSize: 8,
         tickPadding: 5,
-        truncateTickAt: data.length > 5 ? 10 : data.length > 2 ? 12 : 0,
+        renderTick({ x, y, value }) {
+          const text = value as string;
+          const truncate = 12;
+          const maxLength = truncate * 2 - 3;
+          return (
+            <g transform={`translate(${x},${y})`}>
+              <text
+                dominant-baseline="central"
+                text-anchor="middle"
+                transform="translate(0,13)"
+                style={{ fill: "white", fontSize: "11px", outlineWidth: "0px", outlineColor: "transparent" }}>
+                {text.slice(0, truncate)}
+              </text>
+              {text.length > truncate && (
+                <text
+                  dominant-baseline="central"
+                  text-anchor="middle"
+                  transform="translate(0,28)"
+                  style={{ fill: "white", fontSize: "11px", outlineWidth: "0px", outlineColor: "transparent" }}>
+                  {text.slice(truncate, maxLength)}
+                  {text.length > maxLength && "..."}
+                </text>
+              )}
+            </g>
+          );
+        },
       }}
       axisLeft={null}
       valueFormat=" >-1.0%"
