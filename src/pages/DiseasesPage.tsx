@@ -10,7 +10,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import html2canvas from "html2canvas";
+import * as htmlToImage from "html-to-image";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import seedrandom from "seedrandom";
 import BarChart, { BarDatum } from "../components/BarChart";
@@ -74,8 +74,10 @@ export default function DiseasesPage() {
   }, [symptoms]);
 
   const takeScreenshoot = async () => {
-    const canvas = await html2canvas(_chartBox.current!, { backgroundColor: theme.palette.background.default });
-    return canvas.toDataURL("image/png");
+    const canvas = await htmlToImage.toPng(_chartBox.current!, {
+      backgroundColor: theme.palette.background.default,
+    });
+    return canvas;
   };
 
   const handleDownload = async () => {
