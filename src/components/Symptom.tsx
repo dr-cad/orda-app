@@ -190,9 +190,11 @@ const Input = React.memo(({ symptom }: IInnerProps) => {
 });
 
 export default function SymptomsGroup({ symptom }: { symptom: ISymptom }) {
+  const detailed = useStore((s) => s.detailed);
+  if (detailed && !symptom.probable && !symptom.options?.length) return null;
   return (
-    <Fragment>
-      {symptom.options!.map((id, i) => (
+    <Fragment key={symptom.id}>
+      {symptom.options!.map((id) => (
         <Symptom key={id} id={id} parent={symptom} />
       ))}
     </Fragment>

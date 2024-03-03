@@ -102,7 +102,8 @@ function fillSymptomProbable(symptoms: ISymptomRaw[]) {
 }
 
 export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[]): boolean {
-  if (symptom.page || Array.isArray(symptom.options)) return true;
+  if (symptom.page) return true;
+  // if (Array.isArray(symptom.options)) return true;
   for (const disease of diseases) {
     for (const factor of disease.factors) {
       if (factor.sid === symptom.id) {

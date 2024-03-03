@@ -51,11 +51,7 @@ export default function Header() {
       zIndex={99}
       borderBottom="var(--app-border)">
       <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start" overflow="hidden">
-        {inList && (
-          <Tooltip title="New Record">
-            <NewRecordButton size="small" sx={{ fontSize: "0.75rem" }} />
-          </Tooltip>
-        )}
+        {inList && <NewRecordButton size="small" sx={{ fontSize: "0.75rem" }} />}
         {inHistory && (
           <Tooltip title="Import History">
             <IconButton onClick={handleImportHistory}>
