@@ -12,16 +12,12 @@ import { Button, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useStore } from "../config/store";
-import { exportHistory, importHistory } from "../lib/history";
+import useAppHistory from "../hooks/history";
 import NewRecordButton from "./NewRecordButton";
 import { ReactComponent as Logo } from "./favicon.svg";
 
 export default function Header() {
   const { pathname } = useLocation();
-
-  const addHistory = useStore((s) => s.addHistory);
-  const history = useStore((s) => s.history);
-  const showSnackbar = useStore((s) => s.showSnackbar);
   const mode = useStore((s) => s.mode);
   const setMode = useStore((s) => s.setMode);
   const detailed = useStore((s) => s.detailed);
@@ -31,26 +27,14 @@ export default function Header() {
     setMode(mode === "raw" ? "prevalance" : "raw");
   };
 
-  const handleExportHistory: React.MouseEventHandler = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    exportHistory(history);
-    showSnackbar("History file exported successfully!");
-  };
+  const { handleImportHistory, handleExportHistory } = useAppHistory();
 
-  const handleImportHistory: React.MouseEventHandler = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    importHistory(addHistory, () => {
-      showSnackbar("History file imported successfully!");
-    });
-  };
+  const inIntro = useMemo(() => pathname.startsWith("/intro"), [pathname]);
+  const inList = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
+  const inHistory = useMemo(() => pathname.startsWith("/history"), [pathname]);
+  const inResult = useMemo(() => pathname.startsWith("/result"), [pathname]);
 
-  const insideList = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
-  const showLoadBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
-  const showModeBtn = useMemo(() => pathname.startsWith("/result"), [pathname]);
-  const showSaveBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
-  const showHistoryBtn = useMemo(() => !pathname.startsWith("/history"), [pathname]);
+  if (inIntro) return null;
 
   return (
     <Stack
@@ -67,26 +51,26 @@ export default function Header() {
       zIndex={99}
       borderBottom="var(--app-border)">
       <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start" overflow="hidden">
-        {insideList && (
+        {inList && (
           <Tooltip title="New Record">
             <NewRecordButton size="small" sx={{ fontSize: "0.75rem" }} />
           </Tooltip>
         )}
-        {showLoadBtn && (
+        {inHistory && (
           <Tooltip title="Import History">
             <IconButton onClick={handleImportHistory}>
               <UploadFileOutlined />
             </IconButton>
           </Tooltip>
         )}
-        {showSaveBtn && (
+        {inHistory && (
           <Tooltip title="Export History">
             <IconButton onClick={handleExportHistory}>
               <SaveOutlined />
             </IconButton>
           </Tooltip>
         )}
-        {showModeBtn && (
+        {inResult && (
           <Tooltip title="Toggle prevalanced mode to consider spread factor">
             <Button
               value="bold"
@@ -109,18 +93,19 @@ export default function Header() {
         </Typography>
       </NavLink>
       <Stack flex="0 1 100%" gap={0.25} direction="row" justifyContent="flex-end" alignItems="center">
-        {insideList && (
+        {inList && (
           <Tooltip title="Show Detailed" sx={{ opacity: !detailed ? 1 : 0.25 }}>
             <IconButton onClick={toggleDetailed}>{!detailed ? <Visibility /> : <VisibilityOff />}</IconButton>
           </Tooltip>
         )}
-        {showHistoryBtn ? (
+        {!inHistory && !inIntro && (
           <NavLink to="/history">
             <IconButton>
               <HistoryRounded />
             </IconButton>
           </NavLink>
-        ) : (
+        )}
+        {inHistory && (
           <NavLink to="/">
             <IconButton>
               <HomeOutlined />
