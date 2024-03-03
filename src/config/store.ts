@@ -65,8 +65,10 @@ interface Store {
   autoBackup: boolean;
   mode: AppMode;
   chartMode: ChartMode;
+  detailed: boolean;
   setMode: (mode: AppMode) => void;
   setChartMode: (mode: ChartMode) => void;
+  toggleDetailed: () => void;
 }
 
 export const useStore = create(
@@ -174,6 +176,10 @@ export const useStore = create(
       chartMode: "bar",
       setChartMode: (chartMode) => {
         set({ chartMode: chartMode });
+      },
+      detailed: false,
+      toggleDetailed: () => {
+        set((s) => ({ detailed: !s.detailed }));
       },
     }),
     { name: "app-storage", storage: createJSONStorage(() => localStorage) }

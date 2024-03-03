@@ -12,6 +12,7 @@ export interface ISymptomRaw {
   type?: string;
   options?: string[];
   open?: boolean;
+  probable?: boolean;
 }
 
 export interface ISymptom extends ISymptomRaw {

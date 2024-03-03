@@ -3,6 +3,8 @@ import {
   HomeOutlined,
   SaveOutlined,
   UploadFileOutlined,
+  Visibility,
+  VisibilityOff,
   VisibilityOffOutlined,
   VisibilityOutlined,
 } from "@mui/icons-material";
@@ -22,6 +24,8 @@ export default function Header() {
   const showSnackbar = useStore((s) => s.showSnackbar);
   const mode = useStore((s) => s.mode);
   const setMode = useStore((s) => s.setMode);
+  const detailed = useStore((s) => s.detailed);
+  const toggleDetailed = useStore((s) => s.toggleDetailed);
 
   const toggleMode = () => {
     setMode(mode === "raw" ? "prevalance" : "raw");
@@ -42,7 +46,7 @@ export default function Header() {
     });
   };
 
-  const showNewBtn = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
+  const insideList = useMemo(() => pathname.startsWith("/list") && !pathname.startsWith("/list/1"), [pathname]);
   const showLoadBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
   const showModeBtn = useMemo(() => pathname.startsWith("/result"), [pathname]);
   const showSaveBtn = useMemo(() => pathname.startsWith("/history"), [pathname]);
@@ -63,7 +67,7 @@ export default function Header() {
       zIndex={99}
       borderBottom="var(--app-border)">
       <Stack flex="0 1 100%" direction="row" alignItems="center" justifyContent="flex-start" overflow="hidden">
-        {showNewBtn && (
+        {insideList && (
           <Tooltip title="New Record">
             <NewRecordButton size="small" sx={{ fontSize: "0.75rem" }} />
           </Tooltip>
@@ -105,6 +109,11 @@ export default function Header() {
         </Typography>
       </NavLink>
       <Stack flex="0 1 100%" gap={0.25} direction="row" justifyContent="flex-end" alignItems="center">
+        {insideList && (
+          <Tooltip title="Show Detailed" sx={{ opacity: !detailed ? 1 : 0.25 }}>
+            <IconButton onClick={toggleDetailed}>{!detailed ? <Visibility /> : <VisibilityOff />}</IconButton>
+          </Tooltip>
+        )}
         {showHistoryBtn ? (
           <NavLink to="/history">
             <IconButton>

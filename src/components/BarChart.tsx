@@ -64,6 +64,9 @@ export default function BarChart({ data }: ResponsiveBarSvgProps<BarDatum>) {
           const text = value as string;
           const truncate = 12;
           const maxLength = truncate * 2 - 3;
+          const slice0 = text.slice(0, truncate);
+          const slice1 = text.slice(truncate, maxLength);
+          const ellipsis = text.length > maxLength ? "..." : "";
           return (
             <g transform={`translate(${x},${y})`}>
               <text
@@ -71,16 +74,15 @@ export default function BarChart({ data }: ResponsiveBarSvgProps<BarDatum>) {
                 text-anchor="middle"
                 transform="translate(0,13)"
                 style={{ fill: "white", fontSize: "11px", outlineWidth: "0px", outlineColor: "transparent" }}>
-                {text.slice(0, truncate)}
+                {slice0}
               </text>
-              {text.length > truncate && (
+              {slice1.length && (
                 <text
                   dominant-baseline="central"
                   text-anchor="middle"
                   transform="translate(0,28)"
                   style={{ fill: "white", fontSize: "11px", outlineWidth: "0px", outlineColor: "transparent" }}>
-                  {text.slice(truncate, maxLength)}
-                  {text.length > maxLength && "..."}
+                  {slice1 + ellipsis}
                 </text>
               )}
             </g>

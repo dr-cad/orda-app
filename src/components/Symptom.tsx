@@ -31,6 +31,7 @@ function Symptom({ id, parent }: IProps) {
   const toggleExpanded = useStore((s) => s.toggleExpanded);
   const symptoms = useStore((s) => s.symptoms);
   const updateSymptom = useStore((s) => s.updateSymptom);
+  const detailed = useStore((s) => s.detailed);
 
   const symptom = useMemo(() => symptoms.find((i) => i.id === id), [id, symptoms]);
   const { expandable, isEnumParent, hasInput, hasDesc, hasOptions } = useSymptom(symptom);
@@ -53,7 +54,7 @@ function Symptom({ id, parent }: IProps) {
     return [space, expandable ? space : 0];
   }, [expandable, id, parent.options, parent.page]);
 
-  if (!symptom) return null;
+  if (!symptom || (detailed && !symptom.probable)) return null;
 
   return (
     <StyledTreeItem

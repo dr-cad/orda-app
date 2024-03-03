@@ -64,7 +64,7 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms): ISymp
   // remove unnecessary children
 
   let dataFiltered = [...data];
-  dataFiltered = dataFiltered.filter(filterSymptomProbable());
+  dataFiltered = fillSymptomProbable(dataFiltered);
 
   // fill empty types with none
   const dataMapped = dataFiltered.map<ISymptom>((item) => {
@@ -80,26 +80,25 @@ export default function getRawSymptoms(data: ISymptomRaw[] = rawSymptoms): ISymp
   return dataMapped;
 }
 
-function filterSymptomProbable() {
+function fillSymptomProbable(symptoms: ISymptomRaw[]) {
   const diseases = getRawDiseases();
 
-  const recursivelyFilterSymptomProbable = (item: ISymptomRaw, index: number, data: ISymptomRaw[]) => {
+  const recursivelyFillSymptomProbable = (item: ISymptomRaw, index: number, data: ISymptomRaw[]): boolean => {
     if (alwaysVisible.includes(item.id)) return true;
     // if item has any probable children
     if (Array.isArray(item.options)) {
-      item.options = item.options.filter((option) => {
+      const probableItems = item.options.filter((option) => {
         const optItem = data.find((x) => x.id === option);
-        return optItem && recursivelyFilterSymptomProbable(optItem, index, data);
+        return optItem && recursivelyFillSymptomProbable(optItem, index, data);
       });
-      if (item.options.length > 0) return true;
-      item.options = undefined;
+      if (probableItems.length > 0) return true;
     }
     // if item is probable itself
     if (getIsSymptomProbable(item, diseases)) return true;
     return false;
   };
 
-  return recursivelyFilterSymptomProbable;
+  return symptoms.map((x, i, data) => ({ ...x, probable: recursivelyFillSymptomProbable(x, i, data) }));
 }
 
 export function getIsSymptomProbable(symptom: ISymptomRaw, diseases: IDisease[]): boolean {
