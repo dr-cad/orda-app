@@ -106,7 +106,7 @@ export default function Header() {
           </NavLink>
         )}
         {inHistory && (
-          <NavLink to="/">
+          <NavLink to="/list/1">
             <IconButton>
               <HomeOutlined />
             </IconButton>
