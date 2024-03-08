@@ -50,3 +50,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 Before making any changes please run `npm run pull`  
 And right after making stable changes please run `npm run push` in terminal  
 You can access terminal by pressing buttons `ctrl` + `~`  
+mahdi joined
