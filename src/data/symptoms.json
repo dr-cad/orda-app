@@ -44,7 +44,7 @@
     "name": "History",
     "desc": "Patient's history \nand Clinical findings",
     "page": true,
-    "options": ["recent-gingival", "teeth-num", "history-of-surgery", "sys-dis", "sig-blood", "hist-radio"]
+    "options": ["recent-gingival", "teeth-num", "history-of-surgery", "sig-blood", "hist-radio"]
   },
   {
     "id": "recent-gingival",
@@ -72,29 +72,11 @@
   },
   {
     "id": "localized-1",
-    "name": "Localized",
-    "options": ["primary-1", "permanent-1"]
-  },
-  {
-    "id": "primary-1",
-    "name": "Primary tooth"
-  },
-  {
-    "id": "permanent-1",
-    "name": "Permanent tooth"
+    "name": "Localized"
   },
   {
     "id": "generalized-1",
-    "name": "Generalized",
-    "options": ["primary-2", "permanent-2"]
-  },
-  {
-    "id": "primary-2",
-    "name": "Primary tooth"
-  },
-  {
-    "id": "permanent-2",
-    "name": "Permanent tooth"
+    "name": "Generalized"
   },
   {
     "id": "history-of-surgery",
@@ -150,71 +132,7 @@
   },
   {
     "id": "hist-radio",
-    "name": "History of radiotherapy and chemotherapy",
-    "desc": ""
-  },
-  {
-    "id": "sys-dis",
-    "name": "Metabolic disease",
-    "type": "enum",
-    "options": [
-      "paget-dis",
-      "fibrous",
-      "cherubism",
-      "osteoporosis",
-      "osteopetrosis",
-      "osteogensis",
-      "osteomalacia",
-      "hyperpara",
-      "multiple-myeloma",
-      "langer"
-    ]
-  },
-  {
-    "id": "fibrous",
-    "name": "Fibrous dysplasia"
-  },
-  {
-    "id": "cherubism",
-    "name": "Cherubism"
-  },
-  {
-    "id": "osteogensis",
-    "name": "Osteogenesis imperfecta"
-  },
-  {
-    "id": "langer",
-    "name": "Langerhans cell histocytosis"
-  },
-  {
-    "id": "paget-dis",
-    "name": "Paget's disease",
-    "desc": ""
-  },
-  {
-    "id": "osteoporosis",
-    "name": "Osteoporosis",
-    "desc": ""
-  },
-  {
-    "id": "osteopetrosis",
-    "name": "Osteopetrosis",
-    "desc": ""
-  },
-  {
-    "id": "osteomalacia",
-    "name": "Osteomalacia",
-    "desc": ""
-  },
-  {
-    "id": "hyperpara",
-    "name": "Hyperparathyroidism",
-    "desc": ""
-  },
-  {
-    "id": "multiple-myeloma",
-    "name": "Multiple myeloma",
-    "desc": ""
+    "name": "History of radiotherapy and chemotherapy"
   },
   {
     "id": "chief-comp",
@@ -587,68 +505,62 @@
     "id": "radiolucent",
     "name": "Radiolucent",
     "type": "enum",
-    "options": ["uniocular", "multiocular", "rarefaction"]
+    "options": ["unilocular", "multilocular", "rarefaction"]
   },
   {
-    "id": "uniocular",
-    "name": "Uniocular"
+    "id": "unilocular",
+    "name": "Unilocular",
+    "type":"enum",
+    "options": ["uni1", "uni2"]
+  },
+  {
+    "id": "uni1",
+    "name": "Completely radiolucent"
+  },
+  {
+    "id": "uni2",
+    "name": "Radiolucent with flecks"
+  },
+  {
+    "id": "multilocular",
+    "name": "Multilocular",
+    "options": ["linear", "curved"]
+  },
+  {
+    "id": "linear",
+    "name": "Linear septa",
+    "type": "enum",
+    "options": ["wispy1", "coarse1"]
+  },
+  {
+    "id": "wispy1",
+    "name": "Wispy or Thin"
+  },
+  {
+    "id": "coarse1",
+    "name": "Coarse or Thick"
+  },
+  {
+    "id": "curved",
+    "name": "Curved septa",
+    "type": "enum",
+    "options": ["wispy2","coarse2"]
+  },
+  {
+    "id": "wispy2",
+    "name": "Wispy or Thin"
+  },
+  {
+    "id": "coarse2",
+    "name": "Coarse or Thick"
   },
   {
     "id": "rarefaction",
     "name": "Generalized rarefaction"
   },
   {
-    "id": "multiocular",
-    "name": "Multiocular",
-    "type": "enum",
-    "options": ["soap", "honey", "tenis"]
-  },
-  {
-    "id": "soap",
-    "name": "Soap bubble"
-  },
-  {
-    "id": "honey",
-    "name": "Honey comb"
-  },
-  {
-    "id": "tenis",
-    "name": "Tenis racket"
-  },
-  {
     "id": "mixed",
-    "name": "Radiopaque and radiolucent (mixed)",
-    "options": ["unusual", "int-septa", "dystrophic", "amorph", "dent-struct"]
-  },
-  {
-    "id": "unusual",
-    "name": "Unusual trabeculation"
-  },
-  {
-    "id": "dystrophic",
-    "name": "Dystrophic calcification"
-  },
-  {
-    "id": "amorph",
-    "name": "Amorphous bone"
-  },
-  {
-    "id": "dent-struct",
-    "name": "Dental structure"
-  },
-  {
-    "id": "int-septa",
-    "name": "Interal septa",
-    "type": "enum",
-    "options": ["wispy", "coarse"]
-  },
-  {
-    "id": "wispy",
-    "name": "Wispy"
-  },
-  {
-    "id": "coarse",
-    "name": "Coarse"
+    "name": "Radiopaque and radiolucent (mixed)"
   },
   {
     "id": "effects-surr",
@@ -658,10 +570,10 @@
   {
     "id": "tooth",
     "name": "Tooth",
-    "options": ["dispalce-0", "resorp", "divergence"]
+    "options": ["displace-0", "resorp"]
   },
   {
-    "id": "dispalce-0",
+    "id": "displace-0",
     "name": "Displacement"
   },
   {
@@ -677,10 +589,6 @@
   {
     "id": "resorp-2",
     "name": "Spiked like resorption"
-  },
-  {
-    "id": "divergence",
-    "name": "Root divergence"
   },
   {
     "id": "dura",
@@ -703,10 +611,10 @@
   {
     "id": "ian-canal",
     "name": "IAN canal",
-    "options": ["dispalce-1", "enlarge", "destruct-0"]
+    "options": ["displace-1", "enlarge", "destruct-0"]
   },
   {
-    "id": "dispalce-1",
+    "id": "displace-1",
     "name": "Displacement"
   },
   {
@@ -720,10 +628,10 @@
   {
     "id": "maximillary-sinus",
     "name": "Maxillary sinus",
-    "options": ["dispalce-2", "destruct-1"]
+    "options": ["displace-2", "destruct-1"]
   },
   {
-    "id": "dispalce-2",
+    "id": "displace-2",
     "name": "Displacement"
   },
   {
@@ -738,7 +646,7 @@
   },
   {
     "id": "expand",
-    "name": "Expansion with out destruction"
+    "name": "Expansion without destruction"
   },
   {
     "id": "destruct-3",
@@ -782,10 +690,10 @@
   },
   {
     "id": "divergnet",
-    "name": "Divergent(Sunburst"
+    "name": "Divergent(Sunburst)"
   },
   {
     "id": "sloping",
-    "name": "Sloping(velvet"
+    "name": "Sloping(velvet)"
   }
 ]
