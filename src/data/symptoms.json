@@ -54,7 +54,7 @@
   {
     "id": "teeth-num",
     "name": "Teeth shape, number and condition",
-    "options": ["delayed", "super", "malform"]
+    "options": ["impact", "super", "malform"]
   },
   {
     "id": "super",
@@ -65,18 +65,8 @@
     "name": "Malformed tooth"
   },
   {
-    "id": "delayed",
-    "name": "Impacted or missing tooth",
-    "type": "enum",
-    "options": ["localized-1", "generalized-1"]
-  },
-  {
-    "id": "localized-1",
-    "name": "Localized"
-  },
-  {
-    "id": "generalized-1",
-    "name": "Generalized"
+    "id": "impact",
+    "name": "Impacted or missing tooth"
   },
   {
     "id": "history-of-surgery",
@@ -163,19 +153,8 @@
   },
   {
     "id": "pain-0",
-    "name": "Pain",
-    "type": "enum",
-    "options": ["localized-0", "generalized-0"]
+    "name": "Pain"
   },
-  {
-    "id": "generalized-0",
-    "name": "Generalized "
-  },
-  {
-    "id": "localized-0",
-    "name": "Localized"
-  },
-
   {
     "id": "onset-course",
     "name": "Onset and course",
@@ -201,7 +180,7 @@
     "name": "Clinical examination",
     "desc": "Observable Findings and Clinical examination",
     "page": true,
-    "options": ["appearance", "hemorrhage", "consist", "tooth-exam", "aspiration", "auscultation"]
+    "options": ["hemorrhage", "consist", "tooth-exam", "aspiration", "auscultation"]
   },
   {
     "id": "tooth-exam",
@@ -277,32 +256,14 @@
     "name": "Auscultation"
   },
   {
-    "id": "appearance",
-    "name": "Appearance",
-    "type": "enum",
-    "options": ["intrabony", "soft-tissue"]
-  },
-  {
-    "id": "intrabony",
-    "name": "Intrabony"
-  },
-  {
-    "id": "soft-tissue",
-    "name": "Soft tissue presentation"
-  },
-  {
     "id": "consist",
     "name": "Consistancy",
     "type": "enum",
-    "options": ["soft", "cheesy", "rubbery", "firm", "bony-hard"]
+    "options": ["soft", "rubbery", "firm", "bony-hard"]
   },
   {
     "id": "soft",
     "name": "Soft"
-  },
-  {
-    "id": "cheesy",
-    "name": "Chessy"
   },
   {
     "id": "rubbery",
@@ -454,19 +415,29 @@
   },
   {
     "id": "pericoronal",
-    "name": "Pericoronal"
+    "name": "Pericoronal (Coronal to CEJ)"
   },
   {
     "id": "interradicular",
-    "name": "Interradicular or Midroot"
-  },
-  {
-    "id": "related",
-    "name": "Not related"
+    "name": "Root (Interradicular, Midroot or whole root)"
   },
   {
     "id": "periapical",
-    "name": "Periapical"
+    "name": "Periapical (Only apex area)"
+  },
+  {
+    "id": "related",
+    "name": "Not related to tooth",
+    "type": "enum",
+    "options": ["infra","supra"]
+  },
+  {
+    "id": "supra",
+    "name": "Superior to IAN canal"
+  },
+  {
+    "id": "infra",
+    "name": "Inferior to IAN canal"
   },
   {
     "id": "solitary",
@@ -528,7 +499,7 @@
   },
   {
     "id": "linear",
-    "name": "Linear septa",
+    "name": "Curved and Linear septa",
     "type": "enum",
     "options": ["wispy1", "coarse1"]
   },
@@ -560,12 +531,12 @@
   },
   {
     "id": "mixed",
-    "name": "Radiopaque and radiolucent (mixed)"
+    "name": "Radiopaque and Radiolucent (Mixed)"
   },
   {
     "id": "effects-surr",
     "name": "Effects on surrending",
-    "options": ["tooth", "dura", "pdl-space", "ian-canal", "maximillary-sinus", "corital-bone", "periosteal-reaction"]
+    "options": ["tooth", "dura", "pdl-space", "ian-canal", "sinus", "corital-bone", "periosteal-reaction"]
   },
   {
     "id": "tooth",
@@ -626,31 +597,26 @@
     "name": "Destruction"
   },
   {
-    "id": "maximillary-sinus",
-    "name": "Maxillary sinus",
-    "options": ["displace-2", "destruct-1"]
-  },
-  {
-    "id": "displace-2",
-    "name": "Displacement"
-  },
-  {
-    "id": "destruct-1",
-    "name": "Destruction"
+    "id": "sinus",
+    "name": "Invagination to sinus space"
   },
   {
     "id": "corital-bone",
-    "name": "Cortial bone",
+    "name": "Cortial bone (Jaws and maxillary sinus)",
     "type": "enum",
-    "options": ["expand", "destruct-3"]
+    "options": ["expand", "destruct-3","extend"]
   },
   {
     "id": "expand",
-    "name": "Expansion without destruction"
+    "name": "Expansion or displacement without destruction"
   },
   {
     "id": "destruct-3",
-    "name": "Destruction"
+    "name": "Expansion or displacement with destruction"
+  },
+  {
+    "id": "extend",
+    "name": "Extension within bone without expansion"
   },
   {
     "id": "periosteal-reaction",
