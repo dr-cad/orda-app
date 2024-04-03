@@ -71,7 +71,7 @@ const HistoryItem = ({ createdAt, symptoms, index, unsaved }: IHistoryItem & { i
     e.preventDefault();
     e.stopPropagation();
     load(symptoms);
-    nav("/");
+    nav("/list/1");
     showSnackbar("History record loaded!");
   };
 
