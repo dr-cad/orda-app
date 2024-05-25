@@ -44,12 +44,16 @@
     "name": "History",
     "desc": "Patient's history \nand Clinical findings",
     "page": true,
-    "options": ["recent-gingival", "teeth-num", "history-of-surgery", "sig-blood", "hist-radio"]
+    "options": ["recent-gingival", "lymph", "history-of-surgery", "hist-radio", "teeth-num", "sig-blood"]
   },
   {
     "id": "recent-gingival",
     "name": "Gingival or periodontal problem",
     "desc": ""
+  },
+  {
+    "id": "lymph",
+    "name": "Lymphadenopathy"
   },
   {
     "id": "teeth-num",
@@ -128,7 +132,7 @@
     "id": "chief-comp",
     "name": "Chief complaint",
     "page": true,
-    "options": ["pain-0", "fever-illness", "paresth-anes", "bleeding", "mobile-teeth", "swelling"]
+    "options": ["pain-0", "fever-illness", "paresth-anes", "bleeding", "purulent", "swelling"]
   },
   {
     "id": "fever-illness",
@@ -144,8 +148,8 @@
     "name": "Gingival bleeding"
   },
   {
-    "id": "mobile-teeth",
-    "name": "Mobile teeth"
+    "id": "purulent",
+    "name": "Purulent (pus) drainage"
   },
   {
     "id": "swelling",
@@ -180,12 +184,25 @@
     "name": "Clinical examination",
     "desc": "Observable Findings and Clinical examination",
     "page": true,
-    "options": ["hemorrhage", "consist", "tooth-exam", "aspiration", "auscultation"]
+    "options": ["appearance", "consist", "tooth-exam", "aspiration", "auscultation"]
+  },
+  {
+    "id": "appearance",
+    "name": "Appearance",
+    "options": ["soft-tissue", "hemorrhage"]
+  },
+  {
+    "id": "hemorrhage",
+    "name": "Hemorrhage"
+  },
+  {
+    "id": "soft-tissue",
+    "name": "Soft tissue lesion"
   },
   {
     "id": "tooth-exam",
     "name": "Tooth examination",
-    "options": ["vitality", "percussion"]
+    "options": ["vitality", "percussion", "mobile-teeth"]
   },
   {
     "id": "vitality",
@@ -198,14 +215,14 @@
     "name": "Nonvital tooth"
   },
   {
-    "id": "hemorrhage",
-    "name": "Hemorrhage"
-  },
-  {
     "id": "percussion",
     "name": "Percussion",
     "type": "enum",
     "options": ["pain-1", "pump"]
+  },
+  {
+    "id": "mobile-teeth",
+    "name": "Tooth mobility"
   },
   {
     "id": "pain-1",
@@ -309,7 +326,7 @@
   },
   {
     "id": "round-1",
-    "name": "Round or Ovoid"
+    "name": "Round, Ovoid or Regular"
   },
   {
     "id": "scalloped",
@@ -330,11 +347,11 @@
     "id": "well-defined",
     "name": "Well-defined",
     "type": "enum",
-    "options": ["punched", "corticated", "sclerotic", "soft-capsule"]
+    "options": ["non-corticated", "corticated", "sclerotic", "soft-capsule"]
   },
   {
-    "id": "punched",
-    "name": "Punched-out"
+    "id": "non-corticated",
+    "name": "Non corticated"
   },
   {
     "id": "corticated",
@@ -409,7 +426,7 @@
   },
   {
     "id": "relation-tooth",
-    "name": "Relation to tooth",
+    "name": "Epicenter of lesion",
     "type": "enum",
     "options": ["periapical", "pericoronal", "interradicular", "related"]
   },
@@ -427,17 +444,7 @@
   },
   {
     "id": "related",
-    "name": "Not related to tooth",
-    "type": "enum",
-    "options": ["infra","supra"]
-  },
-  {
-    "id": "supra",
-    "name": "Superior to IAN canal"
-  },
-  {
-    "id": "infra",
-    "name": "Inferior to IAN canal"
+    "name": "Not related to tooth"
   },
   {
     "id": "solitary",
@@ -495,6 +502,7 @@
   {
     "id": "multilocular",
     "name": "Multilocular",
+    "type": "enum",
     "options": ["linear", "curved"]
   },
   {
@@ -536,34 +544,28 @@
   {
     "id": "effects-surr",
     "name": "Effects on surrending",
-    "options": ["tooth", "dura", "pdl-space", "ian-canal", "sinus", "corital-bone", "periosteal-reaction"]
+    "options": ["tooth", "dura", "pdl-space", "ian-canal", "sinus", "corital-bone","necrotic", "periosteal-reaction"]
   },
   {
     "id": "tooth",
     "name": "Tooth",
-    "options": ["displace-0", "resorp"]
+    "options": ["displace-0", "resorp-1", "eruption"]
+  },
+  {
+    "id": "eruption",
+    "name": "Early eruption"
   },
   {
     "id": "displace-0",
     "name": "Displacement"
   },
   {
-    "id": "resorp",
-    "name": "Root resorption",
-    "options": ["resorp-1", "resorp-2"],
-    "type": "enum"
-  },
-  {
     "id": "resorp-1",
-    "name": "Smooth and curved resorption"
-  },
-  {
-    "id": "resorp-2",
-    "name": "Spiked like resorption"
+    "name": "Root resorption"
   },
   {
     "id": "dura",
-    "name": "Loss of lamina dura"
+    "name": "Loss of lamina dura (without root resorption)"
   },
   {
     "id": "pdl-space",
@@ -608,15 +610,28 @@
   },
   {
     "id": "expand",
-    "name": "Expansion or displacement without destruction"
+    "name": "Expansion or displacement without destruction or perforation"
   },
   {
     "id": "destruct-3",
-    "name": "Expansion or displacement with destruction"
+    "name": "Expansion or displacement with destruction or perforation"
   },
   {
     "id": "extend",
-    "name": "Extension within bone without expansion"
+    "name": "Extension within bone without expansion or destruction"
+  },
+  {
+    "id": "necrotic",
+    "name": "Necrotic bone",
+    "options": ["sequestrum", "fracture"]
+  },
+  {
+    "id": "sequestrum",
+    "name": "Sequestrum (necrotic bone island)"
+  },
+  {
+    "id": "fracture",
+    "name": "Pathologic fracture"
   },
   {
     "id": "periosteal-reaction",
