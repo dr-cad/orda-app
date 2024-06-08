@@ -40,11 +40,46 @@
     "desc": ""
   },
   {
+    "id": "chief-comp",
+    "name": "Chief complaint",
+    "page": true,
+    "options": ["pain-0", "fever-illness", "paresth-anes", "bleeding", "purulent", "swelling", "trismus"]
+  },
+  {
+    "id": "fever-illness",
+    "name": "Fever and Illness",
+    "desc": ""
+  },
+  {
+    "id": "paresth-anes",
+    "name": "Paresthesia and anesthesia"
+  },
+  {
+    "id": "bleeding",
+    "name": "Gingival bleeding"
+  },
+  {
+    "id": "purulent",
+    "name": "Purulent (pus) drainage"
+  },
+  {
+    "id": "swelling",
+    "name": "Swelling"
+  },
+  {
+    "id": "pain-0",
+    "name": "Pain"
+  },
+  {
+    "id": "trismus",
+    "name": "Trismus"
+  },
+  {
     "id": "pat-his-cli-fin",
     "name": "History",
     "desc": "Patient's history \nand Clinical findings",
     "page": true,
-    "options": ["recent-gingival", "lymph", "history-of-surgery", "hist-radio", "teeth-num", "sig-blood"]
+    "options": [ "onset-course", "history-of-surgery", "hist-radio", "recent-gingival", "lymph", "impact", "sig-blood"]
   },
   {
     "id": "recent-gingival",
@@ -53,28 +88,15 @@
   },
   {
     "id": "lymph",
-    "name": "Lymphadenopathy"
-  },
-  {
-    "id": "teeth-num",
-    "name": "Teeth shape, number and condition",
-    "options": ["impact", "super", "malform"]
-  },
-  {
-    "id": "super",
-    "name": "Supernumerary tooth"
-  },
-  {
-    "id": "malform",
-    "name": "Malformed tooth"
+    "name": "Lymph nodes involvement"
   },
   {
     "id": "impact",
-    "name": "Impacted or missing tooth"
+    "name": "Impacted, unerupted or supernumerary tooth"
   },
   {
     "id": "history-of-surgery",
-    "name": "History of surgery or trauma",
+    "name": "History of surgery, trauma or tooth extraction",
     "desc": ""
   },
   {
@@ -129,42 +151,9 @@
     "name": "History of radiotherapy and chemotherapy"
   },
   {
-    "id": "chief-comp",
-    "name": "Chief complaint",
-    "page": true,
-    "options": ["pain-0", "fever-illness", "paresth-anes", "bleeding", "purulent", "swelling"]
-  },
-  {
-    "id": "fever-illness",
-    "name": "Fever and Illness",
-    "desc": ""
-  },
-  {
-    "id": "paresth-anes",
-    "name": "Paresthesia and anesthesia"
-  },
-  {
-    "id": "bleeding",
-    "name": "Gingival bleeding"
-  },
-  {
-    "id": "purulent",
-    "name": "Purulent (pus) drainage"
-  },
-  {
-    "id": "swelling",
-    "name": "Swelling"
-  },
-  {
-    "id": "pain-0",
-    "name": "Pain"
-  },
-  {
     "id": "onset-course",
     "name": "Onset and course",
-    "page": true,
     "type": "enum",
-    "required": true,
     "options": ["slow-0", "moderate-0", "rapid-0"]
   },
   {
@@ -310,8 +299,7 @@
   {
     "id": "shape-size",
     "name": "Shape and size",
-    "options": ["size", "shape-1"],
-    "required": true
+    "options": ["size", "shape-1"]
   },
   {
     "id": "size",
@@ -414,7 +402,8 @@
     "id": "side",
     "name": "Side",
     "type": "enum",
-    "options": ["unilatral", "bilateral"]
+    "options": ["unilatral", "bilateral"],
+    "required": true
   },
   {
     "id": "unilatral",
@@ -428,7 +417,8 @@
     "id": "relation-tooth",
     "name": "Epicenter of lesion",
     "type": "enum",
-    "options": ["periapical", "pericoronal", "interradicular", "related"]
+    "options": ["periapical", "pericoronal", "interradicular", "related"],
+    "required": true
   },
   {
     "id": "pericoronal",
@@ -544,7 +534,7 @@
   {
     "id": "effects-surr",
     "name": "Effects on surrending",
-    "options": ["tooth", "dura", "pdl-space", "ian-canal", "sinus", "corital-bone","necrotic", "periosteal-reaction"]
+    "options": ["tooth", "dura", "wide-0", "ian-canal", "sinus", "corital-bone","necrotic", "periosteal-reaction"]
   },
   {
     "id": "tooth",
@@ -568,18 +558,8 @@
     "name": "Loss of lamina dura (without root resorption)"
   },
   {
-    "id": "pdl-space",
-    "name": "PDL space",
-    "type": "enum",
-    "options": ["wide-0", "wide-1"]
-  },
-  {
     "id": "wide-0",
-    "name": "Regular widening"
-  },
-  {
-    "id": "wide-1",
-    "name": "Irregular widening"
+    "name": "PDL space widening"
   },
   {
     "id": "ian-canal",
@@ -627,7 +607,7 @@
   },
   {
     "id": "sequestrum",
-    "name": "Sequestrum (necrotic bone island)"
+    "name": "Sequestrum (Bone island)"
   },
   {
     "id": "fracture",
